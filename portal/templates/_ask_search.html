@@ -1,0 +1,61 @@
+<div class="ask-card">
+  <form method="post" action="/ask" class="ask-form">
+    <label for="ask-input">
+      <span class="ask-title">💬 Ask in plain English</span>
+      {% if mock_mode %}
+      <span class="ask-mode-pill">demo mode</span>
+      {% endif %}
+    </label>
+    <div class="ask-row">
+      <input
+        id="ask-input"
+        type="text"
+        name="question"
+        placeholder="how many videos did swugshop post in May 2026"
+        autocomplete="off"
+        required
+      />
+      <button type="submit">Ask →</button>
+    </div>
+    <small class="muted ask-hints">
+      {% if mock_mode %}
+      <strong>Demo mode</strong> — recognises three canned questions. Try:
+      <a
+        href="#"
+        onclick="
+          document.getElementById('ask-input').value =
+            'how many videos did swugshop post in May 2026';
+          document.getElementById('ask-input').focus();
+          return false;
+        "
+        >videos by swugshop</a
+      >
+      ·
+      <a
+        href="#"
+        onclick="
+          document.getElementById('ask-input').value =
+            'top creators by videos in May 2026';
+          document.getElementById('ask-input').focus();
+          return false;
+        "
+        >top creators</a
+      >
+      ·
+      <a
+        href="#"
+        onclick="
+          document.getElementById('ask-input').value =
+            'creator activity in May 2026';
+          document.getElementById('ask-input').focus();
+          return false;
+        "
+        >creator activity</a
+      >
+      . Real AI activates when ANTHROPIC_API_KEY is set. {% else %} Try:
+      <em>top creators by GMV last month</em> ·
+      <em>videos posted by X this week</em>
+      {% endif %}
+    </small>
+  </form>
+</div>

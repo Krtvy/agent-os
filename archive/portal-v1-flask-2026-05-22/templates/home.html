@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rootlabs Data Portal</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        max-width: 720px;
+        margin: 60px auto;
+        padding: 0 24px;
+        color: #222;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0;
+      }
+      .who {
+        color: #666;
+        font-size: 14px;
+      }
+      .who a {
+        color: #1a73e8;
+        margin-left: 12px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .card {
+        padding: 24px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+      }
+      .card:hover {
+        border-color: #1a73e8;
+      }
+      .card h2 {
+        font-size: 18px;
+        margin: 0 0 8px;
+      }
+      .card p {
+        color: #666;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Rootlabs Data Portal</h1>
+      <div class="who">
+        {{ user.email if user is mapping else user }}
+        <a href="/logout">log out</a>
+      </div>
+    </header>
+    <div class="cards">
+      <a class="card" href="/upload">
+        <h2>Fill a template</h2>
+        <p>
+          Upload a CSV with the columns you want. Yudhi fills them from Supabase
+          + Sheets.
+        </p>
+      </a>
+      <a class="card" href="/ask">
+        <h2>Ask a question</h2>
+        <p>
+          Type a question in plain English. Get a number, table, or downloadable
+          CSV back.
+        </p>
+      </a>
+    </div>
+  </body>
+</html>

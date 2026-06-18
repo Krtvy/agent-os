@@ -1,0 +1,32 @@
+# Crontab for the observer-ecosystem.
+# Times are in your machine's local timezone. Adjust the IST/UTC offset
+# annotations to match. Bhishma R19: storage is UTC; display is local.
+#
+# Install with:    crontab -e
+# Verify with:     crontab -l
+
+# ------------------------------------------------------------------
+# Nakula — runs every minute, dispatches due jobs internally
+# ------------------------------------------------------------------
+* * * * *  bash $HOME/projects/observer-test/scripts/run_nakula.sh
+
+# ------------------------------------------------------------------
+# Sanjaya — Tier-1 Observer, every 30 minutes
+# ------------------------------------------------------------------
+*/30 * * * *  bash $HOME/projects/observer-test/scripts/run_sanjaya.sh
+
+# ------------------------------------------------------------------
+# Vyasa — Tier-2 Conductor, every 6 hours (slow on purpose)
+# ------------------------------------------------------------------
+0 */6 * * *  bash $HOME/projects/observer-test/scripts/run_vyasa.sh
+
+# ------------------------------------------------------------------
+# Sahadeva — weekly external auditor, Sundays at 10:00 IST (= 04:30 UTC)
+# Adjust to your local equivalent of Sunday 10:00 IST.
+# ------------------------------------------------------------------
+30 4 * * 0  bash $HOME/projects/observer-test/scripts/run_sahadeva.sh
+
+# ------------------------------------------------------------------
+# Optional: redirect cron stderr to a log so failures are visible
+# ------------------------------------------------------------------
+# MAILTO=""    # uncomment to silence mail; otherwise cron will email failures

@@ -1,0 +1,171 @@
+/* ============================================================
+   Rootlabs Portal — Design Tokens
+   Light mode primary. Dark tokens documented for v2.
+   ============================================================ */
+
+:root {
+  /* ---- Color: neutrals (warm stone) ---- */
+  --c-bg:           #fafaf9;
+  --c-surface:      #ffffff;
+  --c-sunken:       #f5f5f4;
+  --c-sunken-2:     #efeeec;
+  --c-border:       #e7e5e4;
+  --c-border-strong:#d6d3d1;
+  --c-divider:      #ecebe9;
+
+  --c-ink:          #1c1917;   /* primary text */
+  --c-ink-2:        #44403c;   /* secondary text */
+  --c-ink-3:        #78716c;   /* tertiary / labels */
+  --c-ink-4:        #a8a29e;   /* muted, placeholder */
+
+  /* ---- Color: accent (forest, refined) ---- */
+  --c-accent:       #1f6f4a;
+  --c-accent-hover: #175a3a;
+  --c-accent-press: #114730;
+  --c-accent-soft:  #ecf5f0;
+  --c-accent-soft-2:#dbeae2;
+  --c-accent-ink:   #114730;
+
+  /* ---- Color: semantic ---- */
+  --c-success:      #16794d;
+  --c-success-soft: #e6f4ec;
+  --c-warn:         #b45309;
+  --c-warn-soft:    #fdf3e3;
+  --c-error:        #b42318;
+  --c-error-soft:   #fdecea;
+  --c-info:         #1d4ed8;
+  --c-info-soft:    #e7edfb;
+
+  /* ---- Color: data viz (categorical, color-blind safe-ish) ---- */
+  --c-data-1: #1f6f4a;  /* accent */
+  --c-data-2: #b45309;  /* amber */
+  --c-data-3: #1d4ed8;  /* indigo */
+  --c-data-4: #7c3aed;  /* violet */
+  --c-data-5: #0e7490;  /* teal */
+
+  /* ---- Type ---- */
+  --f-sans: "Switzer", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --t-11: 11px;
+  --t-12: 12px;
+  --t-13: 13px;
+  --t-14: 14px;
+  --t-15: 15px;
+  --t-16: 16px;
+  --t-18: 18px;
+  --t-22: 22px;
+  --t-28: 28px;
+  --t-36: 36px;
+
+  --lh-tight: 1.15;
+  --lh-snug:  1.3;
+  --lh-body:  1.5;
+
+  /* ---- Spacing ---- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 48px;
+  --s-10: 64px;
+
+  /* ---- Radius ---- */
+  --r-2: 4px;
+  --r-3: 6px;
+  --r-4: 8px;
+  --r-5: 10px;
+  --r-6: 12px;
+  --r-pill: 999px;
+
+  /* ---- Shadow ---- */
+  --sh-1: 0 1px 0 rgba(28,25,23,0.04), 0 1px 2px rgba(28,25,23,0.04);
+  --sh-2: 0 2px 4px rgba(28,25,23,0.06), 0 1px 2px rgba(28,25,23,0.04);
+  --sh-pop: 0 12px 32px -8px rgba(28,25,23,0.18), 0 4px 12px rgba(28,25,23,0.06);
+  --sh-focus: 0 0 0 3px rgba(31,111,74,0.18);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --dur-fast: 120ms;
+  --dur: 180ms;
+  --dur-slow: 280ms;
+
+  /* ---- Layout ---- */
+  --sidebar-w: 224px;
+  --topbar-h: 52px;
+  --row-h: 44px;       /* table row default */
+  --row-h-tight: 36px; /* dense table row */
+  --max-content: 1320px;
+}
+
+/* Optional: dark token preset (documented; not applied by default) */
+[data-theme="dark"] {
+  --c-bg:           #0f1110;
+  --c-surface:      #181b1a;
+  --c-sunken:       #141716;
+  --c-sunken-2:     #1f2322;
+  --c-border:       #262a29;
+  --c-border-strong:#33393a;
+  --c-divider:      #212524;
+  --c-ink:          #f3f1ed;
+  --c-ink-2:        #c8c5bf;
+  --c-ink-3:        #8e8a82;
+  --c-ink-4:        #635f57;
+  --c-accent:       #4ea784;
+  --c-accent-hover: #5cb692;
+  --c-accent-press: #3e9070;
+  --c-accent-soft:  #14302a;
+  --c-accent-soft-2:#1c453b;
+  --c-accent-ink:   #b9e3cf;
+}
+
+/* ============================================================
+   Density tweaks — driven by [data-density] on <html>
+   ============================================================ */
+
+[data-density="tight"] {
+  --row-h: 32px;
+  --t-14: 13px;
+  --t-13: 12px;
+}
+
+[data-density="loose"] {
+  --row-h: 52px;
+  --t-14: 15px;
+}
+
+/* ============================================================
+   Reset + base
+   ============================================================ */
+
+*,*::before,*::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { background: var(--c-bg); color: var(--c-ink); }
+body {
+  font-family: var(--f-sans);
+  font-size: var(--t-14);
+  line-height: var(--lh-body);
+  color: var(--c-ink);
+  background: var(--c-bg);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: var(--c-accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--c-divider); margin: var(--s-5) 0; }
+
+::selection { background: var(--c-accent-soft-2); color: var(--c-accent-ink); }
+
+/* Use tabular figures everywhere — kills layout jitter in tables */
+.num, td.num, th.num, .kpi-value, .tbl td { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+/* Focus ring */
+:focus-visible { outline: none; box-shadow: var(--sh-focus); border-radius: var(--r-3); }

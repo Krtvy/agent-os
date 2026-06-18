@@ -1,0 +1,657 @@
+{% extends "base.html" %} {% block title %}Creators · Rootlabs Portal{% endblock
+%} {% block content %}
+<nav class="breadcrumb">
+  <a href="/dashboard">Dashboard</a>
+  <span class="sep">›</span>
+  <span>Creators</span>
+</nav>
+
+<div class="page-header">
+  <h2>🎬 Your creators</h2>
+  <p class="subtitle">
+    {{ ctx.start_date }} → {{ ctx.end_date }} ({{ ctx.span_days }} days) ·
+    roster: <strong>{{ ctx.roster_size }} creators</strong> · {{ ctx.shown_count
+    }} active in this window {% if ctx.product_filter %}· filtered to
+    <strong>{{ ctx.product_filter }}</strong>{% endif %}
+  </p>
+</div>
+
+<!-- Plain-English explainer for the "0 videos but $GMV" confusion. -->
+<details
+  class="surface"
+  style="
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  "
+>
+  <summary style="cursor: pointer; font-weight: 600; color: #1c1917">
+    Why some creators have $GMV with 0 videos in this window
+  </summary>
+  <p style="margin: 0.5rem 0 0; color: #44403c">
+    Old videos keep selling for weeks after they're posted — TikTok's algorithm
+    keeps pushing them. So a creator can have <strong>0 new videos</strong> in
+    this window but still post real GMV. That money is the
+    <strong>back-catalog tail</strong> — orders from videos posted earlier that
+    are still earning.
+  </p>
+  <p style="margin: 0.5rem 0 0; color: #44403c">
+    The badge under each GMV cell tells you the mix:
+    <span style="color: #16794d; font-weight: 500">X% new ✓</span> means the
+    creator is productively earning on fresh content;
+    <span style="color: #b45309; font-weight: 500">0% new · all tail</span>
+    means they're coasting on old hits. Both are real revenue — just different
+    stories.
+  </p>
+  <p style="margin: 0.5rem 0 0; color: #78716c; font-size: 0.8rem">
+    Definition: "new" = revenue from videos posted ≤30 days before each order.
+  </p>
+</details>
+
+<!-- Global loading overlay lives in base.html. Forms with
+     data-loading="true" trigger it on submit. -->
+
+<form
+  method="get"
+  action="/creators"
+  class="surface"
+  id="creators-filter-form"
+  data-loading="true"
+  data-loading-pool="creators"
+  style="margin-bottom: 1rem"
+>
+  <div class="spec-row" style="grid-template-columns: 1fr 1fr 1fr auto auto">
+    <label style="margin: 0">
+      <small class="muted">Start</small>
+      <input
+        type="date"
+        name="start"
+        value="{{ ctx.start_date }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">End</small>
+      <input
+        type="date"
+        name="end"
+        value="{{ ctx.end_date }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">Product</small>
+      <select name="product" style="margin: 0">
+        <option value="" {% if not ctx.product_filter %}selected{% endif %}>
+          All products
+        </option>
+        {% for p in hero_products %} {% if p.name == ctx.product_filter %}
+        <option value="{{ p.name }}" selected>{{ p.name }}</option>
+        {% else %}
+        <option value="{{ p.name }}">{{ p.name }}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </label>
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.6rem 1.25rem; align-self: end"
+    >
+      Update
+    </button>
+    <a
+      href="{{ export_url or '/creators/export.csv' }}?start={{ ctx.start_date }}&end={{ ctx.end_date }}{% if ctx.product_filter %}&product={{ ctx.product_filter }}{% endif %}"
+      style="
+        margin: 0;
+        padding: 0.6rem 1.25rem;
+        align-self: end;
+        background: var(--c-surface-2, #f5f5f4);
+        color: var(--c-ink);
+        text-decoration: none;
+        border-radius: var(--r-3);
+        border: 1px solid var(--c-border, #e7e5e4);
+        font-size: var(--t-13);
+      "
+      title="Download the rows you currently see as a CSV"
+    >
+      Download CSV
+    </a>
+  </div>
+  <div
+    style="
+      border-top: 1px solid var(--c-border, #e7e5e4);
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+    "
+  >
+    <div
+      style="display: flex; align-items: flex-end; gap: 1rem; flex-wrap: wrap"
+    >
+      <small class="muted" style="align-self: center; white-space: nowrap"
+        >Quick filter</small
+      >
+      <label style="margin: 0; display: flex; flex-direction: column; gap: 2px">
+        <small class="muted">Min GMV ($)</small>
+        <input
+          id="filter-min-gmv"
+          type="number"
+          min="0"
+          step="100"
+          placeholder="0"
+          style="margin: 0; width: 120px"
+          oninput="applyFilters()"
+        />
+      </label>
+      <label style="margin: 0; display: flex; flex-direction: column; gap: 2px">
+        <small class="muted">Min commission ($)</small>
+        <input
+          id="filter-min-commission"
+          type="number"
+          min="0"
+          step="10"
+          placeholder="0"
+          style="margin: 0; width: 120px"
+          oninput="applyFilters()"
+        />
+      </label>
+      <small
+        id="creator-filter-count"
+        class="muted"
+        style="align-self: center"
+      ></small>
+    </div>
+  </div>
+</form>
+
+<!-- Client-side search + numeric filters — no reload. -->
+<div class="surface creator-search-bar" style="margin-bottom: 1rem">
+  <svg
+    class="creator-search-icon"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+  </svg>
+  <input
+    id="creator-search"
+    type="search"
+    class="creator-search-input"
+    placeholder="Search creator handle…"
+    autocomplete="off"
+    oninput="applyFilters()"
+  />
+  <small id="creator-search-count" class="muted"></small>
+</div>
+
+<style>
+  .creator-search-bar {
+    display: flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem !important;
+    flex-wrap: wrap;
+  }
+  .creator-search-icon {
+    color: #78716c;
+    flex: none;
+  }
+  .creator-search-input {
+    flex: 1 1 140px !important;
+    width: auto !important;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 0.95rem !important;
+    font-family: inherit;
+    color: #1c1917 !important;
+    height: auto !important;
+    line-height: 1.4;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .creator-search-input::placeholder {
+    color: #a8a29e;
+  }
+  .creator-filter-divider {
+    width: 1px;
+    height: 1.25rem;
+    background: var(--c-border, #e7e5e4);
+    flex: none;
+  }
+  .creator-filter-label {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin: 0 !important;
+  }
+  .creator-filter-label small {
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+  .creator-filter-num {
+    width: 90px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 0.9rem !important;
+    font-family: inherit;
+    color: #1c1917 !important;
+    height: auto !important;
+    line-height: 1.4;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .creator-filter-num::placeholder {
+    color: #a8a29e;
+  }
+  #creator-search-count {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: #78716c;
+    margin-left: auto;
+  }
+</style>
+
+<script>
+  function applyFilters() {
+    const q = (document.getElementById("creator-search")?.value || "")
+      .trim()
+      .toLowerCase();
+    const minGmv =
+      parseFloat(document.getElementById("filter-min-gmv")?.value) || 0;
+    const minCom =
+      parseFloat(document.getElementById("filter-min-commission")?.value) || 0;
+    const rows = document.querySelectorAll("table.creators-table tbody tr");
+    let shown = 0;
+    rows.forEach((tr) => {
+      const handle = (tr.querySelector("td:nth-child(2)")?.textContent || "")
+        .trim()
+        .toLowerCase();
+      const gmv = parseFloat(tr.dataset.gmv || "0");
+      const commission = parseFloat(tr.dataset.commission || "0");
+      const match =
+        (!q || handle.includes(q)) && gmv >= minGmv && commission >= minCom;
+      tr.style.display = match ? "" : "none";
+      if (match) shown += 1;
+    });
+    const label = shown !== rows.length ? `${shown} shown` : "";
+    const searchCounter = document.getElementById("creator-search-count");
+    if (searchCounter) searchCounter.textContent = q ? label : "";
+    const filterCounter = document.getElementById("creator-filter-count");
+    if (filterCounter)
+      filterCounter.textContent = minGmv > 0 || minCom > 0 ? label : "";
+  }
+</script>
+
+{% if ctx.creators %}
+<div class="scroll-x">
+  <table class="data-table creators-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>creator</th>
+        <th>videos</th>
+        <th>lives</th>
+        <th>orders</th>
+        <th>GMV</th>
+        <th>commission</th>
+        <th>trend (cumulative videos)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in ctx.creators %}
+      <tr data-gmv="{{ c.gmv }}" data-commission="{{ c.commission }}">
+        <td>{{ loop.index }}</td>
+        <td>
+          <a href="/creator-card/{{ c.creator }}" style="font-weight: 600"
+            >{{ c.creator }}</a
+          >
+        </td>
+        <td>{{ '{:,}'.format(c.videos) }}</td>
+        <td>{{ '{:,}'.format(c.lives) }}</td>
+        <td>{{ '{:,}'.format(c.orders) }}</td>
+        <td>
+          ${{ '{:,.0f}'.format(c.gmv) }} {% if c.gmv > 0 %} {% set new_pct =
+          (c.gmv_new / c.gmv * 100)|round(0)|int %}
+          <div
+            style="
+              font-size: 0.7rem;
+              color: #78716c;
+              margin-top: 2px;
+              line-height: 1.4;
+              font-variant-numeric: tabular-nums;
+            "
+          >
+            <!-- Clickable % new badge: opens modal showing per-video GMV breakdown -->
+            {% if new_pct >= 80 %}
+            <button
+              type="button"
+              class="breakdown-btn"
+              data-kind="newvideo"
+              data-handle="{{ c.creator }}"
+              title="${{ '{:,.0f}'.format(c.gmv_new) }} of ${{ '{:,.0f}'.format(c.gmv) }} from videos posted ≤30 days before each order. Click for per-video breakdown."
+              style="
+                color: #16794d;
+                background: none;
+                border: none;
+                padding: 0;
+                font: inherit;
+                cursor: pointer;
+                text-decoration: underline dotted;
+                text-underline-offset: 2px;
+              "
+            >
+              ${{ '{:,.0f}'.format(c.gmv_new) }} new ({{ new_pct }}%) ✓
+            </button>
+            {% elif new_pct >= 30 %}
+            <button
+              type="button"
+              class="breakdown-btn"
+              data-kind="newvideo"
+              data-handle="{{ c.creator }}"
+              title="${{ '{:,.0f}'.format(c.gmv_new) }} from new posts (≤30d) · ${{ '{:,.0f}'.format(c.gmv_tail) }} from older videos. Click for per-video breakdown."
+              style="
+                color: #78716c;
+                background: none;
+                border: none;
+                padding: 0;
+                font: inherit;
+                cursor: pointer;
+                text-decoration: underline dotted;
+                text-underline-offset: 2px;
+              "
+            >
+              ${{ '{:,.0f}'.format(c.gmv_new) }} new ({{ new_pct }}%) · mixed
+            </button>
+            {% elif c.gmv_new > 0 %}
+            <button
+              type="button"
+              class="breakdown-btn"
+              data-kind="newvideo"
+              data-handle="{{ c.creator }}"
+              title="Only ${{ '{:,.0f}'.format(c.gmv_new) }} of ${{ '{:,.0f}'.format(c.gmv) }} from new posts. Rest (${{ '{:,.0f}'.format(c.gmv_tail) }}) is back catalog. Click for per-video breakdown."
+              style="
+                color: #b45309;
+                background: none;
+                border: none;
+                padding: 0;
+                font: inherit;
+                cursor: pointer;
+                text-decoration: underline dotted;
+                text-underline-offset: 2px;
+              "
+            >
+              ${{ '{:,.0f}'.format(c.gmv_new) }} new ({{ new_pct }}%) ·
+              tail-heavy
+            </button>
+            {% else %}
+            <span
+              style="color: #b45309"
+              title="All ${{ '{:,.0f}'.format(c.gmv) }} from videos posted >30 days ago. Coasting on back catalog."
+              >0% new · all tail</span
+            >
+            {% endif %}
+
+            <!-- Live GMV line — clickable when non-zero -->
+            {% if c.gmv_live > 0 %}
+            <div style="margin-top: 2px">
+              <button
+                type="button"
+                class="breakdown-btn"
+                data-kind="live"
+                data-handle="{{ c.creator }}"
+                title="${{ '{:,.0f}'.format(c.gmv_live) }} from livestreams in this window. Click for per-live breakdown."
+                style="
+                  color: #b91c1c;
+                  background: none;
+                  border: none;
+                  padding: 0;
+                  font: inherit;
+                  cursor: pointer;
+                  text-decoration: underline dotted;
+                  text-underline-offset: 2px;
+                "
+              >
+                🔴 Live: ${{ '{:,.0f}'.format(c.gmv_live) }}
+              </button>
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+        </td>
+        <td>${{ '{:,.0f}'.format(c.commission) }}</td>
+        <td>
+          <button
+            type="button"
+            class="spark-button"
+            onclick="expandSpark('{{ c.creator }}')"
+            title="click to expand"
+          >
+            {{ sparklines[c.creator]|safe }}
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 2rem">
+  No creator activity in this window with these filters.
+</article>
+{% endif %}
+
+<dialog id="expand-modal" class="spark-modal">
+  <div class="spark-modal-head">
+    <h3 id="modal-handle" style="margin: 0">creator</h3>
+    <button
+      type="button"
+      onclick="document.getElementById('expand-modal').close()"
+      class="muted"
+      style="
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0 0.5rem;
+      "
+    >
+      ×
+    </button>
+  </div>
+  <p class="muted" style="margin: 0 0 1rem; font-size: 0.85rem">
+    Cumulative videos posted · {{ ctx.start_date }} → {{ ctx.end_date }}
+  </p>
+  <div id="modal-chart"></div>
+  <p
+    class="muted"
+    style="margin-top: 1rem; font-size: 0.8rem; text-align: center"
+  >
+    <a href="#" id="modal-detail-link">Open creator detail page →</a>
+  </p>
+</dialog>
+
+<!-- Breakdown drill-down modal: per-video or per-live GMV table.
+     Populated by clicking the "% new" badge or the "🔴 Live: $X" line. -->
+<dialog
+  id="breakdown-modal"
+  class="spark-modal"
+  style="max-width: 720px; width: 95%"
+>
+  <div class="spark-modal-head">
+    <h3 id="breakdown-title" style="margin: 0">Breakdown</h3>
+    <button
+      type="button"
+      class="muted"
+      onclick="document.getElementById('breakdown-modal').close()"
+      style="
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0 0.5rem;
+      "
+    >
+      ×
+    </button>
+  </div>
+  <p
+    id="breakdown-sub"
+    class="muted"
+    style="margin: 0 0 1rem; font-size: 0.85rem"
+  ></p>
+  <div id="breakdown-body" style="max-height: 60vh; overflow-y: auto">
+    <p class="muted">Loading…</p>
+  </div>
+</dialog>
+
+<script>
+  // Daily-videos payload for every creator, keyed by handle.
+  const dailyData = {{ daily_payload|tojson }};
+  const startDate = "{{ ctx.start_date }}";
+  const endDate = "{{ ctx.end_date }}";
+
+  function renderBigChart(handle, data) {
+    if (!data || data.length === 0) {
+      return '<svg viewBox="0 0 600 200" style="width:100%;height:200px"><text x="50%" y="50%" text-anchor="middle" fill="#999">no data</text></svg>';
+    }
+    const width = 600, height = 200, padL = 40, padR = 10, padT = 10, padB = 30;
+    const plotW = width - padL - padR, plotH = height - padT - padB;
+    const counts = data.map(d => d.count);
+    const maxV = Math.max(1, ...counts);
+    const n = data.length;
+    const points = data.map((d, i) => {
+      const x = padL + (i / Math.max(1, n - 1)) * plotW;
+      const y = padT + plotH - (d.count / maxV) * plotH;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    // Y-axis ticks (5 of them)
+    let yTicks = '';
+    for (let i = 0; i <= 4; i++) {
+      const v = (maxV * (4 - i) / 4).toFixed(0);
+      const y = padT + (i / 4) * plotH;
+      yTicks += `<line x1="${padL}" y1="${y}" x2="${width-padR}" y2="${y}" stroke="#eee" stroke-width="1"/>`
+              + `<text x="${padL-4}" y="${y+3}" text-anchor="end" fill="#999" font-size="10">${v}</text>`;
+    }
+    // X-axis labels — show first, middle, last
+    const showIdx = [0, Math.floor(n/2), n - 1];
+    let xLabels = '';
+    showIdx.forEach(i => {
+      if (i < 0 || i >= n) return;
+      const x = padL + (i / Math.max(1, n - 1)) * plotW;
+      xLabels += `<text x="${x}" y="${height-10}" text-anchor="middle" fill="#666" font-size="10">${data[i].date}</text>`;
+    });
+    // Hover dots
+    let dots = '';
+    data.forEach((d, i) => {
+      const x = padL + (i / Math.max(1, n - 1)) * plotW;
+      const y = padT + plotH - (d.count / maxV) * plotH;
+      dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="#2d6a4f" stroke="#fff" stroke-width="1"><title>${d.date}: ${d.count} videos (total so far)</title></circle>`;
+    });
+    return `<svg viewBox="0 0 ${width} ${height}" style="width:100%;height:200px">
+      ${yTicks}
+      <polyline fill="none" stroke="#2d6a4f" stroke-width="2" points="${points}"/>
+      ${dots}
+      ${xLabels}
+    </svg>`;
+  }
+
+  function expandSpark(handle) {
+    const data = dailyData[handle] || [];
+    document.getElementById('modal-handle').textContent = '@' + handle;
+    document.getElementById('modal-chart').innerHTML = renderBigChart(handle, data);
+    document.getElementById('modal-detail-link').href = `/creator/${handle}?start=${startDate}&end=${endDate}`;
+    document.getElementById('expand-modal').showModal();
+  }
+
+  // ── Breakdown modal: per-video and per-live GMV drill-downs ──
+  // The "% new" badge and "🔴 Live: $X" line are buttons with
+  // data-kind={newvideo|live} + data-handle=<creator>. On click we
+  // fetch the relevant endpoint and render a table.
+
+  function fmtMoney(n) { return '$' + (n||0).toLocaleString('en-US', {maximumFractionDigits: 0}); }
+  function fmtInt(n)   { return (n||0).toLocaleString('en-US'); }
+
+  function renderBreakdownRows(kind, rows) {
+    if (!rows || rows.length === 0) {
+      return '<p class="muted" style="padding:1rem">No data for this window.</p>';
+    }
+    const idLabel  = kind === 'live' ? 'Live started'  : 'Video posted';
+    const idCol    = kind === 'live' ? 'started_at'    : 'post_date';
+    const linkCol  = kind === 'live' ? 'live_id'       : 'video_id';
+    let html = '<table style="width:100%; border-collapse: collapse; font-size: 13px">';
+    html += '<thead><tr style="border-bottom: 1px solid #e7e5e4; text-align: left">';
+    html += `<th style="padding: 6px 8px">${idLabel}</th>`;
+    html += '<th style="padding: 6px 8px; font-family: monospace; color: #57534e">content_id</th>';
+    html += '<th style="padding: 6px 8px; text-align: right">orders</th>';
+    html += '<th style="padding: 6px 8px; text-align: right">GMV</th>';
+    html += '</tr></thead><tbody>';
+    rows.forEach(r => {
+      const idVal   = r[idCol] ? String(r[idCol]).replace('T', ' ').slice(0, 16) : '—';
+      const cid     = r[linkCol] || '—';
+      html += '<tr style="border-bottom: 1px solid #f5f5f4">';
+      html += `<td style="padding: 6px 8px; font-family: monospace; color: #57534e">${idVal}</td>`;
+      html += `<td style="padding: 6px 8px; font-family: monospace; font-size: 12px; color: #57534e">${cid}</td>`;
+      html += `<td style="padding: 6px 8px; text-align: right">${fmtInt(r.orders)}</td>`;
+      html += `<td style="padding: 6px 8px; text-align: right; font-weight: 600">${fmtMoney(r.gmv)}</td>`;
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    return html;
+  }
+
+  async function openBreakdown(kind, handle) {
+    const path = kind === 'live'
+      ? `/creator/${encodeURIComponent(handle)}/live-breakdown`
+      : `/creator/${encodeURIComponent(handle)}/new-video-breakdown`;
+    const url = `${path}?start=${startDate}&end=${endDate}`;
+    const titleEl = document.getElementById('breakdown-title');
+    const subEl   = document.getElementById('breakdown-sub');
+    const bodyEl  = document.getElementById('breakdown-body');
+    titleEl.textContent = kind === 'live' ? `🔴 Live breakdown · @${handle}` : `New Video GMV · @${handle}`;
+    subEl.textContent   = `${startDate} → ${endDate} · per content_id`;
+    bodyEl.innerHTML    = '<p class="muted" style="padding:1rem">Loading…</p>';
+    document.getElementById('breakdown-modal').showModal();
+    try {
+      const ctrl = new AbortController();
+      // 90s client-side timeout — well above realistic query time, well
+      // below ngrok's 60s server timeout we'd hit on the worst cold case.
+      const tid = setTimeout(() => ctrl.abort('timeout'), 90000);
+      const res = await fetch(url, { signal: ctrl.signal, credentials: 'same-origin' });
+      clearTimeout(tid);
+      if (!res.ok) {
+        bodyEl.innerHTML = `<p style="padding:1rem; color:#b91c1c">Server returned ${res.status}. Try again.</p>`;
+        return;
+      }
+      const data = await res.json();
+      bodyEl.innerHTML = renderBreakdownRows(kind, data.rows);
+    } catch (err) {
+      const msg = err && err.name === 'AbortError'
+        ? 'Request timed out. Refresh and try again.'
+        : `Connection error: ${err && err.message ? err.message : err}. Refresh and try again.`;
+      bodyEl.innerHTML = `<p style="padding:1rem; color:#b91c1c">${msg}</p>`;
+    }
+  }
+
+  // Delegate clicks on all breakdown buttons (data-kind + data-handle)
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.breakdown-btn');
+    if (!btn) return;
+    const kind = btn.dataset.kind;
+    const handle = btn.dataset.handle;
+    if (kind && handle) openBreakdown(kind, handle);
+  });
+</script>
+{% endblock %}

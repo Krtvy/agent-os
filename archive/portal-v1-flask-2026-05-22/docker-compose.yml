@@ -1,0 +1,44 @@
+# Rootlabs POC Data Portal — VPS orchestration
+#
+# Run from portal/ on the VPS:  docker compose up -d --build
+# Health check:                   curl https://<your-domain>/healthz
+
+services:
+  flask:
+    build:
+      context: ..
+      dockerfile: portal/Dockerfile
+    container_name: rootlabs-portal-flask
+    env_file:
+      - .env
+    volumes:
+      # Bind-mount the whole observer-test repo so Yudhi can read
+      # .claude/agents/, lib/, training/, and write pocs/, training/patterns/_candidates/.
+      - ../:/repo:rw
+    expose:
+      - "5000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      - caddy
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: rootlabs-portal-caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

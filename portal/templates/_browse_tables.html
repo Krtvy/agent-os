@@ -1,0 +1,22 @@
+{% if tables %}
+<select
+  name="table"
+  hx-get="/browse/detail"
+  hx-trigger="change"
+  hx-target="#table-detail"
+  hx-swap="innerHTML"
+  hx-include="[name='schema'],this"
+>
+  <option value="">— pick a table —</option>
+  {% for t in tables %}
+  <option value="{{ t.name }}">
+    {{ t.label }}{% if t.table_type != "BASE TABLE" %} ({{ t.table_type|lower
+    }}){% endif %} — {{ t.name }}
+  </option>
+  {% endfor %}
+</select>
+{% else %}
+<select disabled>
+  <option>no tables in this schema</option>
+</select>
+{% endif %}

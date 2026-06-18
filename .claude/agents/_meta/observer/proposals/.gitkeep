@@ -1,0 +1,4 @@
+# Proposals awaiting your decision.
+# Approve: mv <id>.md ../approved/<id>.md
+# Reject:  mv <id>.md ../rejected/<id>.md
+# Format: see ../templates/proposal.template.md

@@ -1,0 +1,339 @@
+{
+  "$schema": "lib/trace-schema.md#v1",
+  "run_id": "2026-05-25-sanjaya-203000",
+  "agent_name": "sanjaya",
+  "tier": 1,
+  "parent_run_id": null,
+  "bhishma_hash": "0323c47eb7d2c72d9df42fab01e402da045547b1f0d1cdc014795967d3929133",
+  "started_at": "2026-05-25T20:30:00Z",
+  "ended_at": "2026-05-25T20:47:12Z",
+  "duration_ms": 1032000,
+  "final_outcome": "journals_updated",
+  "tool_calls": [
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · pattern=.claude/agents/_meta/observer/**/*.md",
+      "verdict": "succeeded",
+      "seq": 0
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · _observer-self.md (offset 0, limit 60)",
+      "verdict": "succeeded",
+      "seq": 1
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · agent.md (sanjaya)",
+      "verdict": "succeeded",
+      "seq": 2
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · config.yml",
+      "verdict": "succeeded",
+      "seq": 3
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · proposals/*.md",
+      "verdict": "succeeded",
+      "seq": 4
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · approved/*.md",
+      "verdict": "succeeded",
+      "seq": 5
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · rejected/*.md",
+      "verdict": "succeeded",
+      "seq": 6
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · .claude/logs/**/*",
+      "verdict": "no_results",
+      "seq": 7
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · config.yml",
+      "verdict": "succeeded",
+      "seq": 8
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · proposals/2026-05-13_hanuman-platforms-awareness.md",
+      "verdict": "succeeded",
+      "seq": 9
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · proposals/20260516-research-agent-bootstrap-skill.md",
+      "verdict": "succeeded",
+      "seq": 10
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/arjuna.md (offset 0, limit 40)",
+      "verdict": "succeeded",
+      "seq": 11
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/hanuman.md (offset 0, limit 40)",
+      "verdict": "succeeded",
+      "seq": 12
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/nakula.md (offset 0, limit 40)",
+      "verdict": "succeeded",
+      "seq": 13
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/narada.md (offset 0, limit 40)",
+      "verdict": "succeeded",
+      "seq": 14
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/yudhishthira.md (offset 0, limit 40)",
+      "verdict": "succeeded",
+      "seq": 15
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/research-agent.md (offset 0, limit 40)",
+      "verdict": "succeeded",
+      "seq": 16
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · traces/**/*.json",
+      "verdict": "succeeded",
+      "seq": 17
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/arjuna.md (offset 40)",
+      "verdict": "succeeded",
+      "seq": 18
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/hanuman.md (offset 40)",
+      "verdict": "succeeded",
+      "seq": 19
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/yudhishthira.md (offset 40)",
+      "verdict": "succeeded",
+      "seq": 20
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/research-agent.md (offset 40)",
+      "verdict": "succeeded",
+      "seq": 21
+    },
+    {
+      "tool_name": "Bash",
+      "tool_input_summary": "Bash · ls JSONL sessions May 24-25",
+      "verdict": "succeeded",
+      "seq": 22
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · traces/sahadeva/2026-05-24-sahadeva-043001.json (offset 0, limit 60)",
+      "verdict": "succeeded",
+      "seq": 23
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/nakula.md (offset 40)",
+      "verdict": "succeeded",
+      "seq": 24
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · journal/narada.md (offset 40)",
+      "verdict": "succeeded",
+      "seq": 25
+    },
+    {
+      "tool_name": "Bash",
+      "tool_input_summary": "Bash · git log (window)",
+      "verdict": "succeeded_no_output",
+      "seq": 26
+    },
+    {
+      "tool_name": "Bash",
+      "tool_input_summary": "Bash · JSONL list May 24-25",
+      "verdict": "succeeded",
+      "seq": 27
+    },
+    {
+      "tool_name": "Bash",
+      "tool_input_summary": "Bash · python3 analyze 63df7d90 session",
+      "verdict": "succeeded",
+      "seq": 28
+    },
+    {
+      "tool_name": "Bash",
+      "tool_input_summary": "Bash · git log --oneline -10",
+      "verdict": "succeeded",
+      "seq": 29
+    },
+    {
+      "tool_name": "Bash",
+      "tool_input_summary": "Bash · python3 Sahadeva W21 output extraction",
+      "verdict": "succeeded",
+      "seq": 30
+    },
+    {
+      "tool_name": "Glob",
+      "tool_input_summary": "Glob · _meta/audit/reports/*.md",
+      "verdict": "succeeded",
+      "seq": 31
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · _meta/audit/reports/2026-W21.md",
+      "verdict": "succeeded",
+      "seq": 32
+    },
+    {
+      "tool_name": "Read",
+      "tool_input_summary": "Read · _observer-self.md (offset 1690, limit 55)",
+      "verdict": "succeeded",
+      "seq": 33
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/arjuna.md (frontmatter)",
+      "verdict": "succeeded",
+      "seq": 34
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/arjuna.md (append Window 12)",
+      "verdict": "succeeded",
+      "seq": 35
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/hanuman.md (frontmatter)",
+      "verdict": "succeeded",
+      "seq": 36
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/hanuman.md (append Window 12)",
+      "verdict": "succeeded",
+      "seq": 37
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/nakula.md (frontmatter)",
+      "verdict": "succeeded",
+      "seq": 38
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/nakula.md (append Window 12)",
+      "verdict": "succeeded",
+      "seq": 39
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/narada.md (frontmatter)",
+      "verdict": "succeeded",
+      "seq": 40
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/narada.md (append Window 12)",
+      "verdict": "succeeded",
+      "seq": 41
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/yudhishthira.md (frontmatter)",
+      "verdict": "succeeded",
+      "seq": 42
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/yudhishthira.md (append Window 9)",
+      "verdict": "succeeded",
+      "seq": 43
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/research-agent.md (frontmatter)",
+      "verdict": "succeeded",
+      "seq": 44
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · journal/research-agent.md (append Window 17)",
+      "verdict": "succeeded",
+      "seq": 45
+    },
+    {
+      "tool_name": "Edit",
+      "tool_input_summary": "Edit · _observer-self.md (append Run 19)",
+      "verdict": "succeeded",
+      "seq": 46
+    },
+    {
+      "tool_name": "Write",
+      "tool_input_summary": "Write · traces/sanjaya/2026-05-25-sanjaya-203000.json",
+      "verdict": "succeeded",
+      "seq": 47
+    }
+  ],
+  "journals_updated": [
+    "arjuna",
+    "hanuman",
+    "nakula",
+    "narada",
+    "yudhishthira",
+    "research-agent",
+    "_observer-self"
+  ],
+  "proposals_applied": [],
+  "proposals_rejected_archived": [],
+  "new_proposals_generated": [],
+  "new_reports_generated": [],
+  "threshold_checks": {
+    "arjuna": { "days": "15/18", "runs": "1/40", "action": "none" },
+    "hanuman": {
+      "days": "15/18",
+      "runs": "1/40",
+      "action": "skip_open_proposal"
+    },
+    "nakula": { "days": "15/18", "runs": "1/40", "action": "none" },
+    "narada": { "days": "15/18", "runs": "1/40", "action": "none" },
+    "yudhishthira": { "days": "11/18", "runs": "9/40", "action": "none" },
+    "research-agent": {
+      "days": "18/10",
+      "runs": "15/20",
+      "action": "skip_threshold_reached"
+    }
+  },
+  "anomalies": [
+    "arjuna/nakula/narada approaching day threshold (~2026-05-28, 3 days)",
+    "hanuman proposal 20260513 pending 12d total, 8d since Sahadeva endorsement",
+    "research-agent proposal 20260516 pending 9 windows, risk_tier misclassification uncorrected",
+    "narada word-count conflict: 13th consecutive window",
+    "yudhishthira skill.md P1 Hyperagent drift: 2/3 observations",
+    "nakula weekly summary heartbeat first expected 2026-05-24T23:55Z"
+  ]
+}

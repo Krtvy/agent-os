@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block title %}Reports · Rootlabs Portal{% endblock
+%} {% block content %} {% if not user_email %}
+<div class="welcome-empty">
+  <p class="welcome-emoji">👋</p>
+  <h2>Welcome to Rootlabs Portal</h2>
+  <p class="muted">
+    Sign in with your <code class="kbd">@mosaicwellness.in</code> email to
+    access your data.
+  </p>
+  <p style="margin-top: 1.5rem">
+    <a href="/login" role="button">Log in to continue →</a>
+  </p>
+</div>
+{% else %} {% set first_name = (user_email or '').split('@')[0]|capitalize %}
+
+<div class="hi-block">
+  <p class="hi-line">👋 Hey {{ first_name }}</p>
+  <h2 class="hi-headline">What would you like to explore?</h2>
+</div>
+
+<div class="section-divider">
+  <span class="section-divider-line"></span>
+  <span class="section-divider-text">⚙️ Your setup</span>
+  <span class="section-divider-line"></span>
+</div>
+
+<a
+  class="report-card"
+  href="/dashboard"
+  style="
+    border-left-color: #2d6a4f;
+    background: linear-gradient(180deg, #e8f3ed 0%, var(--rl-surface) 60%);
+  "
+>
+  <h4>📊 Dashboard</h4>
+  <p class="desc">
+    Your personal dashboard — last 30 days vs prior 30, top creators, daily GMV
+    trend. Built for POCs landing fresh.
+  </p>
+  <span class="meta">your snapshot</span>
+</a>
+
+<a
+  class="report-card"
+  href="/roster"
+  style="
+    border-left-color: #5a3d99;
+    background: linear-gradient(180deg, #f5f0ff 0%, var(--rl-surface) 60%);
+  "
+>
+  <h4>🎬 My creators</h4>
+  <p class="desc">
+    View, add, or remove the creator handles you maintain. Reports scoped to
+    your POC use this list.
+  </p>
+  <span class="meta">manage roster</span>
+</a>
+
+<a
+  class="report-card"
+  href="/products"
+  style="
+    border-left-color: #c69500;
+    background: linear-gradient(180deg, #fff8e1 0%, var(--rl-surface) 60%);
+  "
+>
+  <h4>📦 Products</h4>
+  <p class="desc">
+    The product catalog — HGR, Alpha, MagAshwa, BB, PPP + bundles/extras. Live
+    SKU counts from the database.
+  </p>
+  <span class="meta">view catalog</span>
+</a>
+
+<div class="section-divider">
+  <span class="section-divider-line"></span>
+  <span class="section-divider-text">⚡ Quick reports</span>
+  <span class="section-divider-line"></span>
+</div>
+
+{% if reports %}
+<div class="quick-grid">
+  {% for r in reports %} {% set emoji = { "creator-content-counts": "🎬",
+  "table-info": "🗄️", "probe": "🩺" }.get(r.slug, "📊") %} {% set tint = {
+  "creator-content-counts": "coral", "table-info": "blue", "probe": "gray"
+  }.get(r.slug, "neutral") %}
+  <a class="quick-card tint-{{ tint }}" href="/run/{{ r.slug }}">
+    <span class="quick-card-emoji">{{ emoji }}</span>
+    <h4>{{ r.title }}</h4>
+    <p class="desc">{{ r.description }}</p>
+    <span class="meta">
+      {% if r.inputs %}{{ r.inputs|length }} input{{ "" if r.inputs|length == 1
+      else "s" }}{% else %}no inputs{% endif %} · <code>{{ r.slug }}</code>
+    </span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 2rem">
+  No saved reports yet. Build one via Browse Data, or add a file in
+  <code>reports/&lt;slug&gt;/</code>.
+</article>
+{% endif %}
+
+<footer class="home-footer muted">
+  Deliverables for this session land in
+  <code class="kbd">pocs/{{ poc_slug }}/deliverables/</code> ·
+  <a href="/logout">log out</a>
+</footer>
+{% endif %} {% endblock %}

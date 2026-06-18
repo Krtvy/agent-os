@@ -1,0 +1,79 @@
+version: 2
+last_reviewed: 2026-05-11
+defaults:
+  videos_per_hashtag: 30
+  videos_per_creator: 10
+  recency_window_hours: 168
+  enabled: true
+competitors:
+- slug: bloom-nutrition
+  name: Bloom Nutrition
+  tier: A
+  notes: "TikTok-native greens powder, ~$170M annual rev, 12B+ TikTok views.\nTheir\
+    \ own @bloomgreens posts ~5 videos in 3 years \u2014 virtually all\ncontent lives\
+    \ in creator videos tagged #bloomnutrition.\n"
+  hashtags:
+  - bloomnutrition
+  - bloomgreens
+  known_creators: []
+  enabled: true
+- slug: goli-nutrition
+  name: Goli Nutrition
+  tier: A
+  notes: 'Gummy supplement giant, heavy creator-affiliate program.
+
+    @golinutrition is moderately active (~5 videos in 3 years);
+
+    most volume is creator content under #goli and #goligummies.
+
+    '
+  hashtags:
+  - goligummies
+  - golinutrition
+  - goliapplecidervinegar
+  known_creators: []
+  enabled: true
+- slug: maryruths
+  name: MaryRuth's
+  tier: A
+  notes: 'TikTok Shop top-seller. ~$5.9M/mo TikTok Shop revenue. Posts a few
+
+    videos/month from @maryruths; most ad volume is creators using
+
+    #maryruths and #maryruthorganics.
+
+    '
+  hashtags:
+  - maryruths
+  - maryruthorganics
+  known_creators: []
+  enabled: true
+- slug: nello
+  name: Nello
+  tier: A
+  notes: 'Stress-focused supplement. Per their press release, official handle
+
+    is @drinknello but it has "no reposts" (zero original videos).
+
+    All content is creator videos under #drinknello and #supercalm
+
+    (their hero product).
+
+    '
+  hashtags:
+  - drinknello
+  - supercalm
+  - nellosupercalm
+  known_creators: []
+  enabled: true
+- slug: snap-supplements
+  name: SNAP Supplements
+  tier: A
+  notes: "$40M/yr TikTok creator program. Official @snap_supplements profile\nexists\
+    \ but reports \"no videos\" \u2014 content lives in #snapsupplements\ntagged creator\
+    \ videos.\n"
+  hashtags:
+  - snapsupplements
+  - snap_supplements
+  known_creators: []
+  enabled: true

@@ -1,0 +1,3 @@
+# Pattern reports — dated snapshots of what the observer saw.
+# Files appear when an observation window threshold is reached.
+# Format: see ../templates/pattern-report.template.md

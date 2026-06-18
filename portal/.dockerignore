@@ -1,0 +1,41 @@
+# Things that must NOT enter the container image.
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+*.log
+
+# Local-only docs / drops.
+RUN-LOCALLY.md
+DEPLOY.md
+AUDIT.md
+SECURITY.md
+UX_RESEARCH.md
+NL_TO_PIVOT_DESIGN.md
+
+# Design-system source (already extracted into static/*.css).
+_design_drop/
+PMs Portal Design.zip
+
+# Raw seed / training data — runtime reads JSON in /app/_private instead.
+May Sheet Full.xlsx
+ Simple Products Mapping.csv
+trackers/
+
+# Dev-only run helper (Fly uses Dockerfile CMD instead).
+run.sh
+
+# Editor / IDE noise.
+.vscode/
+.idea/
+
+# Anything that looks like a secret (defense in depth — these live in
+# _private/ which is outside the build context anyway, but in case
+# someone copies one in by mistake).
+*.env
+*.pem
+*.key

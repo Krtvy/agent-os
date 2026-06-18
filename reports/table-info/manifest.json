@@ -1,0 +1,18 @@
+{
+  "slug": "table-info",
+  "title": "Tables in a schema",
+  "description": "Lists all tables (and views) in the given Supabase schema. Useful for verifying which schemas/tables a POC can see, and as a quick sanity check that data sources are reachable.",
+  "inputs": [
+    {
+      "name": "schema",
+      "label": "Schema name",
+      "type": "text",
+      "default": "tiktok_raw_data",
+      "required": true,
+      "placeholder": "tiktok_raw_data"
+    }
+  ],
+  "owner_poc": [],
+  "data_sources": ["supabase.information_schema"],
+  "hidden": true
+}

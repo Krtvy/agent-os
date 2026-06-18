@@ -1,0 +1,561 @@
+{% extends "base.html" %} {% block title %}{{ ctx.tracker.title }} · Rootlabs
+Portal{% endblock %} {% set nav_active = 'trackers' %} {% block crumbs %}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<a href="/trackers">Trackers</a>
+<span class="sep">/</span>
+<strong>{{ ctx.tracker.title }}</strong>
+{% endblock %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">
+      {{ ctx.tracker.emoji }} {{ ctx.tracker.title }} {% if ctx.view == 'poc' %}
+      <span
+        class="chip chip--accent"
+        style="
+          margin-left: var(--s-2);
+          font-size: var(--t-12);
+          vertical-align: middle;
+        "
+        >my creators</span
+      >
+      {% else %}
+      <span
+        class="chip"
+        style="
+          margin-left: var(--s-2);
+          font-size: var(--t-12);
+          vertical-align: middle;
+        "
+        >all POCs</span
+      >
+      {% endif %}
+    </h1>
+    <p class="page__sub">
+      Click any cell to edit · changes save automatically · removed creators
+      land in
+      <a href="/trackers/{{ ctx.tracker.id }}/removed">the trash</a>.
+    </p>
+  </div>
+  <div class="row">
+    {% if ctx.view == 'poc' %}
+    <a href="/trackers/{{ ctx.tracker.id }}?view=all" class="btn"
+      >View all POCs →</a
+    >
+    {% else %}
+    <a href="/trackers/{{ ctx.tracker.id }}" class="btn"
+      >View just my creators →</a
+    >
+    {% endif %}
+  </div>
+</div>
+
+<!-- Date range picker — drives every auto column on the page -->
+<form
+  method="get"
+  action="/trackers/{{ ctx.tracker.id }}"
+  class="surface"
+  data-loading="true"
+  data-loading-pool="trackers"
+  style="
+    margin-bottom: var(--s-4);
+    padding: var(--s-3) var(--s-4);
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+  "
+>
+  {% if ctx.view == 'operator' and ctx.viewing_poc %}<input
+    type="hidden"
+    name="poc"
+    value="{{ ctx.viewing_poc }}"
+  />{% endif %} {% if ctx.view == 'poc' %}{# implicit: own creators #}{% else
+  %}<input type="hidden" name="view" value="all" />{% endif %}
+  <label style="display: flex; flex-direction: column; gap: 2px; margin: 0">
+    <small class="muted" style="font-size: var(--t-11)">Start</small>
+    <input
+      type="date"
+      name="start"
+      value="{{ ctx.range_start }}"
+      class="input"
+      style="height: 30px; width: 150px"
+    />
+  </label>
+  <label style="display: flex; flex-direction: column; gap: 2px; margin: 0">
+    <small class="muted" style="font-size: var(--t-11)">End</small>
+    <input
+      type="date"
+      name="end"
+      value="{{ ctx.range_end }}"
+      class="input"
+      style="height: 30px; width: 150px"
+    />
+  </label>
+  <button
+    type="submit"
+    class="btn btn--primary btn--sm"
+    style="align-self: end"
+  >
+    Update
+  </button>
+  <a
+    href="./{{ ctx.tracker.id }}/export.csv?start={{ ctx.range_start }}&end={{ ctx.range_end }}"
+    class="btn btn--sm"
+    style="align-self: end; text-decoration: none"
+    title="Download the rows you currently see as a CSV"
+  >
+    Download CSV
+  </a>
+  <span
+    class="muted"
+    style="margin-left: var(--s-2); font-size: var(--t-12); align-self: end"
+  >
+    All auto columns (videos in range, GMV in range, NV GMV in range) recompute
+    against this window
+  </span>
+</form>
+
+<!-- Roll-up KPIs -->
+<div class="kpi-grid" style="margin-bottom: var(--s-5)">
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">creators shown</span></div>
+    <div class="kpi__value">{{ ctx.totals.rows }}</div>
+    <div class="kpi__foot">{{ ctx.view }} view</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">GMV in range</span></div>
+    <div class="kpi__value">
+      ${{ '{:,.0f}'.format(ctx.totals.gmv_in_range) }}
+    </div>
+    <div class="kpi__foot">all sources, in window</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">NV GMV in range</span></div>
+    <div class="kpi__value">
+      ${{ '{:,.0f}'.format(ctx.totals.nv_gmv_in_range) }}
+    </div>
+    <div class="kpi__foot">from videos posted in window</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">videos in range</span></div>
+    <div class="kpi__value">
+      {{ '{:,}'.format(ctx.totals.videos_in_range) }}
+    </div>
+    <div class="kpi__foot">posted in the window</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">silent ≥14d</span></div>
+    <div class="kpi__value">{{ ctx.totals.silent_count }}</div>
+    <div class="kpi__foot">need a nudge</div>
+  </div>
+</div>
+
+<!-- + Add creator form + search -->
+<div
+  class="surface"
+  style="
+    margin-bottom: var(--s-4);
+    padding: var(--s-3) var(--s-4);
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+  "
+>
+  <form
+    method="post"
+    action="/trackers/{{ ctx.tracker.id }}/creators"
+    style="display: flex; gap: var(--s-2); align-items: center; margin: 0"
+  >
+    <input
+      type="text"
+      name="handle"
+      placeholder="creator handle (no @)"
+      required
+      pattern="[A-Za-z0-9._-]{1,64}"
+      class="input"
+      style="height: 30px; width: 200px"
+    />
+    <input
+      type="text"
+      name="poc"
+      value="{{ viewer_poc_name or '' }}"
+      placeholder="POC name"
+      required
+      class="input"
+      style="height: 30px; width: 120px"
+    />
+    <button type="submit" class="btn btn--primary btn--sm">
+      + Add creator
+    </button>
+  </form>
+  <div
+    style="
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 240px;
+      margin-left: auto;
+    "
+  >
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      style="color: var(--c-ink-3); flex: none"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+    <input
+      type="search"
+      placeholder="search creator…"
+      oninput="filterTracker(this.value)"
+      style="
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        flex: 1;
+        outline: none;
+        box-shadow: none;
+        font-size: 0.9rem;
+        color: #1c1917;
+      "
+    />
+    <small
+      id="tracker-search-count"
+      class="muted"
+      style="font-variant-numeric: tabular-nums"
+    ></small>
+  </div>
+</div>
+
+<!-- Editable table -->
+<div class="card">
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap" style="max-height: 75vh; overflow: auto">
+      <table class="tbl" id="tracker-table">
+        <thead>
+          <tr>
+            <th
+              style="
+                position: sticky;
+                left: 0;
+                background: var(--c-sunken);
+                z-index: 2;
+                min-width: 160px;
+              "
+            >
+              creator
+            </th>
+            <th style="min-width: 90px">POC</th>
+            {% for col in ctx.columns_auto %}
+            <th class="num">{{ col.label }}</th>
+            {% endfor %} {% for col in ctx.columns_manual %}
+            <th style="min-width: 120px">{{ col.label }}</th>
+            {% endfor %}
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in ctx.rows %}
+          <tr id="row-{{ r.handle }}">
+            <td
+              class="handle"
+              style="
+                position: sticky;
+                left: 0;
+                background: var(--c-surface);
+                z-index: 1;
+              "
+            >
+              <a href="/creator-card/{{ r.handle }}" style="font-weight: 600"
+                >@{{ r.handle }}</a
+              >
+            </td>
+            <td>
+              <input
+                type="text"
+                value="{{ r.poc }}"
+                class="tcell"
+                data-tracker="{{ ctx.tracker.id }}"
+                data-handle="{{ r.handle }}"
+                data-field="poc"
+                style="width: 100%"
+              />
+            </td>
+            <!-- AUTO columns: status, videos in range, GMV in range, NV GMV in range, last post, silent -->
+            <td>
+              {% if r._live.status_label %}<span
+                class="chip"
+                style="font-size: 11px"
+                >{{ r._live.status_emoji }} {{ r._live.status_label }}</span
+              >{% else %}<span class="muted">—</span>{% endif %}
+            </td>
+            <td class="num">{{ r._live.videos_in_range or 0 }}</td>
+            <td class="num">
+              ${{ '{:,.0f}'.format(r._live.gmv_in_range or 0) }}
+            </td>
+            <td class="num">
+              ${{ '{:,.0f}'.format(r._live.nv_gmv_in_range or 0) }}
+            </td>
+            <td class="muted">{{ r._live.last_post or '—' }}</td>
+            <td class="num">
+              {% if r._live.days_silent is none %}<span class="muted">—</span>
+              {% elif r._live.days_silent <= 2 %}<span class="delta-up"
+                >{{ r._live.days_silent }}d</span
+              >
+              {% elif r._live.days_silent <= 7 %}{{ r._live.days_silent }}d {%
+              elif r._live.days_silent <= 14 %}<span
+                style="color: var(--c-warn)"
+                >{{ r._live.days_silent }}d</span
+              >
+              {% else %}<span class="delta-down"
+                >{{ r._live.days_silent }}d</span
+              >{% endif %}
+            </td>
+            <!-- MANUAL columns (editable) -->
+            {% for col in ctx.columns_manual %} {% set val =
+            r.manual.get(col.key) %}
+            <td>
+              {% if col.type == 'bool' %}
+              <input
+                type="checkbox"
+                {%
+                if
+                val
+                %}checked{%
+                endif
+                %}
+                class="tcell-bool"
+                data-tracker="{{ ctx.tracker.id }}"
+                data-handle="{{ r.handle }}"
+                data-field="{{ col.key }}"
+              />
+              {% elif col.type == 'number' %}
+              <input
+                type="number"
+                step="any"
+                value="{{ val or '' }}"
+                class="tcell"
+                data-tracker="{{ ctx.tracker.id }}"
+                data-handle="{{ r.handle }}"
+                data-field="{{ col.key }}"
+                style="width: 100%; font-variant-numeric: tabular-nums"
+              />
+              {% else %}
+              <input
+                type="text"
+                value="{{ val or '' }}"
+                class="tcell"
+                data-tracker="{{ ctx.tracker.id }}"
+                data-handle="{{ r.handle }}"
+                data-field="{{ col.key }}"
+                style="width: 100%"
+              />
+              {% endif %}
+            </td>
+            {% endfor %}
+            <td>
+              <form
+                method="post"
+                action="/trackers/{{ ctx.tracker.id }}/creators/{{ r.handle }}/remove"
+                style="display: inline"
+              >
+                <button
+                  type="submit"
+                  class="btn btn--ghost btn--sm"
+                  onclick="return confirm('Soft-remove @{{ r.handle }} from {{ ctx.tracker.title }}? You can restore from trash.')"
+                  style="color: var(--c-error)"
+                >
+                  remove
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="20" class="tbl-empty">
+              No creators yet. Use the form above to add one.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<p class="muted" style="margin-top: var(--s-4); font-size: var(--t-12)">
+  Stored in
+  <code
+    style="
+      font-family: var(--f-mono);
+      background: var(--c-sunken);
+      padding: 1px 5px;
+      border-radius: 3px;
+    "
+    >_private/trackers_data/{{ ctx.tracker.id }}.json</code
+  >. Edits save inline; auto columns are computed live from the database each
+  load.
+</p>
+
+<style>
+  /* Cell inputs are seamless until you focus them — feels like a spreadsheet. */
+  .tcell,
+  .tcell-bool {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px 6px;
+    font: inherit;
+    color: var(--c-ink);
+    transition:
+      border-color var(--dur-fast),
+      background var(--dur-fast);
+  }
+  .tcell:hover {
+    border-color: var(--c-border);
+  }
+  .tcell:focus {
+    outline: none;
+    border-color: var(--c-accent);
+    background: var(--c-accent-soft);
+    box-shadow: var(--sh-focus);
+  }
+  .tcell.saving {
+    border-color: var(--c-warn);
+  }
+  .tcell.saved {
+    border-color: var(--c-success);
+    transition: border-color 800ms;
+  }
+  .tcell.error {
+    border-color: var(--c-error);
+    background: var(--c-error-soft);
+  }
+  .tcell-bool {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  // Save on blur for text/number; on change for checkbox.
+  // Cell autosave. Robust against transient socket closes (ngrok blips):
+  // retries once after 1s on network failure before surfacing an error.
+  // Shows the failure mode in the cell's tooltip so the POC sees WHY,
+  // not just a red border + a cryptic browser console message.
+  async function _saveOnce(tracker, handle, field, value, signal) {
+    const fd = new FormData();
+    fd.append("field", field);
+    fd.append("value", value);
+    const r = await fetch(`/trackers/${tracker}/creators/${handle}/field`, {
+      method: "POST",
+      body: fd,
+      credentials: "same-origin",
+      signal,
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  }
+
+  async function _save(el, value) {
+    const tracker = el.dataset.tracker;
+    const handle = el.dataset.handle;
+    const field = el.dataset.field;
+    if (!tracker || !handle || !field) return;
+    el.classList.remove("saved", "error");
+    el.classList.add("saving");
+    el.title = "Saving…";
+
+    const tryOnce = async () => {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort("timeout"), 20000);
+      try {
+        return await _saveOnce(tracker, handle, field, value, ctrl.signal);
+      } finally {
+        clearTimeout(tid);
+      }
+    };
+
+    try {
+      let j;
+      try {
+        j = await tryOnce();
+      } catch (firstErr) {
+        // Single retry after a 1-second pause — recovers from ngrok
+        // heartbeat blips that close the socket mid-request.
+        await new Promise((r) => setTimeout(r, 1000));
+        j = await tryOnce();
+      }
+      el.classList.remove("saving");
+      if (j && j.ok) {
+        el.classList.add("saved");
+        el.title = `Saved ${new Date().toLocaleTimeString()}`;
+        setTimeout(() => el.classList.remove("saved"), 1200);
+      } else {
+        el.classList.add("error");
+        const why = j && j.error ? j.error : "server rejected the save";
+        el.title = `Save failed: ${why}. Click the cell + retype + Tab to retry.`;
+        console.error("Save failed:", j);
+      }
+    } catch (e) {
+      el.classList.remove("saving");
+      el.classList.add("error");
+      const msg = e && e.message ? e.message : String(e);
+      el.title = `Save failed: ${msg}. Connection blip — click the cell + retype + Tab to retry.`;
+      console.error("Save error after retry:", e);
+    }
+  }
+  document.querySelectorAll(".tcell").forEach((el) => {
+    let initial = el.value;
+    el.addEventListener("focus", () => {
+      initial = el.value;
+    });
+    el.addEventListener("blur", () => {
+      if (el.value !== initial) _save(el, el.value);
+    });
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        el.blur();
+      }
+      if (e.key === "Escape") {
+        el.value = initial;
+        el.blur();
+      }
+    });
+  });
+  document.querySelectorAll(".tcell-bool").forEach((el) => {
+    el.addEventListener("change", () => _save(el, el.checked ? "1" : "0"));
+  });
+
+  // Client-side search across the handle column.
+  function filterTracker(q) {
+    q = (q || "").trim().toLowerCase();
+    const rows = document.querySelectorAll("#tracker-table tbody tr");
+    let shown = 0;
+    rows.forEach((tr) => {
+      const handleCell = tr.querySelector("td:first-child");
+      const handle = handleCell
+        ? handleCell.textContent.trim().toLowerCase()
+        : "";
+      const match = !q || handle.includes(q);
+      tr.style.display = match ? "" : "none";
+      if (match) shown += 1;
+    });
+    const counter = document.getElementById("tracker-search-count");
+    if (counter)
+      counter.textContent = q ? `${shown} match${shown === 1 ? "" : "es"}` : "";
+  }
+</script>
+
+{% endblock %}

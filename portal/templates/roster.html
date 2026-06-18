@@ -1,0 +1,198 @@
+{% extends "base.html" %} {% block title %}My creators · Rootlabs Portal{%
+endblock %} {% block content %}
+<nav class="breadcrumb">
+  <a href="/dashboard">Dashboard</a>
+  <span class="sep">›</span>
+  <span>My creators</span>
+</nav>
+
+<div class="page-header">
+  <h2>🎬 My creators</h2>
+  <p class="subtitle">
+    Your portal-managed creator list. Already pre-loaded with your existing
+    roster; add new creators as they join, remove ones who've left. Every report
+    you run with <strong>POC scope = {{ poc_name }}</strong> uses this list
+    directly.
+  </p>
+</div>
+
+{% if flash %}
+<div class="status-panel ok" style="padding: 0.75rem 1.1rem">
+  <p class="sub" style="margin: 0">{{ flash }}</p>
+</div>
+{% endif %}
+
+<div class="surface" style="margin-bottom: 1rem">
+  <form
+    method="post"
+    action="/roster/add"
+    style="
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.6rem;
+      margin: 0;
+      align-items: end;
+    "
+  >
+    <label style="margin: 0">
+      <small class="muted">Add a creator</small>
+      <input
+        type="text"
+        name="handle"
+        placeholder="tiktok_handle (no @)"
+        autocomplete="off"
+        required
+        style="margin: 0"
+      />
+    </label>
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.6rem 1.25rem"
+    >
+      + Add
+    </button>
+  </form>
+  <small class="muted" style="display: block; margin-top: 0.5rem">
+    Paste a handle like <code>swugshop</code> — we lowercase and strip leading
+    @.
+  </small>
+</div>
+
+<details class="surface" style="margin-bottom: 1rem">
+  <summary style="font-weight: 600; cursor: pointer">
+    📥 Bulk add — paste many handles or upload a CSV
+  </summary>
+  <form
+    method="post"
+    action="/roster/bulk"
+    enctype="multipart/form-data"
+    style="margin-top: 1rem"
+  >
+    <label>
+      <small class="muted"
+        >Paste handles (one per line or comma-separated)</small
+      >
+      <textarea
+        name="handles"
+        rows="5"
+        placeholder="swugshop&#10;fabian.3st_&#10;bischjj&#10;...&#10;or: swugshop, fabian.3st_, bischjj"
+        style="
+          margin: 0;
+          font-family: ui-monospace, Menlo, monospace;
+          font-size: 0.85rem;
+        "
+      ></textarea>
+    </label>
+    <label style="margin-top: 0.75rem">
+      <small class="muted">
+        OR upload a CSV (one handle per row in the first column; a header row of
+        "creator" / "handle" / "username" is auto-skipped)
+      </small>
+      <input type="file" name="csv_file" accept=".csv,.txt" style="margin: 0" />
+    </label>
+    <div class="form-actions" style="margin-top: 1rem">
+      <button type="submit">+ Add all</button>
+      <small class="muted" style="margin-left: 1rem">
+        Duplicates are skipped automatically. Invalid handles are counted but
+        not added.
+      </small>
+    </div>
+  </form>
+</details>
+
+{% if creators|length > 8 %}
+<div style="margin-bottom: 0.75rem">
+  <input
+    type="search"
+    id="creator-search"
+    placeholder="🔎 Search your {{ creators|length }} creators…"
+    oninput="filterRoster(this.value)"
+    autocomplete="off"
+    style="margin: 0; width: 100%"
+  />
+  <small
+    class="muted"
+    id="search-count"
+    style="display: block; margin-top: 0.3rem; font-size: 0.78rem"
+  ></small>
+</div>
+{% endif %}
+
+<h3 class="section-heading">
+  Your roster — {{ creators|length }} creator{{ "" if creators|length == 1 else
+  "s" }} {% if updated_at %}<small
+    class="muted"
+    style="font-weight: normal; text-transform: none; letter-spacing: 0"
+    >· last updated {{ updated_at }}</small
+  >{% endif %}
+</h3>
+
+{% if creators %}
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>handle</th>
+        <th style="width: 8rem; text-align: right">action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in creators %}
+      <tr>
+        <td><code>{{ c }}</code></td>
+        <td style="text-align: right">
+          <form
+            method="post"
+            action="/roster/remove"
+            style="display: inline; margin: 0"
+          >
+            <input type="hidden" name="handle" value="{{ c }}" />
+            <button
+              type="submit"
+              class="remove-btn"
+              onclick="return confirm('Remove {{ c }} from your roster?');"
+              title="Remove"
+            >
+              × remove
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 1.5rem">
+  No creators yet. Add one above to get started.
+</article>
+{% endif %}
+
+<p class="muted" style="margin-top: 2rem; font-size: 0.85rem">
+  💾 Stored at <code class="kbd">pocs/{{ poc_slug }}/creators.json</code>.
+  Portal-managed only — every add/remove goes straight here. Reports scoped to
+  <code>{{ poc_name }}</code> read this file on every run.
+</p>
+
+<script>
+  function filterRoster(query) {
+    const norm = query.toLowerCase().trim();
+    const rows = document.querySelectorAll("table.data-table tbody tr");
+    let shown = 0;
+    rows.forEach((row) => {
+      const codeEl = row.querySelector("td code");
+      if (!codeEl) return;
+      const handle = codeEl.textContent.toLowerCase();
+      const match = !norm || handle.includes(norm);
+      row.style.display = match ? "" : "none";
+      if (match) shown++;
+    });
+    const counter = document.getElementById("search-count");
+    if (counter) {
+      counter.textContent = norm
+        ? `${shown} match${shown === 1 ? "" : "es"} for "${norm}"`
+        : "";
+    }
+  }
+</script>
+{% endblock %}

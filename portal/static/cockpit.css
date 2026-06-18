@@ -1,0 +1,404 @@
+/* Cockpit additions — Creator Card, Standup, Outreach kanban, Campaigns.
+   Layered on top of portal.css; uses the same --rl-* tokens. */
+
+/* ─── Shell width overrides ────────────────────────────────────
+   Pico's classless mode applies a centered max-width to <body> and
+   to top-level children. The cockpit shell needs to be full-width
+   (sidebar pinned left, main column flexes) — break out of Pico's
+   container here. */
+html,
+body {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+body > .app {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.app > .sidebar {
+  width: var(--sidebar-w);
+  flex: none;
+}
+/* Pico styles <main> with padding we don't want inside .page */
+.app main.page {
+  padding: var(--s-7) var(--s-7) var(--s-9) !important;
+  margin: 0 !important;
+  max-width: var(--max-content);
+}
+/* Don't let Pico constrain headings inside the cockpit */
+.app .page__title,
+.app .page__sub {
+  max-width: none;
+}
+
+/* ─── Creator Card hero ───────────────────────────────────── */
+.card-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--rl-surface);
+  border: 1px solid var(--rl-border);
+  border-radius: var(--rl-radius);
+  box-shadow: var(--rl-shadow-sm);
+  margin-bottom: 1rem;
+}
+.card-hero-handle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.card-hero-at {
+  color: var(--rl-text-muted);
+  font-weight: 400;
+}
+.card-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: var(--rl-bg);
+  border: 1px solid var(--rl-border);
+}
+.card-hero-meta {
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+.card-hero-right {
+  text-align: right;
+}
+.hero-metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rl-text-muted);
+}
+.hero-metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--rl-accent);
+  line-height: 1.1;
+}
+.hero-metric-meta {
+  font-size: 0.85rem;
+}
+
+/* ─── Quick actions ──────────────────────────────────────── */
+.quick-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.qa-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--rl-border-strong);
+  border-radius: var(--rl-radius);
+  background: var(--rl-surface);
+  color: var(--rl-text);
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.qa-btn:hover {
+  background: var(--rl-bg);
+  border-color: var(--rl-accent);
+}
+.qa-btn-primary {
+  background: var(--rl-accent);
+  color: white;
+  border-color: var(--rl-accent);
+}
+.qa-btn-primary:hover {
+  background: var(--rl-accent-hover);
+  color: white;
+}
+
+/* ─── Performance strip ──────────────────────────────────── */
+.perf-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.perf-col {
+  background: var(--rl-surface);
+  border: 1px solid var(--rl-border);
+  border-radius: var(--rl-radius);
+  padding: 1rem;
+}
+.perf-col-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rl-text-muted);
+  margin-bottom: 0.75rem;
+}
+.perf-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--rl-border);
+}
+.perf-row:first-of-type {
+  border-top: 0;
+}
+.perf-row-label {
+  color: var(--rl-text-muted);
+  font-size: 0.85rem;
+}
+.perf-row-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.perf-row-trend {
+  font-size: 0.8rem;
+  min-width: 4rem;
+  text-align: right;
+}
+
+/* ─── Notes ──────────────────────────────────────────────── */
+.note-form {
+  margin-bottom: 1rem;
+}
+.note-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+.note-item {
+  padding: 0.75rem;
+  border-left: 3px solid var(--rl-accent);
+  background: var(--rl-bg);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+.note-item-shared {
+  border-left-color: var(--rl-warning-border);
+}
+.note-meta {
+  font-size: 0.8rem;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.note-author {
+  font-weight: 600;
+}
+.note-shared-pill {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  background: var(--rl-warning-bg);
+  color: var(--rl-warning-text);
+  border-radius: 999px;
+}
+.note-body {
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+/* ─── Timeline ───────────────────────────────────────────── */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.timeline-row {
+  display: grid;
+  grid-template-columns: 6rem 2rem 1fr;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rl-border);
+  font-size: 0.9rem;
+}
+.timeline-when {
+  color: var(--rl-text-muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+}
+.timeline-video {
+  color: var(--rl-text);
+}
+.timeline-spike {
+  background: var(--rl-success-bg);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 4px;
+}
+.timeline-event {
+  color: var(--rl-text);
+}
+.timeline-note {
+  background: var(--rl-bg);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 4px;
+}
+
+/* ─── Standup ────────────────────────────────────────────── */
+.three-things {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.thing-card {
+  display: block;
+  padding: 1.25rem;
+  background: var(--rl-surface);
+  border: 1px solid var(--rl-border);
+  border-radius: var(--rl-radius);
+  text-decoration: none;
+  color: var(--rl-text);
+  box-shadow: var(--rl-shadow-sm);
+  transition: box-shadow 120ms;
+}
+.thing-card:hover {
+  box-shadow: var(--rl-shadow-md);
+  border-color: var(--rl-accent);
+  color: var(--rl-text);
+}
+.thing-underperformer {
+  border-top: 3px solid #c0392b;
+}
+.thing-anomaly {
+  border-top: 3px solid var(--rl-accent);
+}
+.thing-silent {
+  border-top: 3px solid #888;
+}
+.thing-kind {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rl-text-muted);
+  margin-bottom: 0.5rem;
+}
+.thing-headline {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.thing-subline {
+  font-size: 0.85rem;
+  color: var(--rl-text-muted);
+  margin-bottom: 0.75rem;
+}
+.thing-cta {
+  font-size: 0.9rem;
+  color: var(--rl-accent);
+  font-weight: 600;
+}
+
+/* ─── Outreach kanban ────────────────────────────────────── */
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+.kanban-col {
+  min-width: 160px;
+  background: var(--rl-bg);
+  border-radius: var(--rl-radius);
+  padding: 0.5rem;
+}
+.kanban-col-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.kanban-col-count {
+  margin-left: auto;
+  background: var(--rl-surface);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--rl-text-muted);
+  border: 1px solid var(--rl-border);
+}
+.kanban-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.kanban-card {
+  background: var(--rl-surface);
+  border: 1px solid var(--rl-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.85rem;
+}
+.kanban-card-handle {
+  display: block;
+  font-weight: 600;
+  color: var(--rl-text);
+  text-decoration: none;
+  margin-bottom: 0.25rem;
+}
+.kanban-card-handle:hover {
+  color: var(--rl-accent);
+}
+.kanban-move {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.3rem;
+  border: 1px solid var(--rl-border);
+  border-radius: 4px;
+  background: var(--rl-bg);
+  width: 100%;
+  margin: 0;
+}
+.kanban-empty {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0.5rem 0;
+  color: var(--rl-text-muted);
+}
+
+/* ─── Campaigns ──────────────────────────────────────────── */
+.campaign-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.campaign-card {
+  padding: 1.25rem;
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .card-hero {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .card-hero-right {
+    text-align: left;
+  }
+  .perf-strip {
+    grid-template-columns: 1fr;
+  }
+  .three-things {
+    grid-template-columns: 1fr;
+  }
+  .kanban {
+    grid-template-columns: repeat(7, minmax(140px, 1fr));
+  }
+}

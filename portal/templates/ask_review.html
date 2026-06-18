@@ -1,0 +1,270 @@
+{% extends "base.html" %} {% block title %}Review proposal · Rootlabs Portal{%
+endblock %} {% block content %}
+<nav class="breadcrumb">
+  <a href="/">Reports</a>
+  <span class="sep">›</span>
+  <span>Ask</span>
+  <span class="sep">›</span>
+  <span>Review</span>
+</nav>
+
+<div class="page-header">
+  <h2>Review proposal</h2>
+  <p class="subtitle">Your question: <em>"{{ payload.question }}"</em></p>
+</div>
+
+{% set proposal = payload.proposal %} {% set kind = proposal.kind %} {# ── PIVOT
+proposal ─────────────────────────────────── #} {% if kind == "pivot" %}
+<article class="proposal-explanation {{ proposal.confidence }}">
+  <p class="confidence-row">
+    <strong
+      >{{ {"high": "● High confidence", "medium": "● Medium confidence", "low":
+      "● Low confidence"}[proposal.confidence] }}</strong
+    >
+    <small class="muted">via {{ payload.client }}</small>
+  </p>
+  <p>{{ proposal.explanation }}</p>
+</article>
+
+<form
+  method="post"
+  action="/browse/pivot/run"
+  class="surface pivot-form"
+  style="margin-top: 1.5rem"
+>
+  <input type="hidden" name="schema" value="{{ proposal.plan.schema }}" />
+  <input type="hidden" name="table" value="{{ proposal.plan.table }}" />
+
+  <fieldset>
+    <legend>Values <span class="hint">— what to compute</span></legend>
+    <div id="value-specs">
+      {% for v in proposal.plan["values"] %}
+      <div class="spec-row">
+        <select name="value_agg" required>
+          {% for a in supported_aggs %} {% if a == v.agg %}
+          <option value="{{ a }}" selected>{{ a|replace('_', ' ') }}</option>
+          {% else %}
+          <option value="{{ a }}">{{ a|replace('_', ' ') }}</option>
+          {% endif %} {% endfor %}
+        </select>
+        <select name="value_col" required>
+          {% for c in columns %} {% if c.name == v.column %}
+          <option value="{{ c.name }}" selected>
+            {{ c.label }} · {{ c.data_type }}
+          </option>
+          {% else %}
+          <option value="{{ c.name }}">
+            {{ c.label }} · {{ c.data_type }}
+          </option>
+          {% endif %} {% endfor %}
+        </select>
+        <button
+          type="button"
+          class="remove-btn"
+          onclick="this.parentElement.remove()"
+        >
+          ×
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Rows <span class="hint">— group by</span></legend>
+    <div class="column-pills">
+      {% for c in columns %}
+      <label title="{{ c.name }} · {{ c.data_type }}">
+        {% if c.name in proposal.plan.rows %}
+        <input type="checkbox" name="rows" value="{{ c.name }}" checked />
+        {% else %}
+        <input type="checkbox" name="rows" value="{{ c.name }}" />
+        {% endif %}
+        <span>{{ c.label }}</span>
+        <span class="type-hint">{{ c.data_type }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+
+  {% set has_filters = proposal.plan.filters and proposal.plan.filters|length >
+  0 %}
+  <details class="advanced-section" {% if has_filters %}open{% endif %}>
+    <summary>
+      Filters <span class="hint">— pre-filled from your question</span>
+    </summary>
+    <div id="filter-specs" style="margin-top: 0.75rem">
+      {% for f in proposal.plan.filters %}
+      <div class="spec-row filter-row">
+        <select name="filter_col" required>
+          {% for c in columns %} {% if c.name == f.column %}
+          <option value="{{ c.name }}" selected>
+            {{ c.label }} · {{ c.data_type }}
+          </option>
+          {% else %}
+          <option value="{{ c.name }}">
+            {{ c.label }} · {{ c.data_type }}
+          </option>
+          {% endif %} {% endfor %}
+        </select>
+        <select name="filter_op" required onchange="onOpChange(this)">
+          {% for key, spec in supported_ops.items() %} {% if key == f.op %}
+          <option value="{{ key }}" data-needs="{{ spec.needs }}" selected>
+            {{ spec.label }}
+          </option>
+          {% else %}
+          <option value="{{ key }}" data-needs="{{ spec.needs }}">
+            {{ spec.label }}
+          </option>
+          {% endif %} {% endfor %}
+        </select>
+        <input
+          type="text"
+          name="filter_v"
+          value="{{ f.value or '' }}"
+          placeholder="value"
+        />
+        <input
+          type="text"
+          name="filter_v2"
+          value="{{ f.value2 or '' }}"
+          placeholder="and value"
+          {%
+          if
+          not
+          f.value2
+          %}style="display: none"
+          {%
+          endif
+          %}
+        />
+        <button
+          type="button"
+          class="remove-btn"
+          onclick="this.parentElement.remove()"
+        >
+          ×
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    <button
+      type="button"
+      class="ghost"
+      hx-get="/browse/pivot/filter-row?schema={{ proposal.plan.schema }}&table={{ proposal.plan.table }}"
+      hx-target="#filter-specs"
+      hx-swap="beforeend"
+    >
+      + add filter
+    </button>
+  </details>
+
+  <details
+    class="advanced-section"
+    {%
+    if
+    proposal.plan.columns_dim
+    %}open{%
+    endif
+    %}
+  >
+    <summary>
+      Cross-tab columns <span class="hint">— Excel-pivot style</span>
+    </summary>
+    <select name="columns_dim" style="margin-top: 0.75rem">
+      <option value="">(none — tall output)</option>
+      {% for c in columns %} {% if c.name == proposal.plan.columns_dim %}
+      <option value="{{ c.name }}" selected>
+        {{ c.label }} · {{ c.data_type }}
+      </option>
+      {% else %}
+      <option value="{{ c.name }}">{{ c.label }} · {{ c.data_type }}</option>
+      {% endif %} {% endfor %}
+    </select>
+  </details>
+
+  <script>
+    function onOpChange(sel) {
+      const opt = sel.options[sel.selectedIndex];
+      const needs = parseInt(opt.dataset.needs || "1", 10);
+      const row = sel.closest(".filter-row");
+      const v = row.querySelector("input[name='filter_v']");
+      const v2 = row.querySelector("input[name='filter_v2']");
+      v.style.display = needs >= 1 ? "" : "none";
+      v2.style.display = needs >= 2 ? "" : "none";
+      if (needs < 1) v.value = "";
+      if (needs < 2) v2.value = "";
+    }
+  </script>
+
+  <div class="sticky-actions">
+    <div class="limit-row" style="margin: 0">
+      <label style="margin: 0"
+        >Limit
+        <input
+          type="number"
+          name="limit"
+          value="{{ proposal.plan.limit or 100 }}"
+          min="1"
+          max="100000"
+        />
+      </label>
+    </div>
+    <div class="form-actions" style="margin: 0; border: 0; padding: 0">
+      <a href="/" class="muted">← Cancel</a>
+      <button type="submit" style="margin-left: auto">Run as proposed</button>
+    </div>
+  </div>
+</form>
+
+{# ── REPORT match ──────────────────────────────────── #} {% elif kind ==
+"report" %}
+<article class="proposal-explanation {{ proposal.confidence }}">
+  <p class="confidence-row">
+    <strong>● Matched a pre-built report</strong>
+    <small class="muted">via {{ payload.client }}</small>
+  </p>
+  <p>{{ proposal.explanation }}</p>
+</article>
+
+<div class="surface" style="margin-top: 1.5rem">
+  <h3 style="margin-top: 0">{{ proposal.report_slug }}</h3>
+  <form method="post" action="/run/{{ proposal.report_slug }}">
+    {% for k, v in proposal.params.items() %}
+    <label
+      >{{ k }}
+      <input type="text" name="{{ k }}" value="{{ v }}" />
+    </label>
+    {% endfor %}
+    <div class="form-actions">
+      <a href="/" class="muted">← Cancel</a>
+      <button type="submit" style="margin-left: auto">Run report</button>
+    </div>
+  </form>
+</div>
+
+{# ── CLARIFICATION ─────────────────────────────────── #} {% elif kind ==
+"clarification" %}
+<article class="proposal-explanation medium">
+  <p class="confidence-row"><strong>● Ambiguous</strong></p>
+  <p>{{ proposal.question }}</p>
+  {% if proposal.context %}
+  <p class="muted">{{ proposal.context }}</p>
+  {% endif %}
+</article>
+
+<p style="margin-top: 1.5rem">
+  <a href="/" role="button" class="secondary">← Re-ask</a>
+</p>
+
+{# ── CANNOT ANSWER ─────────────────────────────────── #} {% else %}
+<article class="proposal-explanation low">
+  <p class="confidence-row"><strong>● Couldn't answer</strong></p>
+  <p style="white-space: pre-wrap">{{ proposal.reason }}</p>
+</article>
+
+<p style="margin-top: 1.5rem">
+  <a href="/browse" role="button">Open Browse Data instead</a>
+  <a href="/" class="muted" style="margin-left: 1rem">← Home</a>
+</p>
+{% endif %} {% endblock %}

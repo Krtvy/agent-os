@@ -1,0 +1,22 @@
+<div class="spec-row">
+  <select name="value_agg" required>
+    <option value="">— agg —</option>
+    {% for a in supported_aggs %}
+    <option value="{{ a }}">{{ a|replace('_', ' ') }}</option>
+    {% endfor %}
+  </select>
+  <select name="value_col" required>
+    <option value="">— column —</option>
+    {% for c in columns %}
+    <option value="{{ c.name }}">{{ c.label }} · {{ c.data_type }}</option>
+    {% endfor %}
+  </select>
+  <button
+    type="button"
+    class="remove-btn"
+    onclick="this.parentElement.remove()"
+    title="Remove"
+  >
+    ×
+  </button>
+</div>

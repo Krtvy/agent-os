@@ -1,0 +1,66 @@
+{
+  "run_id": "2026-05-14-sanjaya-020000",
+  "agent": "sanjaya",
+  "started_at": "2026-05-13T20:30:07Z",
+  "ended_at": "2026-05-13T20:37:26Z",
+  "trigger": "manual",
+  "phase_summary": {
+    "approvals_polled": true,
+    "proposals_actioned": 0,
+    "proposals_rejected": 0,
+    "journals_written": 6,
+    "new_sessions_ingested": 1,
+    "pattern_reports_emitted": 0,
+    "new_proposals_emitted": 0
+  },
+  "agents_observed": [
+    "arjuna",
+    "hanuman",
+    "nakula",
+    "narada",
+    "research-agent",
+    "yudhishthira"
+  ],
+  "anomalies": [
+    "narada word-count conflict — 4th consecutive flag, escalating to Sahadeva audit",
+    "nakula jobs.yml absent — 5th flag, pipeline cannot self-schedule",
+    "yudhishthira constitutional overrides unendorsed — new flag, operator-directed changes documented in _audit/",
+    "empty trace sanjaya/2026-05-13-sanjaya-203000.json — tool_calls:[], ended_at:null",
+    "cron gap May 12 02:00 IST — no new evidence, carried forward"
+  ],
+  "open_proposals": ["20260513-hanuman-platforms-awareness"],
+  "threshold_status": {
+    "arjuna": {
+      "runs_observed": 1,
+      "days_observed": 5,
+      "threshold_reached": false
+    },
+    "hanuman": {
+      "runs_observed": 1,
+      "days_observed": 5,
+      "threshold_reached": false
+    },
+    "nakula": {
+      "runs_observed": 1,
+      "days_observed": 5,
+      "threshold_reached": false
+    },
+    "narada": {
+      "runs_observed": 1,
+      "days_observed": 5,
+      "threshold_reached": false
+    },
+    "research-agent": {
+      "runs_observed": 14,
+      "days_observed": 8,
+      "threshold_reached": false
+    },
+    "yudhishthira": {
+      "runs_observed": 1,
+      "days_observed": 1,
+      "threshold_reached": false
+    }
+  },
+  "tool_calls": 53,
+  "final_outcome": "complete"
+}

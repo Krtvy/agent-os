@@ -1,0 +1,39 @@
+{% if status == "running" %}
+<div
+  class="status-panel running"
+  id="status-panel"
+  hx-get="/result/{{ task_id }}/fragment"
+  hx-trigger="every 2s"
+  hx-target="#status-panel"
+  hx-swap="outerHTML"
+>
+  <p class="headline"><span class="spinner"></span> Running…</p>
+  <p class="sub">
+    Started {{ started_at }}. Safe to close this tab and come back.
+  </p>
+</div>
+{% elif status == "ok" %}
+<div class="status-panel ok" id="status-panel">
+  <p class="headline">
+    ✓ {{ row_count }} row{{ "" if row_count == 1 else "s" }} returned
+  </p>
+  <p class="sub">
+    Finished in {{ duration_s }}s.
+    <a href="/result/{{ task_id }}" style="margin-left: 0.5rem"
+      >view full page</a
+    >
+    ·
+    <a href="/result/{{ task_id }}/csv">download CSV</a>
+  </p>
+</div>
+{% else %}
+<div class="status-panel error" id="status-panel">
+  <p class="headline">✗ Error</p>
+  <p class="sub">
+    {{ error or "Task failed." }}
+    <a href="/result/{{ task_id }}" style="margin-left: 0.5rem"
+      >view full audit</a
+    >
+  </p>
+</div>
+{% endif %}

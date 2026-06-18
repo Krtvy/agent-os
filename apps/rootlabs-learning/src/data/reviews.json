@@ -1,0 +1,98 @@
+[
+  {
+    "id": "r-001",
+    "productSlug": "alpha-gummies-60s",
+    "authorName": "Ishita",
+    "authorAge": 31,
+    "authorCity": "New York",
+    "rating": 5,
+    "title": "Energy without the crash",
+    "body": "Three weeks in. The 3 PM dip is gone. Not jitters, just sustained. Worth the price.",
+    "date": "2026-04-22",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-002",
+    "productSlug": "alpha-gummies-60s",
+    "authorName": "Gayathri",
+    "authorAge": 28,
+    "authorCity": "Austin",
+    "rating": 4,
+    "title": "Good — give it 4 weeks",
+    "body": "Didn't feel much in week 1 or 2. Week 3 onwards, sleep is noticeably deeper. Will reorder.",
+    "date": "2026-04-10",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-003",
+    "productSlug": "alpha-gummies-60s",
+    "authorName": "Marcus",
+    "authorAge": 45,
+    "authorCity": "Seattle",
+    "rating": 5,
+    "title": "The lab reports sold me",
+    "body": "I've been burned by supplement labels before. Seeing actual third-party lab reports on every batch in the app — that's why I bought.",
+    "date": "2026-03-28",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-004",
+    "productSlug": "immunity-combo",
+    "authorName": "Priya",
+    "authorAge": 36,
+    "authorCity": "San Francisco",
+    "rating": 5,
+    "title": "Cheaper than buying separately",
+    "body": "Bought the combo because the math works out. Three months in, no colds despite a sick household.",
+    "date": "2026-04-15",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-005",
+    "productSlug": "sea-moss-gummies",
+    "authorName": "James",
+    "authorAge": 33,
+    "authorCity": "Chicago",
+    "rating": 4,
+    "title": "Subtle but real",
+    "body": "Two weeks of these and the brain fog I'd been ignoring just kind of… lifted. Hard to put my finger on what changed but something did.",
+    "date": "2026-04-02",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-006",
+    "productSlug": "turmeric-gummies",
+    "authorName": "Sarah",
+    "authorAge": 41,
+    "authorCity": "Denver",
+    "rating": 5,
+    "title": "The piperine makes the difference",
+    "body": "Tried another turmeric brand for 2 months, nothing. These have piperine and I felt joint comfort within 10 days. Will not switch back.",
+    "date": "2026-03-19",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-007",
+    "productSlug": "alpha-gummies-60s",
+    "authorName": "Aditya",
+    "authorAge": 27,
+    "authorCity": "Boston",
+    "rating": 5,
+    "title": "Smart way to start",
+    "body": "Didn't want to commit $60 to one bottle. The mini-trio at $19 let me figure out what worked for me. Now I subscribe to Alpha and Sea Moss.",
+    "date": "2026-04-25",
+    "verifiedPurchase": true
+  },
+  {
+    "id": "r-008",
+    "productSlug": "alpha-gummies-120s",
+    "authorName": "Devon",
+    "authorAge": 52,
+    "authorCity": "Portland",
+    "rating": 5,
+    "title": "Four months in, life-changing",
+    "body": "Did the full 4-month protocol. Stress at work hasn't changed but my response to it has. That's what adaptogens are supposed to do and these actually do it.",
+    "date": "2026-04-30",
+    "verifiedPurchase": true
+  }
+]

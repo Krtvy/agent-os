@@ -1,0 +1,75 @@
+[
+  {
+    "slug": "shilajit",
+    "name": "Shilajit",
+    "tagline": "The Himalayan resin",
+    "origin": "Himalayan altitudes 16,000–18,000 ft",
+    "benefits": ["energy", "absorption", "trace minerals", "cellular function"],
+    "scientificName": "Mumijo",
+    "form": "Purified resin · standardized for fulvic acid",
+    "bioavailability": "Enhanced via ShilAbsorb™ proprietary process",
+    "shortDescription": "Resin from Himalayan rocks, rich in 84+ trace minerals and fulvic acid.",
+    "longDescription": "Shilajit seeps from cracks in Himalayan rocks at altitudes above 16,000 feet — formed over centuries from compressed plant matter. It carries 84+ trace minerals and fulvic acid, which acts as a transport molecule helping cells absorb nutrients. We standardize every batch for fulvic acid content (minimum 18%).",
+    "icon": "ingredients/shilajit.png"
+  },
+  {
+    "slug": "ashwagandha",
+    "name": "Ashwagandha",
+    "tagline": "Adaptogen for modern stress",
+    "origin": "India · cultivated for centuries",
+    "benefits": ["stress resilience", "sleep quality", "cortisol balance"],
+    "scientificName": "Withania somnifera",
+    "form": "KSM-66 full-spectrum root extract",
+    "bioavailability": "Water-soluble extract — no fat needed",
+    "shortDescription": "KSM-66 root extract — the most-studied form for cortisol regulation.",
+    "longDescription": "Ashwagandha is an adaptogen — it doesn't push your body in one direction, it helps regulate. KSM-66 is the full-spectrum root extract; it has the strongest research backing for cortisol regulation and stress resilience. Best taken in the evening when your cortisol curve should be falling anyway.",
+    "icon": "ingredients/ashwagandha.png"
+  },
+  {
+    "slug": "sea-moss",
+    "name": "Sea Moss",
+    "tagline": "Mineral floor for daily wellness",
+    "origin": "Wildcrafted Atlantic coast",
+    "benefits": ["iodine", "thyroid support", "trace minerals"],
+    "scientificName": "Chondrus crispus",
+    "form": "Whole-leaf dried · gummy-formulated",
+    "shortDescription": "Red algae carrying iodine, magnesium, potassium, and 90+ trace minerals.",
+    "longDescription": "Sea moss (Irish moss) is a red algae carrying iodine, magnesium, potassium, and 90+ trace minerals in bioavailable form. It's not a magic bullet — it's the floor that lets everything else work. If you've been mineral-deficient (most people are), you'll notice it within 2–3 weeks.",
+    "icon": "ingredients/sea-moss.png"
+  },
+  {
+    "slug": "turmeric",
+    "name": "Turmeric",
+    "tagline": "Anti-inflammatory daily baseline",
+    "origin": "India · single-origin Erode region",
+    "benefits": ["inflammation support", "joint health", "antioxidant"],
+    "scientificName": "Curcuma longa",
+    "form": "Standardized curcumin (95%) + piperine",
+    "bioavailability": "20× via piperine co-formulation",
+    "shortDescription": "Curcumin paired with piperine for 20× bioavailability.",
+    "longDescription": "Turmeric's active compound is curcumin. The catch: curcumin alone has very poor bioavailability — your body excretes most of it. We pair it with piperine (from black pepper) which boosts absorption 20×. Daily anti-inflammatory baseline.",
+    "icon": "ingredients/turmeric.png"
+  },
+  {
+    "slug": "maca",
+    "name": "Maca",
+    "tagline": "Peruvian root for vitality",
+    "origin": "Andean highlands, Peru",
+    "benefits": ["vitality", "hormone balance", "energy"],
+    "scientificName": "Lepidium meyenii",
+    "form": "Gelatinized root powder",
+    "shortDescription": "Gelatinized Peruvian root — broken down for absorption.",
+    "icon": "ingredients/maca.png"
+  },
+  {
+    "slug": "tongkat-ali",
+    "name": "Tongkat Ali",
+    "tagline": "The deeper vitality protocol",
+    "origin": "Sustainably harvested Southeast Asia",
+    "benefits": ["vitality", "hormone support", "stamina"],
+    "scientificName": "Eurycoma longifolia",
+    "form": "Standardized 200:1 root extract",
+    "shortDescription": "Standardized Eurycoma — 4–6 weeks to reach effect.",
+    "icon": "ingredients/tongkat-ali.png"
+  }
+]

@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}{{ report.title }} · Rootlabs
+Portal{% endblock %} {% block content %}
+<div class="page-header">
+  <h2>{{ report.title }}</h2>
+  <p class="subtitle">{{ report.description }}</p>
+</div>
+
+{% if error %}
+<div class="status-panel error">
+  <p class="headline">{{ error }}</p>
+</div>
+{% endif %}
+
+<form method="post" action="/run/{{ report.slug }}" class="surface">
+  {% for input in report.inputs %} {% set current = submitted.get(input.name,
+  input.default or '') if submitted else (input.default or '') %}
+  <label>
+    {{ input.label }}{% if input.required %} <span class="muted">*</span>{%
+    endif %} {% if input.type == "poc" %}
+    <select name="{{ input.name }}">
+      <option value="" {% if not current %}selected{% endif %}>
+        All POCs (no filter)
+      </option>
+      {% for p in poc_options %} {% if current == p %}
+      <option value="{{ p }}" selected>{{ p }}</option>
+      {% else %}
+      <option value="{{ p }}">{{ p }}</option>
+      {% endif %} {% endfor %}
+    </select>
+    {% else %}
+    <input
+      type="{{ input.type or 'text' }}"
+      name="{{ input.name }}"
+      value="{{ current }}"
+      {%
+      if
+      input.placeholder
+      %}placeholder="{{ input.placeholder }}"
+      {%
+      endif
+      %}
+      {%
+      if
+      input.required
+      %}required{%
+      endif
+      %}
+    />
+    {% endif %}
+  </label>
+  {% endfor %}
+
+  <div class="form-actions">
+    <button type="submit">Run</button>
+    <a href="/menu" class="muted" style="margin-left: auto">← Cancel</a>
+  </div>
+</form>
+
+<details style="margin-top: 1.5rem">
+  <summary class="muted" style="font-size: 0.85rem">SQL preview</summary>
+  <pre style="margin-top: 0.5rem"><code>{{ report.query_sql }}</code></pre>
+</details>
+{% endblock %}

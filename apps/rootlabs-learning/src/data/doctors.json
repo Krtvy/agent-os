@@ -1,0 +1,24 @@
+[
+  {
+    "slug": "douglas-christianson",
+    "name": "Dr. Douglas Christianson",
+    "credentials": "Naturopathic Doctor",
+    "school": "Bastyr University",
+    "specialty": "Integrative Wellness",
+    "yearsOfPractice": 12,
+    "photo": "doctors/christianson.jpg",
+    "endorsementQuote": "Rootlabs is one of the few formulations I recommend without reservation — the sourcing transparency and bioavailability testing put them in a category of their own.",
+    "verified": true
+  },
+  {
+    "slug": "kristy-appelhans",
+    "name": "Dr. Kristy Appelhans",
+    "credentials": "NMD",
+    "school": "Southwest College of Naturopathic Medicine",
+    "specialty": "Pharmacovigilance & Safety",
+    "yearsOfPractice": 17,
+    "photo": "doctors/appelhans.jpg",
+    "endorsementQuote": "In 17 years of pharmacovigilance work, the level of third-party testing Rootlabs runs on every batch is rare. That's the bar consumers should expect.",
+    "verified": true
+  }
+]

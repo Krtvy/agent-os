@@ -1,0 +1,458 @@
+{% extends "base.html" %} {% block title %}Today · Rootlabs Portal{% endblock %}
+{% block crumbs %}<strong>Today</strong>{% endblock %} {% set nav_active =
+'standup' %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">
+      {{ greeting_word|capitalize }}, {{ first_name }}.
+    </h1>
+    <p class="page__sub">
+      Tracking
+      <strong style="color: var(--c-ink)"
+        >{{ standup.roster_size }} creators</strong
+      >
+      · {{ standup.today }} ·
+      <span class="muted">your daily cockpit</span>
+    </p>
+  </div>
+  <div class="row">
+    <a href="/dashboard" class="btn">Open dashboard →</a>
+    <a href="/creators" class="btn btn--primary">View all creators</a>
+  </div>
+</div>
+
+<!-- ─── YOUR MONTHLY TARGETS ─────────────────────────────────── -->
+{% if targets %}
+<div class="card" style="margin-bottom: var(--s-6)">
+  <div class="card__head">
+    <h3 class="card__title">Your half-month target</h3>
+    <p class="card__sub">
+      {{ targets.period }} · {{ targets.period_start }} → {{ targets.period_end
+      }} · live progress against PM-set target
+    </p>
+    <div class="card__spacer"></div>
+    <div class="seg" style="height: 28px">
+      {% for pkey, p in targets_by_product.items() %}
+      <a
+        href="?product={{ pkey }}"
+        class="seg__opt {% if pkey == active_product %}is-active{% endif %}"
+        style="height: 24px; padding: 0 0.6rem"
+        >{{ p.product_emoji }} {{ p.product_label }}</a
+      >
+      {% endfor %}
+    </div>
+  </div>
+  <div class="card__body">
+    {% if targets.target.gmv == 0 and targets.target.videos == 0 %}
+    <p class="muted" style="margin: 0; font-size: var(--t-13)">
+      No {{ targets.product_label }} target set for you this period. Live
+      achievement:
+      <strong style="color: var(--c-ink)"
+        >${{ '{:,.0f}'.format(targets.achieved.gmv) }}</strong
+      >
+      GMV from
+      <strong style="color: var(--c-ink)">{{ targets.achieved.videos }}</strong>
+      {{ targets.product_label }} videos.
+    </p>
+    {% else %}
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5)">
+      <!-- GMV progress -->
+      <div>
+        <div
+          style="
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: var(--s-2);
+          "
+        >
+          <span class="muted" style="font-size: var(--t-12)">GMV target</span>
+          <span
+            style="
+              font-size: var(--t-22);
+              font-weight: 600;
+              font-variant-numeric: tabular-nums;
+            "
+          >
+            ${{ '{:,.0f}'.format(targets.achieved.gmv) }}
+            <span class="muted" style="font-size: var(--t-13); font-weight: 400"
+              >/ ${{ '{:,.0f}'.format(targets.target.gmv) }}</span
+            >
+          </span>
+        </div>
+        <div
+          style="
+            height: 10px;
+            background: var(--c-sunken);
+            border-radius: var(--r-pill);
+            overflow: hidden;
+          "
+        >
+          {% set pct = targets.gmv_pct or 0 %} {% set capped = pct if pct < 100
+          else 100 %}
+          <div
+            style="height: 100%; width: {{ capped }}%; background: {% if pct >= 80 %}var(--c-success){% elif pct >= 50 %}var(--c-accent){% elif pct >= 20 %}var(--c-warn){% else %}var(--c-error){% endif %}; transition: width var(--dur) var(--ease)"
+          ></div>
+        </div>
+        <div
+          style="
+            margin-top: var(--s-2);
+            font-size: var(--t-12);
+            color: var(--c-ink-3);
+          "
+        >
+          {% if targets.gmv_pct is not none %}
+          <strong
+            style="color: {% if pct >= 80 %}var(--c-success){% elif pct < 30 %}var(--c-error){% else %}var(--c-ink-2){% endif %}"
+            >{{ targets.gmv_pct }}%</strong
+          >
+          of target · ${{ '{:,.0f}'.format(targets.target.gmv -
+          targets.achieved.gmv) }} remaining {% endif %}
+        </div>
+      </div>
+
+      <!-- Videos progress -->
+      <div>
+        <div
+          style="
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: var(--s-2);
+          "
+        >
+          <span class="muted" style="font-size: var(--t-12)"
+            >videos target</span
+          >
+          <span
+            style="
+              font-size: var(--t-22);
+              font-weight: 600;
+              font-variant-numeric: tabular-nums;
+            "
+          >
+            {{ targets.achieved.videos }}
+            <span class="muted" style="font-size: var(--t-13); font-weight: 400"
+              >/ {{ targets.target.videos }}</span
+            >
+          </span>
+        </div>
+        <div
+          style="
+            height: 10px;
+            background: var(--c-sunken);
+            border-radius: var(--r-pill);
+            overflow: hidden;
+          "
+        >
+          {% set vpct = targets.videos_pct or 0 %} {% set vcapped = vpct if vpct
+          < 100 else 100 %}
+          <div
+            style="height: 100%; width: {{ vcapped }}%; background: {% if vpct >= 80 %}var(--c-success){% elif vpct >= 50 %}var(--c-accent){% elif vpct >= 20 %}var(--c-warn){% else %}var(--c-error){% endif %}; transition: width var(--dur) var(--ease)"
+          ></div>
+        </div>
+        <div
+          style="
+            margin-top: var(--s-2);
+            font-size: var(--t-12);
+            color: var(--c-ink-3);
+          "
+        >
+          {% if targets.videos_pct is not none %}
+          <strong
+            style="color: {% if vpct >= 80 %}var(--c-success){% elif vpct < 30 %}var(--c-error){% else %}var(--c-ink-2){% endif %}"
+            >{{ targets.videos_pct }}%</strong
+          >
+          of target · {{ targets.target.videos - targets.achieved.videos }}
+          videos remaining {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<!-- ─── TODAY'S 3 THINGS ─────────────────────────────────────── -->
+{% if standup.top_three %}
+<div style="margin-bottom: var(--s-6)">
+  <p
+    style="
+      font-size: var(--t-11);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-ink-3);
+      margin: 0 0 var(--s-3);
+    "
+  >
+    Today's 3 things
+  </p>
+  <div
+    style="
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--s-3);
+    "
+  >
+    {% for t in standup.top_three %}
+    <a
+      href="/creator-card/{{ t.handle }}"
+      class="card"
+      style="
+        padding: var(--s-5);
+        display: block;
+        text-decoration: none;
+        color: var(--c-ink);
+        transition: border-color var(--dur-fast);
+      "
+    >
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          gap: var(--s-2);
+          margin-bottom: var(--s-3);
+        "
+      >
+        <span
+          class="chip {% if t.kind == 'underperformer' %}chip--error{% elif t.kind == 'anomaly' %}chip--success{% else %}chip--warn{% endif %}"
+        >
+          {% if t.kind == 'underperformer' %}↓ Drop {% elif t.kind == 'anomaly'
+          %}↑ Spike {% elif t.kind == 'silent' %}⏸ Silent {% elif t.kind ==
+          'coasting' %}🪂 Coasting {% endif %}
+        </span>
+      </div>
+      <div
+        style="
+          font-size: var(--t-15);
+          font-weight: 600;
+          line-height: var(--lh-snug);
+          margin-bottom: var(--s-2);
+        "
+      >
+        {{ t.headline }}
+      </div>
+      <div
+        style="
+          font-size: var(--t-12);
+          color: var(--c-ink-3);
+          margin-bottom: var(--s-4);
+        "
+      >
+        {{ t.subline }}
+      </div>
+      <div
+        style="font-size: var(--t-13); color: var(--c-accent); font-weight: 500"
+      >
+        {{ t.action_label }} →
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="empty">
+  <div class="empty__icon">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  </div>
+  <p class="empty__title">Nothing urgent today.</p>
+  <p class="empty__sub">
+    No big drops, no big spikes, no one's gone silent. Use the day to seed
+    outreach or browse <a href="/creators">your creators</a> for compounding
+    wins.
+  </p>
+</div>
+{% endif %}
+
+<!-- ─── UNDERPERFORMERS ──────────────────────────────────────── -->
+{% if standup.underperformers %}
+<div class="card" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Underperforming this week</h3>
+    <p class="card__sub">
+      7-day GMV vs prior 7d, only creators with prior &gt; $100
+    </p>
+    <div class="card__spacer"></div>
+    <span class="chip">{{ standup.underperformers|length }}</span>
+  </div>
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>creator</th>
+            <th class="num">7d GMV</th>
+            <th class="num">prior 7d</th>
+            <th class="num">change</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in standup.underperformers %}
+          <tr>
+            <td class="handle">
+              <a href="/creator-card/{{ u.handle }}">@{{ u.handle }}</a>
+            </td>
+            <td class="num">${{ '{:,.0f}'.format(u.gmv_7d) }}</td>
+            <td class="num">${{ '{:,.0f}'.format(u.gmv_7d_prev) }}</td>
+            <td class="num delta-down">▼ {{ u.drop_pct }}%</td>
+            <td>
+              <a href="/creator-card/{{ u.handle }}" class="row-act"
+                >investigate →</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ─── ANOMALIES ───────────────────────────────────────────── -->
+{% if standup.anomalies %}
+<div class="card" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Spikes yesterday</h3>
+    <p class="card__sub">
+      Creators whose yesterday's GMV was ≥ 2× their typical day
+    </p>
+    <div class="card__spacer"></div>
+    <span class="chip chip--success">{{ standup.anomalies|length }}</span>
+  </div>
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>creator</th>
+            <th class="num">yesterday GMV</th>
+            <th class="num">typical day</th>
+            <th class="num">multiple</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in standup.anomalies %}
+          <tr>
+            <td class="handle">
+              <a href="/creator-card/{{ a.handle }}">@{{ a.handle }}</a>
+            </td>
+            <td class="num">${{ '{:,.0f}'.format(a.gmv_yesterday) }}</td>
+            <td class="num">${{ '{:,.0f}'.format(a.median_day) }}</td>
+            <td class="num delta-up">{{ a.multiple }}×</td>
+            <td>
+              <a href="/creator-card/{{ a.handle }}" class="row-act"
+                >replicate →</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ─── COASTING ─────────────────────────────────────────────── -->
+{% if standup.coasting %}
+<div class="card" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Coasting on back catalog</h3>
+    <p class="card__sub">
+      Still earning, but every dollar in the last 30d came from videos posted
+      &gt;30 days ago. They need fresh content before the tail decays.
+    </p>
+    <div class="card__spacer"></div>
+    <span class="chip chip--warn">{{ standup.coasting|length }}</span>
+  </div>
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>creator</th>
+            <th class="num">30d GMV (all tail)</th>
+            <th>last post</th>
+            <th class="num">days silent</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in standup.coasting %}
+          <tr>
+            <td class="handle">
+              <a href="/creator-card/{{ c.handle }}">@{{ c.handle }}</a>
+            </td>
+            <td class="num">${{ '{:,.0f}'.format(c.gmv_tail_30d) }}</td>
+            <td class="muted">{{ c.last_post or '—' }}</td>
+            <td class="num">
+              {{ c.days_silent if c.days_silent is not none else '—' }}
+            </td>
+            <td>
+              <a href="/creator-card/{{ c.handle }}" class="row-act"
+                >ask for new content →</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ─── SILENT ───────────────────────────────────────────────── -->
+{% if standup.silent %}
+<div class="card">
+  <div class="card__head">
+    <h3 class="card__title">Gone silent</h3>
+    <p class="card__sub">No video posts in 7+ days</p>
+    <div class="card__spacer"></div>
+    <span class="chip chip--warn">{{ standup.silent|length }}</span>
+  </div>
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>creator</th>
+            <th>last post</th>
+            <th class="num">days silent</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in standup.silent %}
+          <tr>
+            <td class="handle">
+              <a href="/creator-card/{{ s.handle }}">@{{ s.handle }}</a>
+            </td>
+            <td class="muted">{{ s.last_post or '—' }}</td>
+            <td class="num">{{ s.days_silent if s.days_silent else '—' }}</td>
+            <td>
+              <a href="/creator-card/{{ s.handle }}" class="row-act"
+                >reach out →</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock %}

@@ -1,0 +1,3 @@
+# This directory holds running journals — one per watched agent.
+# Files appear automatically on the observer's first run.
+# Format: see ../templates/journal.template.md

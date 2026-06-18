@@ -1,0 +1,2102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Video Walkthrough — Build Mobile Apps with Claude Code (4-hour course)
+    </title>
+    <style>
+      :root {
+        --bg: #faf8f4;
+        --panel: #ffffff;
+        --ink: #1f2933;
+        --ink-soft: #4b5663;
+        --ink-fade: #8a94a3;
+        --accent: #2f6f5e;
+        --accent-soft: #e6f0ec;
+        --jargon: #7a4a1f;
+        --jargon-bg: #fdf5e6;
+        --border: #e3e0d6;
+        --rule: #ecebe5;
+        --code-bg: #f3f1ea;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+          Arial, sans-serif;
+        line-height: 1.65;
+        font-size: 17px;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 32px 24px 96px;
+      }
+      header.top {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 24px;
+        margin-bottom: 28px;
+      }
+      header.top h1 {
+        font-size: 30px;
+        margin: 0 0 6px 0;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+      }
+      header.top .sub {
+        color: var(--ink-soft);
+        font-size: 15px;
+      }
+      header.top .meta {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 22px;
+        font-size: 13px;
+        color: var(--ink-fade);
+      }
+      header.top .meta b {
+        color: var(--ink-soft);
+        font-weight: 600;
+      }
+      .video-frame {
+        aspect-ratio: 16 / 9;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 18px 0 28px;
+        border: 1px solid var(--rule);
+      }
+      .video-frame iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
+      h2 {
+        font-size: 24px;
+        letter-spacing: -0.01em;
+        margin: 44px 0 4px;
+        line-height: 1.3;
+      }
+      h2 .ts {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 2px 8px;
+        border-radius: 4px;
+        vertical-align: middle;
+        margin-left: 10px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      h2 .ch-num {
+        color: var(--ink-fade);
+        font-weight: 400;
+        margin-right: 8px;
+      }
+      h3 {
+        font-size: 18px;
+        margin: 22px 0 6px;
+      }
+      p {
+        margin: 8px 0 12px;
+      }
+      ul,
+      ol {
+        padding-left: 22px;
+        margin: 6px 0 14px;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+      .tldr {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--accent);
+        padding: 18px 22px;
+        border-radius: 6px;
+        margin: 0 0 28px;
+      }
+      .tldr h2 {
+        margin-top: 0;
+        font-size: 18px;
+      }
+      .tldr p:last-child {
+        margin-bottom: 0;
+      }
+      .toc {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 18px 24px;
+        margin: 24px 0 36px;
+      }
+      .toc h2 {
+        font-size: 18px;
+        margin: 0 0 10px;
+      }
+      .toc ol {
+        margin: 0;
+        padding-left: 22px;
+        column-count: 1;
+      }
+      @media (min-width: 640px) {
+        .toc ol {
+          column-count: 2;
+          column-gap: 30px;
+        }
+      }
+      .toc li {
+        break-inside: avoid;
+        margin-bottom: 4px;
+        font-size: 14.5px;
+      }
+      .toc a {
+        color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        color: var(--accent);
+        text-decoration: underline;
+      }
+      .toc .ts {
+        color: var(--ink-fade);
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 12.5px;
+      }
+      .chapter {
+        border-top: 1px solid var(--rule);
+        padding-top: 12px;
+        margin-top: 32px;
+      }
+      .chapter:first-of-type {
+        border-top: 0;
+      }
+      .pull {
+        background: var(--jargon-bg);
+        border-left: 3px solid var(--jargon);
+        padding: 12px 16px;
+        border-radius: 4px;
+        margin: 14px 0;
+        font-size: 15px;
+        color: var(--ink-soft);
+      }
+      .pull strong {
+        color: var(--jargon);
+      }
+      code {
+        background: var(--code-bg);
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-size: 14px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      pre {
+        background: var(--code-bg);
+        padding: 12px 14px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 13.5px;
+        line-height: 1.55;
+      }
+      .glossary {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 20px 24px;
+        margin-top: 40px;
+      }
+      .glossary dl {
+        margin: 0;
+      }
+      .glossary dt {
+        font-weight: 600;
+        color: var(--jargon);
+        margin-top: 14px;
+        font-size: 15.5px;
+      }
+      .glossary dt:first-of-type {
+        margin-top: 0;
+      }
+      .glossary dd {
+        margin: 4px 0 0;
+        color: var(--ink-soft);
+        font-size: 15px;
+      }
+      .key {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      footer {
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid var(--rule);
+        font-size: 13px;
+        color: var(--ink-fade);
+      }
+      a {
+        color: var(--accent);
+      }
+      .small {
+        font-size: 14px;
+        color: var(--ink-soft);
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--rule);
+        margin: 32px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <h1>Build Real Mobile Apps with Claude Code — full 4-hour course</h1>
+        <div class="sub">
+          Plain-English walkthrough of every section of the video, with
+          technical terms explained as they appear.
+        </div>
+        <div class="meta">
+          <span><b>Source:</b> YouTube · <code>BMMcmmnjrM8</code></span>
+          <span><b>Presenter:</b> Nick (Left Click / Maker School)</span>
+          <span><b>Length:</b> 4 hr 3 min</span>
+          <span><b>Prepared:</b> 2026-05-13</span>
+        </div>
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/BMMcmmnjrM8"
+            title="Build a mobile app with Claude Code — full course"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+      </header>
+
+      <section class="tldr">
+        <h2>The whole video in three sentences</h2>
+        <p>
+          Nick teaches you to build phone apps using Claude Code — Anthropic's
+          AI coding assistant — without writing any code yourself. He builds
+          three apps live (a habit tracker, a calorie tracker, and a Pomodoro
+          timer) and walks through the same nine-step recipe for each one:
+          design → build → test on computer → test on phone mirror → test on
+          real phone → add a database and login → test again → security audit →
+          submit to the App Store.
+        </p>
+        <p>
+          You finish with a real app running on your real phone, plus enough
+          understanding of the process to ship your own ideas. Total cost:
+          ~$20/month for Claude Pro, plus optional small fees for Supabase and
+          Apple's developer program.
+        </p>
+      </section>
+
+      <section class="toc">
+        <h2>What's in the video, section by section</h2>
+        <ol>
+          <li>
+            <a href="#ch1"
+              >Intro & promise <span class="ts">00:00–00:09</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch2"
+              >Set up Claude Code <span class="ts">00:09–00:11</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch3"
+              >The three ways to build mobile apps
+              <span class="ts">00:11–00:16</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch4"
+              >Install the dev tools <span class="ts">00:16–00:24</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch5"
+              >The 5-part app design framework
+              <span class="ts">00:24–00:34</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch6"
+              >Build the habit tracker (local only)
+              <span class="ts">00:34–01:00</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch7"
+              >Save your code to GitHub <span class="ts">01:00–01:06</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch8"
+              >Add a database + login (Supabase)
+              <span class="ts">01:06–01:25</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch9"
+              >Add AI features (coaching & weekly reports)
+              <span class="ts">01:25–01:57</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch10"
+              >Security audit <span class="ts">01:57–02:06</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch11"
+              >The framework as a repeatable checklist
+              <span class="ts">02:06–02:13</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch12"
+              >Build app #2: calorie tracker
+              <span class="ts">02:13–02:55</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch13"
+              >Calorie tracker — DB + final polish
+              <span class="ts">02:55–03:05</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch14"
+              >Build app #3: the Pomodoro forest
+              <span class="ts">03:05–03:43</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch15"
+              >Submit to the App Store <span class="ts">03:43–04:00</span></a
+            >
+          </li>
+          <li>
+            <a href="#ch16"
+              >Closing & where to go next <span class="ts">04:00–04:03</span></a
+            >
+          </li>
+          <li>
+            <a href="#glossary">Jargon translator (all technical terms)</a>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ───────────────────────────────────────────── CHAPTERS ───────────────────────────────────────────── -->
+
+      <section class="chapter" id="ch1">
+        <h2>
+          <span class="ch-num">1.</span>Intro & promise<span class="ts"
+            >00:00–00:09</span
+          >
+        </h2>
+
+        <p>
+          Nick opens by telling you exactly what you'll have at the end of the
+          video: <b>a real, working app running on your real phone</b> — not a
+          mock-up, not a simulator. He says you don't need any prior programming
+          experience: "if you can type an English sentence into a terminal,
+          you'll be fine."
+        </p>
+
+        <p>
+          He introduces himself: he runs a business doing roughly $300,000 a
+          month that is "almost entirely built on Claude Code." He's shipped
+          several web apps and SaaS products. The #1 most-requested video from
+          his audience is "how do I use this AI-coding stuff to build mobile
+          apps?" — and that's what the course delivers.
+        </p>
+
+        <p>He outlines what's coming:</p>
+        <ol>
+          <li>
+            Show you a finished app running on his iPhone in under 2 minutes.
+          </li>
+          <li>
+            Set up Claude Code, the mobile development environment, and your
+            phone as a testing device.
+          </li>
+          <li>
+            Explain how mobile apps actually work and what the main frameworks
+            are.
+          </li>
+          <li>
+            Build a complete app together, testing on his phone in real time.
+          </li>
+          <li>Repeat the build three or four times so you build the muscle.</li>
+          <li>Submit one to the App Store and Google Play Store.</li>
+        </ol>
+
+        <div class="pull">
+          <strong>What's a terminal?</strong> The black-and-white text window on
+          your computer where you can type commands directly to the operating
+          system. On a Mac it's called "Terminal." You can ignore it for the
+          most part — Claude does the typing.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch2">
+        <h2>
+          <span class="ch-num">2.</span>Set up Claude Code<span class="ts"
+            >00:09–00:11</span
+          >
+        </h2>
+
+        <p>
+          Step one is signing up for Claude. He sends you to
+          <code>claude.ai/code</code>, where you can continue with Google or
+          enter your email. After signing in you'll be shown plans:
+        </p>
+        <ul>
+          <li><b>Free</b> — limited use; not enough for serious work.</li>
+          <li>
+            <b>Pro ($20/month)</b> — enough for this course. Nick's strong
+            recommendation: "20 bucks a month is probably the highest return on
+            investment you will ever get."
+          </li>
+          <li>
+            <b>Max</b> — the highest tier, which Nick himself is on. Used for
+            heavy daily work.
+          </li>
+        </ul>
+
+        <p>
+          He shows the basic Claude chat — where you can just send messages and
+          get replies — but explains that's not what we'll use. To build apps we
+          need <b>Claude Code</b>, which is a more powerful version that lives
+          inside a code editor and can read, write, and modify files on your
+          computer.
+        </p>
+
+        <div class="pull">
+          <strong>What's the difference between Claude and Claude Code?</strong>
+          Same AI brain underneath. Regular Claude is a chat window. Claude Code
+          adds the ability to actually touch files on your computer — create
+          them, edit them, run commands. Think of regular Claude as a consultant
+          on the phone; Claude Code is the same consultant sitting at your desk
+          with their hands on the keyboard.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch3">
+        <h2>
+          <span class="ch-num">3.</span>The three ways to build mobile apps<span
+            class="ts"
+            >00:11–00:16</span
+          >
+        </h2>
+
+        <p>
+          Before installing anything, Nick gives you the lay of the land. There
+          are three main approaches to building modern mobile apps. You don't
+          have to memorise any of this — pick option 1 and ignore the rest.
+        </p>
+
+        <h3>Option 1 — Expo + React Native (what we'll use)</h3>
+        <ul>
+          <li>Uses two programming languages: JavaScript and TypeScript.</li>
+          <li>
+            One codebase produces an iPhone app, an Android app, and a website
+            at the same time.
+          </li>
+          <li>
+            Expo handles the painful "preparing the app for production" step
+            automatically.
+          </li>
+          <li>
+            Has hot reload: when you change the code, the running app updates
+            instantly, without you reinstalling.
+          </li>
+        </ul>
+
+        <h3>Option 2 — Flutter + Firebase (Google's approach)</h3>
+        <ul>
+          <li>Uses Google's language called <b>Dart</b>.</li>
+          <li>
+            Built-in design system: buttons, popups, and animations all look
+            "very Google." Easy to assemble but limited in how custom your
+            design can feel.
+          </li>
+          <li>
+            Tightly tied to Firebase, Google's database product. Great if you
+            stay in Google's world.
+          </li>
+        </ul>
+
+        <h3>Option 3 — Capacitor (websites in app clothing)</h3>
+        <ul>
+          <li>
+            You build a regular website with HTML, CSS, JavaScript, then "wrap"
+            it to behave like an app.
+          </li>
+          <li>
+            Easiest entry point if you already make websites — but you're
+            optimising for everything at once, so nothing is as good as it could
+            be.
+          </li>
+        </ul>
+
+        <p>
+          <b>Nick's pick: Expo + React Native.</b> Most flexibility, most
+          well-known, and Claude Code is good at it.
+        </p>
+
+        <div class="pull">
+          <strong>What's a framework?</strong> Pre-built scaffolding for an app.
+          Instead of writing "what happens when the user taps a button" from
+          scratch, the framework already knows. You just describe the unique
+          parts.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch4">
+        <h2>
+          <span class="ch-num">4.</span>Install the dev tools<span class="ts"
+            >00:16–00:24</span
+          >
+        </h2>
+
+        <p>
+          This section is the most install-heavy of the video. Nick walks
+          through each step:
+        </p>
+
+        <h3>Install Anti-Gravity</h3>
+        <p>
+          <b>Anti-Gravity</b> is a code editor built by Google. It looks at all
+          your project files on the left and gives you a chat box with Claude on
+          the right. Download from its homepage, drag to Applications, open it.
+        </p>
+
+        <h3>Install the "Claude Code for VS Code" extension</h3>
+        <p>
+          Inside Anti-Gravity, go to Extensions, search for
+          <code>Claude Code for VS Code</code>, and install it. (Anti-Gravity is
+          a cousin of VS Code, so VS Code extensions work in it.)
+        </p>
+
+        <p>
+          Once installed, you'll see Claude's icon appear in the bottom toolbar.
+          Clicking it opens a chat with Claude that lives next to your files.
+        </p>
+
+        <h3>Install Expo Go on your phone</h3>
+        <p>
+          <b>Expo Go</b> is a free app on the iPhone App Store and Google Play
+          Store. It lets you run apps you're building <i>without</i> needing to
+          submit them to the App Store first.
+        </p>
+
+        <p>
+          How it works in practice: Claude tells your computer to start a local
+          "development server" → that prints a QR code on your computer screen →
+          you scan the QR code with your phone → Expo Go opens the app you're
+          building, running live on your phone. Any time you change the code,
+          the app updates on your phone automatically.
+        </p>
+
+        <h3>The first test build</h3>
+        <p>
+          To prove everything works, Nick opens a new folder called
+          <code>example project</code>, opens Claude Code there, and types:
+          <i
+            >"I want to build a mobile app with Expo and React Native. Set up my
+            workspace for me."</i
+          >
+          Claude creates all the scaffolding files. Then:
+          <i
+            >"Create a simple demo application, some habit tracker for demo
+            purposes, and let me launch it on my phone."</i
+          >
+        </p>
+
+        <p>
+          About two minutes later: scaffolded habit tracker, QR code on screen,
+          Nick scans, app appears on iPhone.
+          <b>Time from zero to running app: under 5 minutes.</b>
+        </p>
+
+        <div class="pull">
+          <strong>What's a "local development server"?</strong> A mini-website
+          running only on your own computer that your phone can connect to. The
+          Expo Go app on your phone connects to this mini-website to load the
+          app while you work on it. Think of it as a private rehearsal space
+          before the show goes on tour.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch5">
+        <h2>
+          <span class="ch-num">5.</span>The 5-part app design framework<span
+            class="ts"
+            >00:24–00:34</span
+          >
+        </h2>
+
+        <p>
+          This is the most important conceptual section of the entire course.
+          Nick argues that having Claude type code for you is the easy part —
+          knowing <i>what</i> you want is the hard part. So before building
+          anything, he forces every app through a five-step thinking exercise.
+        </p>
+
+        <h3>1. Core function</h3>
+        <p>
+          The one thing that, if you stripped everything else away, would still
+          make this app what it is. For a habit tracker, it's "tap a button to
+          record that you did the habit today." Just one sentence.
+        </p>
+
+        <h3>2. Core loop</h3>
+        <p>
+          An action-and-reward cycle, ideally under 30 seconds long. Every time
+          the user does the core function, something rewarding happens — a
+          sound, an animation, a vibration. Without this, people install your
+          app once and forget it.
+        </p>
+
+        <p>
+          For the habit tracker: tap the habit button → hear a chime → see
+          confetti animation → feel the phone vibrate slightly.
+        </p>
+
+        <h3>3. Accessory features</h3>
+        <p>
+          The supporting cast that orbits the core loop without replacing it.
+          For a habit tracker: a history chart, the ability to create new habit
+          types, the ability to add friends and share progress.
+        </p>
+
+        <h3>4. Surface area check</h3>
+        <p>
+          How many screens does the app have? If it's more than ~7, you've made
+          it too complicated. Beginners always pile on features. Real designers
+          cut them. Five to seven screens is the sweet spot.
+        </p>
+
+        <h3>5. Retention hook</h3>
+        <p>
+          Something that creates an "unfinished state" so the user has to come
+          back. For a habit tracker: a 3-day challenge. To win, you have to open
+          the app on three separate days. The structure itself pulls you back.
+        </p>
+
+        <p>
+          Once you've answered all five for your app, you have what Nick calls
+          an <b>MVP</b> — Minimum Viable Product. The smallest version of the
+          app worth building.
+        </p>
+
+        <div class="pull">
+          <strong>What's "MVP"?</strong> Minimum Viable Product. The smallest
+          possible version of an app that still does its main job. You ship this
+          first, get real users on it, then add the fancy stuff only if people
+          actually want it.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch6">
+        <h2>
+          <span class="ch-num">6.</span>Build the habit tracker (local
+          only)<span class="ts">00:34–01:00</span>
+        </h2>
+
+        <p>Now the building begins. Nick uses a clever sequence:</p>
+
+        <h3>Step A — Initialize a memory file with <code>/init</code></h3>
+        <p>
+          Inside Claude Code, he types <code>/init</code>. This makes Claude
+          examine the project and write a file called <code>CLAUDE.md</code>.
+          That file is a permanent note Claude reads every future session — so
+          Claude doesn't have to re-learn what the project is each time. Saves
+          time and money.
+        </p>
+
+        <h3>Step B — Voice-dictate the full spec</h3>
+        <p>
+          Instead of typing the framework answers, Nick uses a voice-to-text
+          tool called <b>Aqua</b>. He just talks: "the core function is X, the
+          core loop is Y..." Aqua transcribes it into the chat. Way faster than
+          typing.
+        </p>
+
+        <h3>Step C — Tell Claude to do it all at once</h3>
+        <p>
+          Claude initially offers to do the work in 4 phases. Nick rejects that:
+          <i
+            >"No, I want you to do the whole thing, including phases 1–4. Once
+            done, open in Chrome, not Expo, so I can test locally."</i
+          >
+          He asks for everything in one go.
+        </p>
+
+        <p>
+          Five minutes later Claude has built the whole thing. Nick views it in
+          Chrome (resized to be phone-shaped so it looks like a phone app). It
+          works. Lots of small bugs — text is invisible in places, padding is
+          off, the reminder feature only allows one time — but the bones are
+          good.
+        </p>
+
+        <h3>Step D — Iterate via natural language</h3>
+        <p>
+          The next 20 minutes are Nick speaking detailed feedback into the voice
+          tool: "the text colour is the same as the background colour for these
+          icons", "the reminder only has one time", "add a developer testing
+          menu so I can simulate completing 3 days of the challenge." He sends
+          it. Claude fixes. He tests. Repeats.
+        </p>
+
+        <p>
+          Important point Nick makes: <b>queue up messages</b>. You don't have
+          to wait for Claude to finish one task before starting the next. While
+          Claude is fixing the design, you can already be dictating the next set
+          of changes for the AI features. Saves a lot of waiting.
+        </p>
+
+        <h3>Step E — Test on real phone via Expo Go</h3>
+        <p>
+          Once Chrome looks good, Nick says
+          <i>"start an Expo server for this in a new terminal window"</i>. QR
+          code appears. He scans it on his iPhone. App runs live on the phone.
+        </p>
+
+        <p>
+          This is where bugs that Chrome could never have caught show up: the
+          haptic feedback (phone vibration) wasn't working, the icons were cut
+          off at the top, the chime sound that was inaudible in Chrome plays
+          properly on iPhone. Each issue gets dictated back to Claude.
+        </p>
+
+        <div class="pull">
+          <strong>What's <code>/init</code>?</strong> A built-in shortcut in
+          Claude Code that creates a <code>CLAUDE.md</code> file describing your
+          project. Future sessions read it automatically, so Claude doesn't have
+          to figure out what the project is every time you open the chat.
+        </div>
+
+        <div class="pull">
+          <strong>What does "test locally" mean?</strong> Run the app only on
+          your own computer (in a browser like Chrome made to look
+          phone-shaped), as opposed to actually running it on a real phone.
+          Faster and easier to iterate on. You always still need to test on a
+          real phone before shipping.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch7">
+        <h2>
+          <span class="ch-num">7.</span>Save your code to GitHub<span class="ts"
+            >01:00–01:06</span
+          >
+        </h2>
+
+        <p>
+          Once the app feels right, Nick has Claude push the project to GitHub.
+          <b>GitHub</b> is like Dropbox for code — it stores your project
+          online, and it also remembers every change anyone has ever made. That
+          second part matters because when AI makes a change that breaks
+          something, you can roll back to a working version in seconds.
+        </p>
+
+        <p>
+          He just says:
+          <i
+            >"Great, create a GitHub repo for this. As well as a README. Then
+            push."</i
+          >
+          Claude does the whole thing — including adding itself as a co-author
+          on the commit, which Nick finds hilarious.
+        </p>
+
+        <p>
+          From this point on, the project exists both on Nick's computer and on
+          the GitHub website. He can view the code in a browser, share the link
+          with collaborators, or restore an earlier version if anything breaks.
+        </p>
+
+        <div class="pull">
+          <strong>What's a "commit"?</strong> A saved snapshot of your code at
+          one moment in time, with a short note saying what changed. GitHub
+          keeps every commit forever, so you can travel back to any past version
+          of your project.
+        </div>
+
+        <div class="pull">
+          <strong>What's a "repo"?</strong> Short for "repository" — a single
+          project stored on GitHub. Think of it as one folder, but with the full
+          edit history attached.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch8">
+        <h2>
+          <span class="ch-num">8.</span>Add a database + login (Supabase)<span
+            class="ts"
+            >01:06–01:25</span
+          >
+        </h2>
+
+        <p>
+          So far the habit tracker stores everything on the user's own phone. If
+          you uninstall the app, your data is gone. If you switch from phone to
+          laptop, your habits don't follow. To fix that, Nick adds two things
+          together: a <b>database</b> (cloud storage for the data) and
+          <b>authentication</b> (login/signup so the database knows whose data
+          is whose).
+        </p>
+
+        <h3>Why both at once?</h3>
+        <p>
+          You can't have one without the other. If the database held everyone's
+          data with no login, anyone could read anyone else's habits. So login
+          screens and databases always ship together.
+        </p>
+
+        <h3>The tool: Supabase</h3>
+        <p>
+          <b>Supabase</b> is a free-to-start service that gives you both a
+          database and a login system in one product. Nick says he likes it
+          because he's used it on many apps and "you just kind of arrive at one
+          specific stack that works pretty well." It's not the only choice — you
+          could use Firebase or others — but Supabase is what the course uses.
+        </p>
+
+        <h3>What Nick actually does</h3>
+        <ol>
+          <li>
+            Goes to <code>supabase.com</code>, clicks "Start a project", names
+            it "habit tracker app", picks a password, enables
+            <b>automatic RLS</b> (a security setting — see jargon translator).
+          </li>
+          <li>
+            Supabase spends a few minutes creating the database in the cloud (in
+            Oregon, in his case).
+          </li>
+          <li>
+            Once ready, Supabase shows him a few things: the project URL, a
+            "publishable key", a connection string. These are all just IDs and
+            passwords Claude needs to connect to the database.
+          </li>
+          <li>
+            Nick copies all that info, pastes it into the Claude chat, and says
+            <i>"Here's all the stuff you need."</i>
+          </li>
+          <li>
+            Claude reads it, decides what database tables it needs (Habits,
+            Completions, Challenges, Profiles), and creates them automatically.
+          </li>
+          <li>
+            Nick also disables the "confirm email" setting so users don't have
+            to click a verification link before they can log in — a friction
+            reducer for a demo.
+          </li>
+        </ol>
+
+        <h3>The result</h3>
+        <p>
+          The app now has a login screen. New users sign up, log in, and their
+          habits sync to the cloud. Nick demonstrates by creating habits in the
+          app, then opening Supabase's web dashboard to show those exact same
+          habits sitting in the database — confirming the round trip works.
+        </p>
+
+        <h3>Local caching trick</h3>
+        <p>
+          Nick specifically asks Claude to <b>cache</b> data locally too.
+          Meaning: even though the data lives in the cloud, a copy is kept on
+          the phone so the app feels instant — no waiting for the cloud every
+          time. The phone version syncs to the cloud in the background. Without
+          this, every tap would feel laggy.
+        </p>
+
+        <div class="pull">
+          <strong>What's a "database"?</strong> An organised filing system that
+          stores data and can be searched. Think of a spreadsheet that lots of
+          apps can read and write to at the same time. Yours lives online, so
+          any device can reach it.
+        </div>
+
+        <div class="pull">
+          <strong>What's "authentication"?</strong> The login system that lets a
+          person prove they are who they say they are (usually by typing a
+          password). It pairs each user with their own data so others can't see
+          it.
+        </div>
+
+        <div class="pull">
+          <strong>What's "OAuth"?</strong> Nick says <code>OOTH</code> a couple
+          of times — that's "OAuth", pronounced "oh-auth". It's the technology
+          that lets you sign in to an app with your Google or Apple account
+          instead of creating a new password. One click instead of a signup
+          form.
+        </div>
+
+        <div class="pull">
+          <strong>What's "RLS" / automatic RLS?</strong> Row-Level Security. A
+          database setting that automatically makes sure users can only see
+          their own rows of data — they can't read other people's. Turning this
+          on is one of the easiest, biggest wins for security. Supabase used to
+          leave it off by default; now they ship the option to enable it on
+          creation.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch9">
+        <h2>
+          <span class="ch-num">9.</span>Add AI features (coaching & weekly
+          reports)<span class="ts">01:25–01:57</span>
+        </h2>
+
+        <p>Now Nick adds two AI-powered features to the habit tracker:</p>
+        <ul>
+          <li>
+            <b>Smart coaching nudges</b> — periodic short messages like "you've
+            nailed sleep for 14 days, but water intake is low — here's a hack."
+          </li>
+          <li>
+            <b>Reflection summaries</b> — longer weekly or monthly reports
+            analysing the user's full pattern of behaviour.
+          </li>
+        </ul>
+
+        <h3>The architecture (the flow of data)</h3>
+        <p>
+          Nick draws a diagram showing how this works. Don't worry about
+          memorising it — just follow the journey:
+        </p>
+        <ol>
+          <li>
+            Once a day, your <b>phone</b> wakes up and sends a tiny request to
+            the cloud.
+          </li>
+          <li>
+            That request hits a <b>Supabase Edge Function</b> — a small piece of
+            code that runs in the cloud only when triggered, and then turns off.
+          </li>
+          <li>
+            The edge function reads your habit data from the Supabase database.
+          </li>
+          <li>
+            It bundles up your data and a prompt ("write a motivating coaching
+            message based on these habits") and sends it to <b>Claude's API</b>.
+          </li>
+          <li>Claude generates a custom message just for you.</li>
+          <li>
+            The message comes back to the edge function, which stores it in the
+            database and sends it to your phone as a push notification.
+          </li>
+        </ol>
+
+        <h3>Why "edge functions" instead of a server?</h3>
+        <p>
+          You could have a computer running 24/7 in a data centre waiting to do
+          this. But that's expensive — most of the time it's just sitting idle.
+          Edge functions are the alternative: they turn on for one second when a
+          request hits them, do the work, then turn off. You pay per second of
+          actual use, which for a habit tracker is pennies a month.
+        </p>
+
+        <h3>The API key</h3>
+        <p>
+          To let the edge function talk to Claude, you need to give it your
+          <b>API key</b> — a secret password that proves you're allowed to use
+          Claude's service and that bills usage to your Anthropic account. Nick
+          gets one from <code>console.anthropic.com</code>, creates a new key
+          called "Cal Tracker", and stores it in a special hidden file called
+          <code>.env</code> so it doesn't get committed to GitHub by accident.
+        </p>
+
+        <h3>Iteration: making the AI output feel human</h3>
+        <p>
+          Once the system works, Nick refines the prompt. The first AI-generated
+          nudges used em-dashes ("—") everywhere, which Nick says is a tell-tale
+          sign of AI-written text. He tells Claude:
+          <i>"Modify the prompt so Claude does not output any em-dashes."</i>
+          Then: <i>"Also add some emojis to the titles, specifically."</i> A few
+          back-and-forths and the nudges sound much more like a friend texting
+          you and less like a corporate newsletter.
+        </p>
+
+        <h3>Toasts and modals</h3>
+        <p>
+          To show the messages, he asks Claude to display a "toast" — a small
+          notification bar that slides in from the top of the screen for a few
+          seconds, like getting a text message. (A <b>modal</b> is the bigger
+          version that takes over the whole screen.)
+        </p>
+
+        <h3>Real push notifications</h3>
+        <p>
+          Finally, Nick tests on his real phone. The first time, push
+          notifications need to be permitted manually in iOS Settings — Apple
+          makes the user grant that explicitly. Once allowed, Nick triggers a
+          notification and sees it pop up on his phone in real time. It works.
+        </p>
+
+        <div class="pull">
+          <strong>What's an "API"?</strong> Application Programming Interface. A
+          way for two pieces of software to talk to each other. When Nick's app
+          sends data to Claude, it does so by calling Claude's API. You can
+          think of it like a vending machine: you put in a request, it gives you
+          a response.
+        </div>
+
+        <div class="pull">
+          <strong>What's an "API key"?</strong> A secret password that
+          identifies you to a service like Claude or OpenAI. Anyone who has your
+          API key can spend your money on that service, so it must stay secret —
+          never paste it into chats, never commit it to GitHub. Store it in a
+          <code>.env</code> file.
+        </div>
+
+        <div class="pull">
+          <strong>What's a "prompt"?</strong> The instructions you give an AI.
+          "Write a motivational message based on these habits" is a prompt.
+          Better prompts produce better outputs. Nick iterates on the prompt
+          repeatedly to get the tone he wants.
+        </div>
+
+        <div class="pull">
+          <strong>What's a "toast"?</strong> A small notification that slides
+          in, stays for a few seconds, then disappears — like the banner you see
+          when a text message arrives at the top of your phone.
+        </div>
+
+        <div class="pull">
+          <strong>What's a "modal"?</strong> A bigger popup that takes over the
+          screen until the user dismisses it. Used for important things that
+          need a response, like "are you sure you want to delete this?"
+        </div>
+      </section>
+
+      <section class="chapter" id="ch10">
+        <h2>
+          <span class="ch-num">10.</span>Security audit<span class="ts"
+            >01:57–02:06</span
+          >
+        </h2>
+
+        <p>
+          Nick says this is the step "99% of vibe coders skip" — because it's
+          boring and not visible — but it's the difference between an app that
+          survives and an app that gets its users' data leaked onto the dark
+          web.
+        </p>
+
+        <h3>The realistic goal</h3>
+        <p>
+          You won't get to 100% secure. Even big companies don't. The goal is to
+          fix the obvious, low-effort holes so that anyone looking for an easy
+          target moves on to a different app instead of yours.
+        </p>
+
+        <h3>The technique: a single big security prompt</h3>
+        <p>
+          Nick uses a long, structured prompt (from his "Security for Vibe-Coded
+          Apps" course) that asks Claude to scan the entire project for the most
+          common vulnerability patterns:
+        </p>
+        <ul>
+          <li>
+            <b>Hard-coded secrets</b> — API keys accidentally written directly
+            into the code instead of stored in <code>.env</code> files.
+          </li>
+          <li>
+            <b>Missing server-side validation</b> — trusting whatever the phone
+            sends instead of double-checking on the cloud.
+          </li>
+          <li>
+            <b>Default-open database policies</b> — rows readable by anyone if
+            RLS isn't on.
+          </li>
+          <li>
+            <b>Console error leaks</b> — error messages that reveal too much
+            about how the app works internally.
+          </li>
+          <li>
+            <b>Expensive operations with no rate-limiting</b> — features an
+            attacker could spam to burn your API budget.
+          </li>
+        </ul>
+
+        <p>
+          Claude outputs a tier list: Critical / High / Medium / Low for each
+          finding. Nick says,
+          <i
+            >"Run through and fix all of these errors end-to-end. After you're
+            done, test and ensure they're 100% solved."</i
+          >
+          Claude fixes them.
+        </p>
+
+        <h3>The two-pass trick</h3>
+        <p>
+          Then — and this is the clever bit — Nick clears the conversation and
+          runs the entire security prompt <i>again</i>, with no memory of the
+          first run. Why? Because fixing one problem sometimes creates a new
+          one. A fresh second pass catches anything the first one introduced.
+          Most of the original "Fails" are now "Passes" or "Partials." Nick asks
+          Claude to also fix the Partials.
+        </p>
+
+        <p>
+          By the end, the app isn't bulletproof but is solid enough that "no
+          attacker is going to bother — they'll go find an easier target."
+        </p>
+
+        <div class="pull">
+          <strong>What's "CWE"?</strong> Common Weakness Enumeration. A
+          standardised numbering system for known security weaknesses ("CWE-89:
+          SQL injection", "CWE-79: Cross-site scripting", etc.). Each finding in
+          the audit gets tagged with its CWE number so you can look up exactly
+          what the weakness is.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch11">
+        <h2>
+          <span class="ch-num">11.</span>The framework as a repeatable
+          checklist<span class="ts">02:06–02:13</span>
+        </h2>
+
+        <p>
+          Before moving on to the next app, Nick zooms out and draws the whole
+          process as a flowchart. This is the checklist he'll repeat for every
+          app he ever builds, in order:
+        </p>
+
+        <ol>
+          <li><b>MVP ideation</b> — answer the 5 framework questions.</li>
+          <li><b>Build</b> — dictate the MVP to Claude, let it scaffold.</li>
+          <li>
+            <b>Design</b> — once it works, polish the look. Tell Claude things
+            like "make this feel more like an Apple app", "use a serif font",
+            "darker blue colour scheme."
+          </li>
+          <li>
+            <b>Test 1: Chrome</b> — view the app in a phone-sized Chrome window,
+            find bugs.
+          </li>
+          <li>
+            <b>Test 2: phone mirror</b> — use iPhone Mirroring on a Mac to test
+            on the phone while seeing the screen on your computer.
+          </li>
+          <li>
+            <b>Test 3: real phone</b> — pick up the phone and use it as a phone.
+            Catches things that only matter physically: haptic feedback, push
+            notifications, thumb reach.
+          </li>
+          <li>
+            <b>Add database & login</b> — only after the local version works.
+          </li>
+          <li>
+            <b>Test 1 + 2 + 3 again</b> — because adding the database introduces
+            new failure modes.
+          </li>
+          <li><b>Security audit</b> — two passes.</li>
+          <li><b>Final test</b> — one more end-to-end check.</li>
+          <li><b>Deploy</b> — submit to App Store.</li>
+        </ol>
+
+        <p>
+          He emphasises: this loop is the same for every app. The reason he's
+          about to build two more apps isn't to teach you more — it's to drill
+          the pattern.
+        </p>
+      </section>
+
+      <section class="chapter" id="ch12">
+        <h2>
+          <span class="ch-num">12.</span>Build app #2 — calorie tracker<span
+            class="ts"
+            >02:13–02:55</span
+          >
+        </h2>
+
+        <p>
+          The second app is a calorie tracker similar to Cal AI (which sold for
+          $50–100M to MyFitnessPal). You take a photo of your food, AI estimates
+          the calories and macronutrients (protein, carbs, fat), you log it.
+        </p>
+
+        <h3>What's new in this build</h3>
+
+        <h4>1. Photo input via Anthropic's vision API</h4>
+        <p>
+          The user's photo gets sent to Claude, which is told to analyse the
+          food in the image and return a JSON object with estimated calories,
+          protein, carbs, and fat. Plus or minus 10–15% accuracy, but good
+          enough for daily tracking.
+        </p>
+
+        <h4>2. Personalised goals via the Mifflin-St Jeor equation</h4>
+        <p>
+          The app asks the user their age, height, weight, sex, and activity
+          level, then uses a standard formula (the Mifflin-St Jeor equation, a
+          textbook calculation for resting metabolic rate) to recommend a daily
+          calorie target.
+        </p>
+
+        <h4>3. Screenshot-driven design</h4>
+        <p>
+          This is the most useful trick in the whole video. Instead of
+          describing the design Nick wants in words, he:
+        </p>
+        <ol>
+          <li>
+            Goes to <b>Dribbble</b> (a website where designers post their work)
+            and finds time-tracker app screenshots he likes.
+          </li>
+          <li>Screenshots them.</li>
+          <li>
+            Drags the screenshots into Claude Code and says
+            <i
+              >"I love the design of this app. I want you to start by emulating
+              it."</i
+            >
+          </li>
+        </ol>
+        <p>
+          Claude can see images. It pulls colour palettes, spacing, font
+          choices, layout — and adapts them to the new app.
+        </p>
+
+        <h4>4. A custom colour palette via the UI Colors tool</h4>
+        <p>
+          For finer control, he uses <code>uicolors.app</code> to pick a
+          specific blue-grey palette, then copies the exact colour codes into
+          Claude.
+        </p>
+
+        <h4>5. Anthropic API key for the photo analysis</h4>
+        <p>
+          Same setup as before. New key created on the Anthropic console, pasted
+          into <code>.env</code>.
+        </p>
+
+        <h3>Iteration patterns Nick shows</h3>
+        <ul>
+          <li>
+            <b>Test loops queue up</b> — while waiting for one fix, dictate the
+            next round.
+          </li>
+          <li>
+            <b>"Run through every page yourself"</b> — Nick asks Claude to open
+            each page in Chrome's developer tools, take a screenshot, list every
+            alignment / spacing / colour inconsistency, and then fix them in a
+            loop. This works because Claude can now look at its own work.
+          </li>
+          <li>
+            <b>Compaction</b> — once the conversation gets very long (around
+            250,000 tokens), Nick types <code>/compact</code>. Claude rewrites
+            the whole conversation history into a much shorter summary, freeing
+            up space for more work without losing context.
+          </li>
+        </ul>
+
+        <h3>Sign-in page lifted from Dribbble too</h3>
+        <p>
+          For the login screen, Nick searches Dribbble for sign-in pages he
+          likes, screenshots one, and tells Claude to build something like it.
+          Result: the calorie tracker has tiny food-and-weight icons floating
+          around the sign-in page, very polished, in minutes.
+        </p>
+
+        <div class="pull">
+          <strong>What's "Dribbble"?</strong> A community website where
+          designers post screenshots of their app designs. It's basically
+          Pinterest for app design. Great for inspiration.
+          <code>dribbble.com</code>
+        </div>
+
+        <div class="pull">
+          <strong>What does "/compact" do?</strong> A Claude Code shortcut that
+          rewrites your entire current conversation into a much shorter summary,
+          keeping the meaning but reducing the size. Useful when conversations
+          get long and slow — Claude works faster on smaller contexts.
+        </div>
+
+        <div class="pull">
+          <strong>What's a "token"?</strong> Roughly speaking, a small chunk of
+          text — a word, a piece of a word, or a bit of code. AI services bill
+          by tokens. The longer the conversation, the more tokens it uses, and
+          at some point performance degrades. Compaction shrinks the count.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch13">
+        <h2>
+          <span class="ch-num">13.</span>Calorie tracker — database, security &
+          polish<span class="ts">02:55–03:05</span>
+        </h2>
+
+        <p>Nick repeats the now-familiar pattern:</p>
+        <ul>
+          <li>Spin up a new Supabase project called "cal-tracker".</li>
+          <li>Enable automatic RLS.</li>
+          <li>Paste URL + keys into Claude Code.</li>
+          <li>
+            Claude creates the necessary tables (users, foods logged, weight
+            entries) and the login flow.
+          </li>
+          <li>Test on Chrome → mirror → real phone.</li>
+          <li>Run the security audit prompt — twice.</li>
+        </ul>
+
+        <p>
+          One specific iPhone-only bug he had to catch: the iPhone's native top
+          bar (clock, battery, Wi-Fi icon) was rendering white-on-white because
+          the app background was also white. He couldn't see this in Chrome,
+          only on a real iPhone. He tells Claude,
+          <i
+            >"my iPhone's native top bar icons are white, how do I force the
+            colours?"</i
+          >
+          One prompt, fixed.
+        </p>
+
+        <p>
+          Result: a calorie tracker app that looks like a polished product. Nick
+          says,
+          <i
+            >"this is probably one of the nicer apps I've put together in a
+            pretty short period of time."</i
+          >
+        </p>
+      </section>
+
+      <section class="chapter" id="ch14">
+        <h2>
+          <span class="ch-num">14.</span>Build app #3 — the Pomodoro forest<span
+            class="ts"
+            >03:05–03:43</span
+          >
+        </h2>
+
+        <p>
+          The third app is a Pomodoro timer (a productivity technique where you
+          work in 25-minute focused blocks). Nick's twist: every time you
+          complete a Pomodoro, a tree grows. Over time you build a forest. Skip
+          your Pomodoros and your trees start withering.
+        </p>
+
+        <p>
+          This app is the most visual of the three and shows off design
+          techniques you haven't seen yet.
+        </p>
+
+        <h3>The new technique: AI-generated art</h3>
+        <p>
+          Nick uses <b>GPT Image-2</b> (OpenAI's image generation model) to
+          generate concept mockups for his app. He asks Claude to describe his
+          app in words → he feeds that description to GPT Image → GPT Image
+          returns four mockup screens with hand-drawn-style trees, fields, and
+          skies.
+        </p>
+
+        <p>
+          Then he asks Claude to <i>extract</i> the individual trees,
+          backgrounds, and sky elements from the mockups as separate image
+          files. He saves them in an <code>images/</code> folder in the project.
+          Claude uses these real images directly in the app instead of trying to
+          draw them in code.
+        </p>
+
+        <h3>Other new bits in this build</h3>
+        <ul>
+          <li>
+            <b>Plan mode</b> — for this build, Claude switches itself into "plan
+            mode" and asks Nick clarifying questions before writing code:
+            "should the tree grow in real time as the timer ticks down, or play
+            a pre-made animation at the end?" Nick picks each option.
+          </li>
+          <li>
+            <b>Sub-agents</b> — Claude spawns a small helper that does
+            background research on "React Native animation libraries" while the
+            main thread keeps working. The helper reports back, then disappears.
+          </li>
+          <li>
+            <b>Haptic feedback at the design level</b> — Nick asks for it
+            explicitly: "when I tap on a seed, it should jiggle slightly and the
+            phone should buzz."
+          </li>
+          <li>
+            <b>Withering animations</b> — neglected trees visually wilt; the app
+            sends push notifications inviting you back.
+          </li>
+        </ul>
+
+        <h3>Why so much polish on such a simple app?</h3>
+        <p>
+          Nick's point: the Pomodoro core function (a timer) is trivial — your
+          phone already has a timer. The reason a user would choose this app is
+          the <i>feeling</i>. So the entire app is engineered around the
+          "growing tree" payoff. Without that, you have nothing.
+        </p>
+
+        <div class="pull">
+          <strong>What's "plan mode"?</strong> A mode Claude Code can enter when
+          a task is complex enough that it wants to ask clarifying questions
+          before charging ahead. You'll see "PLAN" on the screen and Claude will
+          present numbered options. You either pick from the suggestions or
+          override.
+        </div>
+
+        <div class="pull">
+          <strong>What are "sub-agents"?</strong> Smaller, focused versions of
+          Claude that the main Claude can dispatch to handle a specific question
+          — like researching a library, or testing one page of an app — without
+          cluttering the main conversation. They report back and disappear.
+        </div>
+
+        <div class="pull">
+          <strong>What's an "SVG"?</strong> Scalable Vector Graphic. An image
+          format described as code, not pixels. The advantage: it scales to any
+          size without getting blurry. Used a lot for icons.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch15">
+        <h2>
+          <span class="ch-num">15.</span>Submit to the App Store<span class="ts"
+            >03:43–04:00</span
+          >
+        </h2>
+
+        <p>
+          Final stretch. Nick picks the Calorie Tracker (most complex of the
+          three) and walks it all the way through to App Store submission.
+        </p>
+
+        <h3>What you need before you can submit</h3>
+        <ol>
+          <li>
+            <b>An Apple Developer account</b> — sign up at
+            <code>developer.apple.com/account</code>. Costs $99/year. Without
+            this you cannot publish to the iOS App Store.
+          </li>
+          <li>
+            <b>A Google Play Developer account</b> — sign up at
+            <code>play.google.com/console/signup</code>. One-time $25 fee. For
+            the Android side. (Optional if you're iOS-only.)
+          </li>
+          <li>
+            <b>A working app</b> — fully tested on Chrome, mirror, and real
+            phone, plus security audit passed.
+          </li>
+          <li>
+            <b>A privacy policy</b> hosted on a real website. Apple requires
+            this. Nick has Claude write his — fed the Apple submission rules to
+            Claude and got a complete privacy policy hosted at
+            <code>leftclick.ai/caltracker/privacy</code> in minutes.
+          </li>
+          <li><b>A support page</b> hosted on a website. Same trick.</li>
+          <li>
+            <b>App screenshots</b> in specific sizes for iPhone and iPad. Claude
+            can take these by opening the app in Chrome and screenshotting at
+            the right dimensions.
+          </li>
+          <li>
+            <b>App store text</b> — promotional copy, full description,
+            keywords. All written by Claude.
+          </li>
+        </ol>
+
+        <h3>The build-and-submit flow</h3>
+        <ol>
+          <li>
+            <b>Prepare for production</b> — Claude generates two config files
+            (<code>app.json</code> and <code>eas.json</code>) that describe the
+            app to Apple: name, version, icon, permissions needed.
+          </li>
+          <li>
+            <b>Build via EAS</b> — Nick runs the command Claude gives him.
+            <b>EAS</b> (Expo Application Services) is Expo's cloud building
+            service. You upload your code; their servers compile it into a
+            finished iOS app package. Free tier takes longer; paid tier is
+            faster.
+          </li>
+          <li>
+            <b>Submit via EAS</b> — once built, run
+            <code>eas submit --platform ios</code>. It uploads the finished
+            build directly to Apple's App Store Connect.
+          </li>
+          <li>
+            <b>App Store Connect</b> — log in at
+            <code>appstoreconnect.apple.com</code>. Drag in screenshots, paste
+            promotional text, set price (free or paid), select category, fill in
+            age ratings, content rights, in-app-purchase declarations, and so
+            on. This is tedious but Claude can produce all the text and images.
+          </li>
+          <li>
+            <b>Test sign-in for reviewers</b> — Apple requires you to give them
+            a username and password for an actual account in your app so a human
+            reviewer can log in and test the features. Nick uses something like
+            <code>test@gmail.com</code> / <code>t3stx!.414</code>.
+          </li>
+          <li>
+            <b>Submit for review</b> — top-right corner of App Store Connect.
+            Apple reviews within a few days. They might reject and tell you what
+            to fix, or approve.
+          </li>
+        </ol>
+
+        <h3>TestFlight (optional but recommended)</h3>
+        <p>
+          Apple has a service called <b>TestFlight</b> that lets you share your
+          app with up to 10,000 testers privately, before submitting to the
+          public App Store. Nick recommends spending 1–2 weeks on TestFlight
+          with real users to find bugs before going public. He doesn't do this
+          on camera because of video length, but flags it as best practice.
+        </p>
+
+        <div class="pull">
+          <strong>What's "EAS"?</strong> Expo Application Services. The
+          cloud-build part of Expo. It takes your JavaScript code and turns it
+          into the binary file (.ipa for iPhone, .aab for Android) that Apple
+          and Google actually require. You'd otherwise need a Mac with Xcode
+          installed for iOS builds — EAS removes that requirement.
+        </div>
+
+        <div class="pull">
+          <strong>What's "TestFlight"?</strong> Apple's beta-testing service.
+          Lets you share an in-progress app with specific people via a private
+          link, without going through the full public App Store review. Great
+          for catching bugs from real users before going public.
+        </div>
+
+        <div class="pull">
+          <strong>What's "App Store Connect"?</strong> Apple's web dashboard
+          where you actually manage your app's listing: screenshots,
+          descriptions, pricing, reviewer notes, submission status. Distinct
+          from the developer account itself — it's where the per-app paperwork
+          lives.
+        </div>
+      </section>
+
+      <section class="chapter" id="ch16">
+        <h2>
+          <span class="ch-num">16.</span>Closing & where to go next<span
+            class="ts"
+            >04:00–04:03</span
+          >
+        </h2>
+
+        <p>Nick wraps up by recommending three follow-ups:</p>
+        <ol>
+          <li>
+            <b>His seminal 4-hour Claude Code course</b> — a "bottom-up"
+            comprehensive curriculum on Claude Code itself: icons, buttons,
+            context management, advanced prompt engineering. This video is the
+            "top-down" version (learn by doing); that one is the "bottom-up"
+            version (learn by reading).
+          </li>
+          <li>
+            <b>Advanced Claude Code courses</b> — sub-agent orchestration,
+            optimising skills for knowledge work.
+          </li>
+          <li>
+            <b>Maker School</b> — his paid community ($90-day money-back
+            guarantee) on monetising these skills as a service business.
+            Lead-gen via cold email, DM sequences, social-media branding.
+          </li>
+        </ol>
+
+        <p>
+          He invites you to leave video ideas in the comments, asks you to
+          subscribe ("hate asking, but it helps my reach"), and signs off.
+        </p>
+      </section>
+
+      <!-- ───────────────────────────────────────────── GLOSSARY ───────────────────────────────────────────── -->
+
+      <section class="glossary" id="glossary">
+        <h2 style="margin-top: 0">
+          Jargon Translator — every technical term, defined plainly
+        </h2>
+        <p class="small">
+          Sorted alphabetically. If a term appears in the video and isn't in
+          this list, it was a passing mention that doesn't really matter.
+        </p>
+        <dl>
+          <dt>Android</dt>
+          <dd>
+            Google's phone operating system. Used by Samsung, Google Pixel,
+            OnePlus, and most non-Apple phones.
+          </dd>
+
+          <dt>Anti-Gravity</dt>
+          <dd>
+            A code editor (the app where you write and edit your project's
+            files) built by Google. Nick uses it because it's similar to VS Code
+            but supports Claude Code natively.
+          </dd>
+
+          <dt>API</dt>
+          <dd>
+            Application Programming Interface. A way for two pieces of software
+            to communicate. When your app sends a food photo to Claude for
+            analysis, it's "calling Claude's API."
+          </dd>
+
+          <dt>API key</dt>
+          <dd>
+            A secret password that identifies you to an API (like Claude's).
+            Keep it secret — anyone with it can spend your money. Store in
+            <code>.env</code> files, never paste into chats, never commit to
+            GitHub.
+          </dd>
+
+          <dt>App Store Connect</dt>
+          <dd>
+            Apple's web dashboard for managing your app's listing on the App
+            Store. Screenshots, description, price, reviewer login, submission
+            status all live here.
+          </dd>
+
+          <dt>Apple Developer account</dt>
+          <dd>
+            The $99/year membership you need to publish apps to the iOS App
+            Store. Sign up at <code>developer.apple.com/account</code>.
+          </dd>
+
+          <dt>Authentication</dt>
+          <dd>
+            The login system. Lets users prove who they are, usually with a
+            password or a Google/Apple sign-in. Pairs each user with their data.
+          </dd>
+
+          <dt>Cache (local caching)</dt>
+          <dd>
+            Keeping a copy of data on the user's own device for speed. The app
+            reads from the cache instantly while syncing to the cloud in the
+            background. Without caching, every tap waits on the cloud.
+          </dd>
+
+          <dt>Capacitor</dt>
+          <dd>
+            A framework that lets you take a regular website and wrap it so it
+            behaves like a mobile app. Easier to learn but less flexible than
+            React Native.
+          </dd>
+
+          <dt>CD (change directory)</dt>
+          <dd>
+            A terminal command that moves you into a folder.
+            <code>cd ~/projects/habit-tracker</code> takes the terminal to that
+            folder.
+          </dd>
+
+          <dt>Claude / Claude Code</dt>
+          <dd>
+            The AI assistant from Anthropic. Plain "Claude" is the chat. "Claude
+            Code" is the version that can actually read and write files on your
+            computer.
+          </dd>
+
+          <dt>CLAUDE.md</dt>
+          <dd>
+            A plain-text memory file at the root of your project. Claude reads
+            it at the start of every session, so it remembers what your project
+            is. Created automatically by typing <code>/init</code>.
+          </dd>
+
+          <dt>Commit</dt>
+          <dd>
+            A saved snapshot of your code at one moment, with a short message
+            describing what changed. GitHub remembers every commit forever.
+          </dd>
+
+          <dt>Compaction (<code>/compact</code>)</dt>
+          <dd>
+            A Claude Code shortcut that compresses the current conversation into
+            a shorter summary. Use when conversations get very long and Claude
+            starts to slow down.
+          </dd>
+
+          <dt>CWE</dt>
+          <dd>
+            Common Weakness Enumeration. A standardised numbering system for
+            known security weaknesses. The security audit tags each finding with
+            its CWE number.
+          </dd>
+
+          <dt>Dart</dt>
+          <dd>
+            Google's programming language, used with the Flutter framework. We
+            don't use it in this course.
+          </dd>
+
+          <dt>Database</dt>
+          <dd>
+            Organised online storage. Like a giant spreadsheet that lots of apps
+            can read and write to at the same time. Lives in the cloud so any
+            device can reach it.
+          </dd>
+
+          <dt>Deployment</dt>
+          <dd>
+            Pushing your app to a place where real users can install it (the App
+            Store, the Play Store, a public website). The final stage of the
+            build pipeline.
+          </dd>
+
+          <dt>Dribbble</dt>
+          <dd>
+            A website where designers share screenshots of their work. Great
+            place to find design inspiration. <code>dribbble.com</code>
+          </dd>
+
+          <dt>EAS (Expo Application Services)</dt>
+          <dd>
+            Expo's cloud-build service. Takes your code and produces the
+            finished iOS / Android app file that Apple and Google require.
+            Removes the need for a Mac with Xcode.
+          </dd>
+
+          <dt>Edge function</dt>
+          <dd>
+            A small piece of code that runs in the cloud only when triggered,
+            then turns off. Cheaper than an always-on server. Supabase Edge
+            Functions are the version used here.
+          </dd>
+
+          <dt><code>.env</code> file</dt>
+          <dd>
+            A hidden file at the root of your project where you store secrets
+            like API keys. It's automatically excluded from GitHub uploads via
+            the <code>.gitignore</code> file.
+          </dd>
+
+          <dt>Expo / Expo Go</dt>
+          <dd>
+            Expo is the toolkit Nick uses to build apps. Expo Go is the free
+            phone app from the App Store / Play Store that lets you run your
+            in-progress app on your real phone by scanning a QR code.
+          </dd>
+
+          <dt>Firebase</dt>
+          <dd>
+            Google's database and login product. Direct competitor to Supabase.
+            Nick uses Supabase instead because of personal preference.
+          </dd>
+
+          <dt>Flutter</dt>
+          <dd>
+            Google's app-building framework. Uses Dart. Has its own opinionated
+            design system that makes Android apps look "very Google." Nick chose
+            React Native over Flutter for this course.
+          </dd>
+
+          <dt>GitHub</dt>
+          <dd>
+            Online storage for code, plus a complete history of every change.
+            Like Dropbox-for-code with a time machine attached.
+          </dd>
+
+          <dt>Haptic feedback</dt>
+          <dd>
+            The little vibrations your phone produces when you tap certain
+            buttons. Real, deliberate UX feature — not a quirk. Adding haptics
+            to your app makes it feel professional.
+          </dd>
+
+          <dt>Hot reload</dt>
+          <dd>
+            When you change the code, the running app on your phone updates
+            instantly without reinstalling. Saves enormous time during
+            development.
+          </dd>
+
+          <dt>HTML / CSS / JavaScript / TypeScript</dt>
+          <dd>
+            The four core languages of the web. HTML is the structure, CSS is
+            the styling, JavaScript is the behaviour, TypeScript is JavaScript
+            with type-checking added. Expo + React Native use JavaScript and
+            TypeScript.
+          </dd>
+
+          <dt><code>/init</code></dt>
+          <dd>
+            A Claude Code shortcut that creates a <code>CLAUDE.md</code> file
+            describing your project so future sessions don't start from scratch.
+          </dd>
+
+          <dt>iOS</dt>
+          <dd>
+            Apple's phone operating system. The thing that runs on iPhones.
+          </dd>
+
+          <dt>JSON</dt>
+          <dd>
+            A simple text format for structured data. Looks like
+            <code>{"calories": 650, "protein": 42}</code>. The standard way apps
+            and APIs trade data.
+          </dd>
+
+          <dt>JWT</dt>
+          <dd>
+            JSON Web Token. A specific kind of login token that proves a user is
+            signed in. Mentioned in passing during the AI features section.
+          </dd>
+
+          <dt>Local-first</dt>
+          <dd>
+            An approach where the app's local cache is the primary source of
+            data and the cloud is the backup, instead of the other way round.
+            Results in apps that feel instant.
+          </dd>
+
+          <dt>Local storage</dt>
+          <dd>
+            Data stored on the user's own device only. Doesn't sync between
+            phone and laptop. The version of the habit tracker before Supabase
+            was added used local storage only.
+          </dd>
+
+          <dt>Mifflin-St Jeor equation</dt>
+          <dd>
+            A standard physiology formula for estimating how many calories
+            someone burns at rest, based on their age, height, weight, and sex.
+            Used by most calorie-tracker apps.
+          </dd>
+
+          <dt>Modal</dt>
+          <dd>
+            A popup that takes over the whole screen until the user dismisses
+            it. Used for important interruptions: confirmations, errors, sign-in
+            screens.
+          </dd>
+
+          <dt>MVP (Minimum Viable Product)</dt>
+          <dd>
+            The smallest version of an app that still does its main job. Ship
+            this, then iterate based on real users.
+          </dd>
+
+          <dt>OAuth (pronounced "oh-auth")</dt>
+          <dd>
+            The technology that lets users sign in with their Google or Apple
+            account instead of creating a new password. Nick keeps saying "OOTH"
+            — he means OAuth.
+          </dd>
+
+          <dt>Plan mode</dt>
+          <dd>
+            A Claude Code mode where Claude asks clarifying questions before
+            writing code. Triggered automatically when a task is complex enough
+            to need decisions.
+          </dd>
+
+          <dt>Pomodoro</dt>
+          <dd>
+            A productivity technique: work in 25-minute focused blocks
+            ("Pomodoros") separated by 5-minute breaks. Builds focus over time.
+          </dd>
+
+          <dt>Postgres / PostgreSQL</dt>
+          <dd>
+            The specific database technology Supabase uses under the hood. You
+            don't need to know anything about it directly — Claude handles it.
+          </dd>
+
+          <dt>Production</dt>
+          <dd>
+            The "real" version of your app that real users will install — as
+            opposed to the in-development version you've been playing with.
+            "Preparing for production" means locking down the configuration
+            before publishing.
+          </dd>
+
+          <dt>Prompt</dt>
+          <dd>
+            The instructions you give to an AI. Better prompts produce better
+            outputs. Nick rewrites prompts repeatedly to tune the AI's
+            behaviour.
+          </dd>
+
+          <dt>Push notification</dt>
+          <dd>
+            A message that appears on a user's phone even when your app is
+            closed — like getting a text. Requires the user to grant permission
+            in iOS / Android settings first.
+          </dd>
+
+          <dt>QR code</dt>
+          <dd>
+            The black-and-white square pattern. Your computer prints one; you
+            scan it with your phone's camera to open the in-development app via
+            Expo Go.
+          </dd>
+
+          <dt>React Native</dt>
+          <dd>
+            Facebook / Meta's framework for building phone apps with JavaScript.
+            The framework underlying everything in this course.
+          </dd>
+
+          <dt>Repo / repository</dt>
+          <dd>
+            A single project on GitHub. One folder of files plus all its edit
+            history.
+          </dd>
+
+          <dt>RLS (Row-Level Security)</dt>
+          <dd>
+            A database setting that automatically restricts each user to only
+            their own rows of data. One of the easiest, biggest wins for
+            security. Enable it when creating a Supabase project.
+          </dd>
+
+          <dt>Schema</dt>
+          <dd>
+            The "shape" of your database — what tables exist, what columns are
+            in each table, what types of data they hold. Claude designs and
+            applies the schema for you.
+          </dd>
+
+          <dt>Serif vs sans-serif fonts</dt>
+          <dd>
+            Serifs are the little tails at the ends of letters in fonts like
+            Times. "Sans serif" means "without serifs" — fonts like Helvetica.
+            Nick experiments with both.
+          </dd>
+
+          <dt>Server</dt>
+          <dd>
+            A computer in a data centre that responds to requests over the
+            internet. The Supabase database lives on Supabase's servers.
+          </dd>
+
+          <dt>Serverless</dt>
+          <dd>
+            The opposite of "always-on server." Code that only runs when
+            triggered, then turns off. Supabase Edge Functions are serverless.
+            You pay per second of actual use, not 24/7.
+          </dd>
+
+          <dt>SQL</dt>
+          <dd>
+            The language used to talk to databases. Nick mentions it but you
+            almost never have to write it yourself — Claude does.
+          </dd>
+
+          <dt>Splash screen</dt>
+          <dd>
+            The brief logo screen you see when you first launch any app. Needs
+            to be created for the App Store submission. Claude can make one.
+          </dd>
+
+          <dt>SVG (Scalable Vector Graphic)</dt>
+          <dd>
+            An image format described as code, not pixels. Scales to any size
+            without blur. Used for icons and simple illustrations.
+          </dd>
+
+          <dt>Supabase</dt>
+          <dd>
+            The database + login service used in this course. Free to start.
+            Cheap and reliable. Lives at <code>supabase.com</code>.
+          </dd>
+
+          <dt>Sub-agent</dt>
+          <dd>
+            A smaller, focused version of Claude that the main Claude can
+            dispatch to handle a specific question (research, testing) and then
+            disappear. Keeps the main conversation clean.
+          </dd>
+
+          <dt>Terminal</dt>
+          <dd>
+            The black-and-white text window where you type commands directly to
+            the computer. On Mac it's called "Terminal." Claude can drive it for
+            you.
+          </dd>
+
+          <dt>TestFlight</dt>
+          <dd>
+            Apple's private beta-testing service. Share your in-progress app
+            with up to 10,000 people before submitting to the public App Store.
+          </dd>
+
+          <dt>Toast</dt>
+          <dd>
+            A small notification that slides in, stays for a few seconds, then
+            disappears. The banner you see when a text arrives.
+          </dd>
+
+          <dt>Token</dt>
+          <dd>
+            The unit of measurement for AI usage. Roughly a word or piece of a
+            word. Long conversations use more tokens. AI services bill by
+            tokens.
+          </dd>
+
+          <dt>UI / UX</dt>
+          <dd>
+            UI is User Interface — what the app looks like. UX is User
+            Experience — how it feels to use. Different but related concerns.
+          </dd>
+
+          <dt>VS Code / Visual Studio Code</dt>
+          <dd>
+            Microsoft's free code editor, the most popular one in the world.
+            Anti-Gravity is built on top of it.
+          </dd>
+
+          <dt>WebFetch</dt>
+          <dd>
+            Not mentioned in the video, but it's the Claude Code tool that lets
+            Claude read web pages — which it can do automatically when it needs
+            to research a library.
+          </dd>
+
+          <dt>YAML / Markdown / .md</dt>
+          <dd>
+            Plain-text formats for configuration and documentation.
+            <code>CLAUDE.md</code> is a Markdown file. Don't worry about the
+            distinction.
+          </dd>
+        </dl>
+      </section>
+
+      <footer>
+        Walkthrough prepared 2026-05-13 by Claude Code session. Source video:
+        <a href="https://www.youtube.com/watch?v=BMMcmmnjrM8"
+          >youtube.com/watch?v=BMMcmmnjrM8</a
+        >. Transcript pulled via <code>youtube-transcript-api</code> and
+        structured manually. No claims attributed to Nick beyond what he says on
+        tape.
+      </footer>
+    </div>
+  </body>
+</html>

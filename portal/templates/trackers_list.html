@@ -1,0 +1,155 @@
+{% extends "base.html" %} {% block title %}Trackers · Rootlabs Portal{% endblock
+%} {% set nav_active = 'trackers' %} {% block crumbs %}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<strong>Trackers</strong>
+{% endblock %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">Trackers</h1>
+    <p class="page__sub">
+      Product-by-product target trackers maintained as CSVs. Each tracker shows
+      the team's targets per creator and is enriched live with 30-day GMV, last
+      post, and current status from the database.
+    </p>
+  </div>
+</div>
+
+<div
+  style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--s-4);
+  "
+>
+  {% for t in trackers %}
+  <a
+    href="/trackers/{{ t.id }}"
+    class="card"
+    style="
+      padding: var(--s-5);
+      text-decoration: none;
+      color: var(--c-ink);
+      display: block;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        gap: var(--s-3);
+        margin-bottom: var(--s-3);
+      "
+    >
+      <span style="font-size: var(--t-22); line-height: 1">{{ t.emoji }}</span>
+      <h3 class="card__title" style="margin: 0">{{ t.title }}</h3>
+      <div style="margin-left: auto">
+        {% if t.exists %}
+        <span class="chip chip--success"
+          >{{ '{:,}'.format(t.row_count) }} rows</span
+        >
+        {% else %}
+        <span class="chip chip--error">CSV missing</span>
+        {% endif %}
+      </div>
+    </div>
+    <p
+      style="
+        margin: 0 0 var(--s-3) 0;
+        font-size: var(--t-13);
+        color: var(--c-ink-3);
+        line-height: 1.5;
+      "
+    >
+      {{ t.description }}
+    </p>
+    <div style="font-size: var(--t-12); color: var(--c-ink-4)">
+      product: <strong style="color: var(--c-ink-2)">{{ t.product }}</strong> ·
+      csv:
+      <code style="font-family: var(--f-mono); font-size: 11px"
+        >{{ t.csv }}</code
+      >
+    </div>
+    <div
+      style="
+        font-size: var(--t-13);
+        color: var(--c-accent);
+        margin-top: var(--s-3);
+        font-weight: 500;
+      "
+    >
+      Open tracker →
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="card" style="margin-top: var(--s-7)">
+  <div class="card__head">
+    <h3 class="card__title">How to add a new tracker</h3>
+    <p class="card__sub">
+      30 seconds — no code change to routes/templates needed
+    </p>
+  </div>
+  <div class="card__body" style="font-size: var(--t-13); line-height: 1.6">
+    <ol style="margin: 0; padding-left: 1.25rem">
+      <li>
+        Drop the CSV file into
+        <code
+          style="
+            font-family: var(--f-mono);
+            background: var(--c-sunken);
+            padding: 1px 6px;
+            border-radius: 3px;
+          "
+          >portal/trackers/</code
+        >
+        (lowercase filename, no spaces).
+      </li>
+      <li>
+        Open
+        <code
+          style="
+            font-family: var(--f-mono);
+            background: var(--c-sunken);
+            padding: 1px 6px;
+            border-radius: 3px;
+          "
+          >portal/lib/trackers.py</code
+        >
+        and add an entry to <code>TRACKERS</code>:
+        <pre
+          style="
+            background: var(--c-sunken);
+            padding: var(--s-3);
+            border-radius: var(--r-3);
+            font-family: var(--f-mono);
+            font-size: var(--t-12);
+            margin: var(--s-2) 0;
+            overflow-x: auto;
+          "
+        >
+"alpha": {
+    "id": "alpha", "title": "Alpha Tracker", "emoji": "⚡",
+    "csv": "alpha_tracker.csv", "product": "Alpha",
+    "creator_col": "Creator", "poc_col": "POC",
+    "skip_rows": 0,  # set to 1 if the first row is totals
+    "description": "Alpha campaign targets &amp; achievement.",
+},</pre
+        >
+      </li>
+      <li>
+        Reload the portal — the new tracker appears here and at
+        <code>/trackers/&lt;id&gt;</code>.
+      </li>
+    </ol>
+    <p style="margin: var(--s-4) 0 0; color: var(--c-ink-3)">
+      The system auto-detects all the CSV's columns, filters by POC for the
+      logged-in POC, and adds live DB columns (30d GMV, last post, status). No
+      template work needed for new trackers — they all share this view.
+    </p>
+  </div>
+</div>
+
+{% endblock %}

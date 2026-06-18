@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "ashwagandha-night-or-morning",
+    "title": "Why Ashwagandha at night, not morning",
+    "category": "Adaptogens",
+    "readTimeMin": 4,
+    "publishedWeek": 1,
+    "heroImage": "articles/ashwagandha-night.jpg",
+    "summary": "Cortisol curves, KSM-66 dosing, and the case for evening protocols.",
+    "body": "Cortisol is supposed to peak in the morning and fall through the day. For most modern adults — stressed, screen-lit, under-slept — that curve gets blunted. Cortisol stays elevated into the evening, sleep degrades, and the loop reinforces.\n\nAshwagandha (specifically KSM-66, the full-spectrum root extract) helps regulate cortisol — it doesn't slam it down, it nudges the curve back toward its natural shape.\n\nWhich is why evening dosing makes more sense than morning: you're catching cortisol where it's misbehaving (high when it should be low), not where it's already correct (high when it should be high).\n\nProtocol: 600mg KSM-66 with dinner, every day, for 8 weeks before judging effect.",
+    "linkedProducts": ["alpha-gummies-60s", "alpha-gummies-120s"]
+  },
+  {
+    "slug": "shilajit-what-is-it-actually",
+    "title": "Shilajit: what is it, actually?",
+    "category": "Ingredients",
+    "readTimeMin": 5,
+    "publishedWeek": 2,
+    "heroImage": "articles/shilajit-resin.jpg",
+    "summary": "Beyond the marketing — what makes Himalayan resin chemically distinct.",
+    "body": "Shilajit isn't a plant. It's not a mineral. It's a resin — formed over centuries from compressed plant matter pressurized between rock layers at Himalayan altitudes above 16,000 feet.\n\nThe active fraction is fulvic acid. Unlike most nutrients, fulvic acid is a 'carrier' molecule — it doesn't have a direct effect; it helps your cells absorb everything else. Think of it as the delivery system for whatever stack you're already running.\n\nWhat to look for in a good Shilajit:\n- Purified resin (not raw — raw can carry contaminants)\n- Standardized fulvic acid content (minimum 18%)\n- Third-party tested for heavy metals (Himalayan sourcing can pick up trace metals; testing matters)\n- Vegetarian capsule or gummy format if you want consistency",
+    "linkedProducts": ["alpha-gummies-60s"]
+  },
+  {
+    "slug": "sea-moss-mineral-floor",
+    "title": "The 'mineral floor' nobody talks about",
+    "category": "Foundations",
+    "readTimeMin": 3,
+    "publishedWeek": 3,
+    "heroImage": "articles/sea-moss-mineral.jpg",
+    "summary": "Why supplement stacks fail without baseline mineral coverage.",
+    "body": "Most people who 'don't feel anything' from supplements are mineral-deficient before they start.\n\nMagnesium, iodine, potassium, selenium, chromium — these aren't trendy, they don't make hero copy. But every enzyme reaction in your body needs them as cofactors. When they're low, everything downstream is bottlenecked.\n\nSea moss is the unsexy answer: a red algae carrying 90+ trace minerals in their bioavailable form. Two weeks of daily intake usually closes the deficit. After that, you'll notice the stuff you ARE taking actually works.\n\nIt's not a magic bullet. It's the floor that lets everything else stand on something.",
+    "linkedProducts": ["sea-moss-gummies", "immunity-combo"]
+  },
+  {
+    "slug": "turmeric-piperine-why",
+    "title": "Why turmeric without piperine is wasted money",
+    "category": "Bioavailability",
+    "readTimeMin": 3,
+    "publishedWeek": 4,
+    "heroImage": "articles/turmeric-piperine.jpg",
+    "summary": "Curcumin's bioavailability problem — and the simple fix.",
+    "body": "Curcumin (the active in turmeric) has a problem: your body's bad at absorbing it. Studies show oral bioavailability under 1% — which means 99% of a curcumin capsule passes through unused.\n\nPiperine, from black pepper, blocks the liver enzymes that metabolize curcumin. Co-formulated, absorption jumps roughly 20×.\n\nIf your turmeric supplement doesn't list piperine (or BioPerine®, the standardized form) on the label, you're paying for something your body will mostly excrete.\n\nThat's it. No drama. Just a labeling rule.",
+    "linkedProducts": ["turmeric-gummies"]
+  },
+  {
+    "slug": "honest-report-what-we-test",
+    "title": "What we test for, on every batch",
+    "category": "Transparency",
+    "readTimeMin": 4,
+    "publishedWeek": 5,
+    "heroImage": "articles/honest-report.jpg",
+    "summary": "Five lab panels, on every batch, before any product ships.",
+    "body": "Every batch we manufacture goes to an independent third-party lab (Equinox Labs in our case — NABL accredited) before a single bottle leaves the warehouse.\n\nThe panels:\n\n1. **Aflatoxin** — 4 mycotoxins (B1, B2, G1, G2). Limit of quantification 0.5µg/kg.\n2. **Heavy Metals** — Barium, Copper, Selenium. Tested against FSSAI limits.\n3. **Pesticide** — 211 separate chemicals screened. Every one must come back BLQ.\n4. **Allergen** — standard 14-allergen panel.\n5. **Gluten** — below 20ppm threshold.\n\nReports are public, viewable in the Honest Reports section of this app. Tap a panel → read the actual signed lab report.\n\nWhy this matters: most supplement labels claim 'tested for purity.' Very few publish the actual reports. Even fewer test 211 pesticides individually. That's the bar we hold.",
+    "linkedProducts": ["alpha-gummies-60s", "immunity-combo"]
+  },
+  {
+    "slug": "subscribe-vs-one-off",
+    "title": "Why we steer toward subscriptions",
+    "category": "Protocols",
+    "readTimeMin": 3,
+    "publishedWeek": 6,
+    "heroImage": "articles/subscribe-protocol.jpg",
+    "summary": "Adaptogens compound over months, not weeks.",
+    "body": "Adaptogens (Ashwagandha, Tongkat Ali, Shilajit) don't work like caffeine. They don't hit fast. They work by nudging your hormonal systems over weeks, and they reach steady state somewhere between weeks 4 and 8.\n\nIf you take a bottle, stop, take another in 2 months, stop again — you never actually let the compound build. You're paying for the start of effect, not the effect itself.\n\nThe subscribe-and-save price isn't a sales tactic. It's an alignment: we want you on the protocol long enough to feel it, you pay less for committing. Cancel anytime, no penalty.",
+    "linkedProducts": ["alpha-gummies-120s"]
+  },
+  {
+    "slug": "mayank-founder-story",
+    "title": "Why I started Root Labs",
+    "category": "From the Founder",
+    "readTimeMin": 6,
+    "publishedWeek": 7,
+    "heroImage": "articles/mayank-story.jpg",
+    "summary": "Mayank Kumar on the gap between what supplement labels say and what they actually contain.",
+    "body": "I started Root Labs because I was tired of buying supplements that I had no way to verify. I'd read the marketing, hold the bottle, and think — okay, but what's actually in here?\n\nThe industry has a problem: the gap between what a label claims and what a third-party lab finds is sometimes laughable. Independent testing has caught products at 10% of labeled potency, or carrying heavy metals far above safe limits, or containing ingredients that weren't on the label at all.\n\nWe built Root Labs around a simple principle: anything we say on a label, we'll prove on a lab report. Every batch. Publicly.\n\nThat's it. That's the whole pitch. The rest is just execution.",
+    "linkedProducts": []
+  },
+  {
+    "slug": "starter-pack-protocol",
+    "title": "Two weeks each — how to actually try our line",
+    "category": "Protocols",
+    "readTimeMin": 3,
+    "publishedWeek": 8,
+    "heroImage": "articles/starter-pack.jpg",
+    "summary": "If you're new to Root Labs, here's the lowest-risk way to find what works for you.",
+    "body": "The Wellness Starter Pack is three mini-bottles, two weeks each: Alpha Gummies, Sea Moss, Turmeric.\n\nThe protocol:\n\n- **Weeks 1–2**: Sea Moss only. This closes the mineral floor. You may notice nothing — that's fine. You're setting baseline.\n- **Weeks 3–4**: Add Turmeric. Daily anti-inflammatory baseline. Joint comfort, recovery, general wellbeing should start nudging.\n- **Weeks 5–6**: Add Alpha Gummies. Shilajit + Ashwagandha. Energy, sleep, stress resilience. Now you're feeling effects.\n\nAt week 6, you know what's hitting and what isn't. From there, full bottle of whatever you want to continue.\n\n30-day money-back guarantee on the starter pack. Risk-free trial.",
+    "linkedProducts": ["alpha-gummies-60s"]
+  }
+]

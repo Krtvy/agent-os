@@ -1,0 +1,9 @@
+{
+  "slug": "probe",
+  "title": "Database probe",
+  "description": "Smallest possible report — verifies portal can reach Supabase and return a CSV. Returns one row with `ok=1` and the database server's current timestamp.",
+  "inputs": [],
+  "owner_poc": [],
+  "data_sources": ["supabase"],
+  "hidden": true
+}

@@ -1,0 +1,172 @@
+{% extends "base.html" %} {% block title %}{{ handle }} · Rootlabs Portal{%
+endblock %} {% block content %}
+<nav class="breadcrumb">
+  <a href="/dashboard">Dashboard</a>
+  <span class="sep">›</span>
+  <a href="/creators">Creators</a>
+  <span class="sep">›</span>
+  <span>@{{ handle }}</span>
+</nav>
+
+<div class="page-header">
+  <h2>🎬 {{ handle }}</h2>
+  <p class="subtitle">
+    Activity from <strong>{{ start_date }}</strong> to
+    <strong>{{ end_date }}</strong>
+    (IST day boundary)
+  </p>
+</div>
+
+<form
+  method="get"
+  action="/creator/{{ handle }}"
+  class="surface"
+  style="margin-bottom: 1.5rem"
+>
+  <div class="spec-row" style="grid-template-columns: 1fr 1fr auto">
+    <label style="margin: 0">
+      <small class="muted">Start</small>
+      <input
+        type="date"
+        name="start"
+        value="{{ start_date }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">End</small>
+      <input type="date" name="end" value="{{ end_date }}" style="margin: 0" />
+    </label>
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.6rem 1.25rem; align-self: end"
+    >
+      Update
+    </button>
+  </div>
+</form>
+
+<div class="surface" style="margin-bottom: 1.5rem">
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-value">{{ summary.videos_count }}</div>
+      <div class="stat-label">videos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ summary.lives_count }}</div>
+      <div class="stat-label">lives</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ summary.total_orders }}</div>
+      <div class="stat-label">orders</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">${{ '{:,.0f}'.format(summary.total_gmv) }}</div>
+      <div class="stat-label">GMV</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">
+        ${{ '{:,.0f}'.format(summary.total_commission_organic +
+        summary.total_commission_shop_ads) }}
+      </div>
+      <div class="stat-label">commission</div>
+    </div>
+  </div>
+</div>
+
+{% if sparkline %}
+<div class="surface" style="margin-bottom: 1.5rem">
+  <div
+    style="
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    "
+  >
+    <h3 style="margin: 0; font-size: 1rem">Daily GMV trend</h3>
+    <small class="muted">hover any point for that day's value</small>
+  </div>
+  {{ sparkline|safe }}
+</div>
+{% endif %}
+
+<h3 class="section-heading">📹 Videos ({{ videos|length }})</h3>
+{% if videos %}
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>posted (UTC)</th>
+        <th>product</th>
+        <th>video id</th>
+        <th>orders</th>
+        <th>GMV</th>
+        <th>$organic</th>
+        <th>$shop ads</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for v in videos %}
+      <tr>
+        <td><small>{{ v.post_time }}</small></td>
+        <td><strong>{{ v.product }}</strong></td>
+        <td><code style="font-size: 0.75rem">{{ v.video_id[:20] }}…</code></td>
+        <td>{{ v.orders }}</td>
+        <td>${{ '{:,.2f}'.format(v.gmv) }}</td>
+        <td>${{ '{:,.2f}'.format(v.commission_organic) }}</td>
+        <td>${{ '{:,.2f}'.format(v.commission_shop_ads) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 1rem">
+  No videos posted in this range.
+</article>
+{% endif %}
+
+<h3 class="section-heading" style="margin-top: 2.5rem">
+  🔴 Livestreams ({{ lives|length }})
+</h3>
+{% if lives %}
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>first order (UTC)</th>
+        <th>live id</th>
+        <th>orders</th>
+        <th>GMV</th>
+        <th>$organic</th>
+        <th>$shop ads</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for l in lives %}
+      <tr>
+        <td><small>{{ l.first_order_at }}</small></td>
+        <td>
+          <code style="font-size: 0.75rem">{{ l.content_id[:20] }}…</code>
+        </td>
+        <td>{{ l.orders }}</td>
+        <td>${{ '{:,.2f}'.format(l.gmv) }}</td>
+        <td>${{ '{:,.2f}'.format(l.commission_organic) }}</td>
+        <td>${{ '{:,.2f}'.format(l.commission_shop_ads) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 1rem">
+  No livestreams in this range.
+</article>
+{% endif %}
+
+<p class="muted" style="margin-top: 2rem; font-size: 0.85rem">
+  💾 Queries run live against Supabase on each page load (capped at 500 videos +
+  500 lives). No caching for this view — refresh anytime.
+</p>
+{% endblock %}

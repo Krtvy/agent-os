@@ -1,0 +1,53 @@
+---
+id: <YYYYMMDD>-vyasa-<short-slug>
+target: sanjaya            # always sanjaya — vyasa never targets anyone else
+mode: meta-adaptation      # there is no bootstrap mode for vyasa
+status: pending
+confidence: <0-100>
+band: high | medium | low
+self_review: passed | warnings | flags
+review_notes: []
+evidence_count: <int, ≥3>
+example_run_ids:
+  - <run_id>
+  - <run_id>
+  - <run_id>
+days_spanned: <int>
+contributors:
+  - { factor: evidence_count, delta: +0 }
+  - { factor: days_spanned, delta: +0 }
+  - { factor: self_review, delta: +0 }
+  - { factor: bhishma_check, delta: +0 }
+proposal_kind: skill_update | threshold_change | new_skill | rule_clarification
+human_explicit: false      # set to true only if proposal touches approval-gate logic
+bhishma_check: passed
+loosens_rules: false       # MUST be false (R14)
+---
+
+## Rationale
+
+<3–25 lines. Cite specific Sanjaya journal-entry dates and run_ids.
+Describe the meta-pattern (drift signal, calibration miss, journal entropy,
+cooldown gaming, or velocity collapse) that triggered this proposal.>
+
+## Diff
+
+```diff
+--- a/.claude/agents/_meta/observer/skill.md
++++ b/.claude/agents/_meta/observer/skill.md
+@@ ... @@
+- <removed line>
++ <added line>
+```
+
+## What could go wrong
+
+- <Failure mode 1>
+- <Failure mode 2>
+- <How to detect each, post-apply>
+
+## Loop-detection self-check
+
+- [ ] No reference to my own previous proposals as evidence.
+- [ ] Evidence comes from Sanjaya's journals/proposals, not from Vyasa's reaction history.
+- [ ] Pattern was observed independently across ≥3 distinct Sanjaya runs.

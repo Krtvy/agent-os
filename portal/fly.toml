@@ -1,0 +1,43 @@
+# Fly.io app config for the Rootlabs POC Portal.
+#
+# This file is read by `fly deploy`. Run from the portal/ directory:
+#   cd portal && fly deploy
+#
+# IMPORTANT: `app` must be GLOBALLY unique across all of Fly. If
+# `rootlabs-portal` is taken, change it (e.g. mw-rootlabs-portal) AND
+# run `fly apps create <new-name>` before the first deploy.
+
+app = "rootlabs-portal"
+primary_region = "bom"        # Mumbai — closest to Supabase ap-south-1
+
+[build]
+  # Empty — Fly auto-detects the Dockerfile in this dir.
+
+# Persistent volume for POC-edited state (whitelist + passwords,
+# tracker rows, targets). Survives every deploy.
+[[mounts]]
+  source = "portal_data"
+  destination = "/app/_private"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false        # keep warm during the pilot
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 20
+    hard_limit = 40
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "20s"
+    method = "get"
+    path = "/healthz"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

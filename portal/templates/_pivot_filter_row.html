@@ -1,0 +1,31 @@
+<div class="spec-row filter-row">
+  <select name="filter_col" required>
+    <option value="">— column —</option>
+    {% for c in columns %}
+    <option value="{{ c.name }}">{{ c.label }} · {{ c.data_type }}</option>
+    {% endfor %}
+  </select>
+  <select name="filter_op" required onchange="onOpChange(this)">
+    <option value="">— op —</option>
+    {% for key, spec in supported_ops.items() %}
+    <option value="{{ key }}" data-needs="{{ spec.needs }}">
+      {{ spec.label }}
+    </option>
+    {% endfor %}
+  </select>
+  <input type="text" name="filter_v" placeholder="value" />
+  <input
+    type="text"
+    name="filter_v2"
+    placeholder="and value"
+    style="display: none"
+  />
+  <button
+    type="button"
+    class="remove-btn"
+    onclick="this.parentElement.remove()"
+    title="Remove"
+  >
+    ×
+  </button>
+</div>

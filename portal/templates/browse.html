@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block title %}Browse Data · Rootlabs Portal{%
+endblock %} {% block content %}
+<div class="page-header">
+  <h2>Browse Data</h2>
+  <p class="subtitle">
+    Click through to any table in Supabase, see what's in it, and build a pivot.
+    No SQL knowledge needed.
+  </p>
+</div>
+
+<div class="surface">
+  <div class="spec-row" style="grid-template-columns: 1fr 1fr">
+    <label style="margin: 0">
+      <small class="muted">Step 1 · Data source</small>
+      <select
+        name="schema"
+        hx-get="/browse/tables"
+        hx-trigger="change"
+        hx-target="#table-picker"
+        hx-swap="innerHTML"
+        hx-include="this"
+        autofocus
+      >
+        <option value="">— pick a data source —</option>
+        {% for s in schemas %}
+        <option value="{{ s.name }}">{{ s.label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label style="margin: 0">
+      <small class="muted">Step 2 · Table</small>
+      <div id="table-picker">
+        <select disabled>
+          <option>— pick a data source first —</option>
+        </select>
+      </div>
+    </label>
+  </div>
+</div>
+
+<div id="table-detail">
+  <div class="empty-hero">
+    <p class="emoji">↑</p>
+    <h3>Where do you want to look?</h3>
+    <p class="muted">
+      Start by picking a data source above. <strong>TikTok performance</strong>
+      has the videos, orders, and livestream activity most POC questions need.
+    </p>
+  </div>
+</div>
+{% endblock %}

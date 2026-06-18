@@ -1,0 +1,47 @@
+{
+  "_comment": "Project-shared Claude Code settings. Hooks wire the Bhishma write_scope check (PreToolUse) and structured trace recording (PostToolUse). Both hooks are opt-in via the BHISHMA_AGENT environment variable: they no-op in Kartavya's interactive sessions (where BHISHMA_AGENT is unset) and activate in agent runners that export it. See lib/README.md for full activation discipline. Constitutional R23 wiring authorized by Kartavya 2026-05-12 00:04 IST under auto-mode override; first Sahadeva audit at 10:00 IST 2026-05-17 should confirm or revert.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "lib/bhishma-pretool-hook.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "lib/post-tool-hook.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "lib/session-start-greeting.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "lib/session-end-checkpoint.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

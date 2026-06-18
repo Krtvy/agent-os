@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Root Labs",
+    "slug": "rootlabs-learning",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "rootlabs",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FEF8F3"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "co.rootlabs.learning"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#FEF8F3"
+      },
+      "package": "co.rootlabs.learning"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

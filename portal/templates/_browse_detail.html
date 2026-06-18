@@ -1,0 +1,245 @@
+{% if error %}
+<div class="status-panel error">
+  <p class="headline">{{ error }}</p>
+</div>
+{% else %}
+
+<div class="page-header" style="margin-top: 2rem">
+  <h2>{{ table_label }}</h2>
+  <p class="subtitle">
+    From <strong>{{ schema_label }}</strong> ·
+    <code class="kbd">{{ schema }}.{{ table }}</code><br />
+    {{ columns|length }} column{{ "" if columns|length == 1 else "s" }} · {{
+    row_count }} preview row{{ "" if row_count == 1 else "s" }}.
+  </p>
+</div>
+
+{# Collect all warnings into a single panel above the form #} {% set
+has_warnings = columns|selectattr("warnings")|list %} {% if has_warnings %}
+<details class="warnings-panel" open>
+  <summary>
+    {{ has_warnings|length }} column{{ "" if has_warnings|length == 1 else "s"
+    }} need{{ "s" if has_warnings|length == 1 else "" }} care
+  </summary>
+  <ul>
+    {% for c in has_warnings %} {% for w in c.warnings %}
+    <li>
+      <strong>{{ c.label }}</strong>
+      <small class="muted">({{ c.name }})</small> — {{ w }}
+    </li>
+    {% endfor %} {% endfor %}
+  </ul>
+</details>
+{% endif %}
+
+<h3 class="section-heading">Build a pivot</h3>
+
+<form method="post" action="/browse/pivot/run" class="surface pivot-form">
+  <input type="hidden" name="schema" value="{{ schema }}" />
+  <input type="hidden" name="table" value="{{ table }}" />
+
+  {% if creator_column and poc_options %}
+  <fieldset class="poc-scope">
+    <legend>
+      POC scope
+      <span class="hint"
+        >— restrict to creators owned by one POC (from
+        <code>portal/May Sheet PoC.csv</code>)</span
+      >
+    </legend>
+    <select name="poc_filter" style="max-width: 22rem">
+      <option value="">All POCs (no filter)</option>
+      {% for p in poc_options %}
+      <option value="{{ p }}">{{ p }}</option>
+      {% endfor %}
+    </select>
+    <small class="muted">
+      Adds
+      <code>WHERE {{ creator_column }} = ANY(&lt;POC's creators&gt;)</code>.
+    </small>
+  </fieldset>
+  {% endif %}
+
+  <fieldset>
+    <legend>
+      Values <span class="hint">— what to compute. Default: row count.</span>
+    </legend>
+    <div id="value-specs">
+      <div class="spec-row">
+        <select name="value_agg" required>
+          <option value="">— agg —</option>
+          {% for a in supported_aggs %} {% if a == "COUNT" %}
+          <option value="{{ a }}" selected>{{ a|replace('_', ' ') }}</option>
+          {% else %}
+          <option value="{{ a }}">{{ a|replace('_', ' ') }}</option>
+          {% endif %} {% endfor %}
+        </select>
+        <select name="value_col" required>
+          <option value="">— column —</option>
+          {% for c in columns %}
+          <option value="{{ c.name }}">
+            {{ c.label }} · {{ c.data_type }}
+          </option>
+          {% endfor %}
+        </select>
+        <button
+          type="button"
+          class="remove-btn"
+          onclick="this.parentElement.remove()"
+          title="Remove"
+        >
+          ×
+        </button>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="ghost"
+      hx-get="/browse/pivot/value-row?schema={{ schema }}&table={{ table }}"
+      hx-target="#value-specs"
+      hx-swap="beforeend"
+    >
+      + add value
+    </button>
+  </fieldset>
+
+  <fieldset>
+    <legend>
+      Rows
+      <span class="hint"
+        >— group by one or more columns. Leave empty for a single summary
+        row.</span
+      >
+    </legend>
+    <div id="row-specs"></div>
+    <button
+      type="button"
+      class="ghost"
+      hx-get="/browse/pivot/row-pick?schema={{ schema }}&table={{ table }}"
+      hx-target="#row-specs"
+      hx-swap="beforeend"
+    >
+      + add row
+    </button>
+  </fieldset>
+
+  <details class="advanced-section">
+    <summary>
+      Filters
+      <span class="hint">— optional WHERE clauses, AND-ed together</span>
+    </summary>
+    <div id="filter-specs" style="margin-top: 0.75rem"></div>
+    <button
+      type="button"
+      class="ghost"
+      hx-get="/browse/pivot/filter-row?schema={{ schema }}&table={{ table }}"
+      hx-target="#filter-specs"
+      hx-swap="beforeend"
+    >
+      + add filter
+    </button>
+  </details>
+
+  <details class="advanced-section">
+    <summary>
+      Cross-tab columns
+      <span class="hint"
+        >— optional. One column's values become output headers (Excel pivot
+        style)</span
+      >
+    </summary>
+    <select name="columns_dim" style="margin-top: 0.75rem">
+      <option value="">(none — tall output)</option>
+      {% for c in columns %}
+      <option value="{{ c.name }}">{{ c.label }} · {{ c.data_type }}</option>
+      {% endfor %}
+    </select>
+  </details>
+
+  <script>
+    function onOpChange(sel) {
+      const opt = sel.options[sel.selectedIndex];
+      const needs = parseInt(opt.dataset.needs || "1", 10);
+      const row = sel.closest(".filter-row");
+      const v = row.querySelector("input[name='filter_v']");
+      const v2 = row.querySelector("input[name='filter_v2']");
+      v.style.display = needs >= 1 ? "" : "none";
+      v2.style.display = needs >= 2 ? "" : "none";
+      if (needs < 1) v.value = "";
+      if (needs < 2) v2.value = "";
+    }
+  </script>
+
+  <div class="sticky-actions">
+    <div class="limit-row" style="margin: 0">
+      <label style="margin: 0"
+        >Limit
+        <input type="number" name="limit" value="1000" min="1" max="100000" />
+      </label>
+      <small class="muted">max 100k · times out at 30s</small>
+    </div>
+    <div class="form-actions" style="margin: 0; border: 0; padding: 0">
+      <a href="/" class="muted">← Cancel</a>
+      <button type="submit" style="margin-left: auto">Run pivot</button>
+    </div>
+  </div>
+</form>
+
+<h3 class="section-heading" style="margin-top: 3rem">Reference</h3>
+<p class="muted" style="font-size: 0.85rem">
+  Full column list and a 50-row preview of what's actually in the table.
+</p>
+
+<details>
+  <summary>Columns ({{ columns|length }})</summary>
+  <div class="scroll-x" style="margin-top: 0.5rem">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>label</th>
+          <th>raw name</th>
+          <th>type</th>
+          <th>nullable</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in columns %}
+        <tr>
+          <td>{{ c.label }}</td>
+          <td><code class="muted">{{ c.name }}</code></td>
+          <td><span class="muted">{{ c.data_type }}</span></td>
+          <td>
+            {% if c.is_nullable %}<span class="muted">yes</span>{% else
+            %}<strong>no</strong>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>Preview — first {{ row_count }} rows</summary>
+  <div class="scroll-x" style="margin-top: 0.5rem">
+    <table class="data-table">
+      <thead>
+        <tr>
+          {% for col in preview_cols %}
+          <th>{{ col }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in preview_rows %}
+        <tr>
+          {% for v in row %}
+          <td>{{ (v|string)[:80] if v is not none else "—" }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</details>
+{% endif %}

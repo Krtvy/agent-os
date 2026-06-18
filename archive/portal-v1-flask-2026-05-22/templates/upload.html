@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Upload a template — Rootlabs Data Portal</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        max-width: 720px;
+        margin: 60px auto;
+        padding: 0 24px;
+        color: #222;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      label {
+        display: block;
+        margin: 16px 0 4px;
+        font-weight: 500;
+      }
+      input[type="file"],
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+      }
+      textarea {
+        min-height: 120px;
+      }
+      .btn {
+        padding: 12px 20px;
+        background: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .btn:hover {
+        background: #1557b0;
+      }
+      .hint {
+        color: #666;
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      a.back {
+        color: #1a73e8;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <p><a class="back" href="/">← back</a></p>
+    <h1>Upload a template</h1>
+    <form method="post" enctype="multipart/form-data">
+      <label for="template">Template CSV</label>
+      <input
+        type="file"
+        id="template"
+        name="template"
+        accept=".csv,.xlsx"
+        required
+      />
+      <div class="hint">
+        Headers should describe what you want in each column. Leave the data
+        rows blank or with one example row Yudhi can pattern-match.
+      </div>
+
+      <label for="instructions">Instructions for Yudhi</label>
+      <textarea
+        id="instructions"
+        name="instructions"
+        placeholder="e.g. 'For each creator_username in column A, fill May 2026 livestream GMV (column B), total orders (column C), top product (column D). Use HGR creators only.'"
+        required
+      ></textarea>
+
+      <button type="submit" class="btn">Send to Yudhi</button>
+    </form>
+  </body>
+</html>

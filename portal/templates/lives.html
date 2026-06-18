@@ -1,0 +1,486 @@
+{% extends "base.html" %} {% block title %}Lives · Rootlabs Portal{% endblock %}
+{% block content %}
+
+<div class="page-header" style="margin-bottom: var(--s-5)">
+  <h1 style="margin: 0 0 var(--s-2); font-size: var(--t-22)">
+    🔴 Lives — {{ ctx.scope_label }}
+  </h1>
+  <p class="muted" style="margin: 0; font-size: var(--t-13)">
+    {{ ctx.start_date }} → {{ ctx.end_date }} ·
+    <strong>{{ ctx.totals.live_count }}</strong> lives by
+    <strong>{{ ctx.totals.creator_count }}</strong> creators ·
+    <strong>${{ "{:,.0f}".format(ctx.totals.gmv) }}</strong> GMV · {{
+    "{:,}".format(ctx.totals.orders) }} orders
+  </p>
+</div>
+
+<!-- Date range form -->
+<form
+  method="get"
+  action="/lives"
+  data-loading="true"
+  data-loading-pool="lives"
+  style="
+    display: flex;
+    gap: var(--s-3);
+    align-items: end;
+    margin-bottom: var(--s-5);
+    flex-wrap: wrap;
+  "
+>
+  <label style="display: flex; flex-direction: column; gap: var(--s-1)">
+    <span style="font-size: var(--t-12); color: var(--c-ink-3)">Start</span>
+    <input
+      type="date"
+      name="start"
+      class="input"
+      value="{{ ctx.start_date }}"
+      style="height: 30px; width: 150px"
+    />
+  </label>
+  <label style="display: flex; flex-direction: column; gap: var(--s-1)">
+    <span style="font-size: var(--t-12); color: var(--c-ink-3)">End</span>
+    <input
+      type="date"
+      name="end"
+      class="input"
+      value="{{ ctx.end_date }}"
+      style="height: 30px; width: 150px"
+    />
+  </label>
+  {% if is_operator %}
+  <label style="display: flex; flex-direction: column; gap: var(--s-1)">
+    <span style="font-size: var(--t-12); color: var(--c-ink-3)">POC scope</span>
+    <select name="poc" class="input" style="height: 30px; width: 180px">
+      <option value="">All creators (union)</option>
+      {% for p in available_pocs %} {% if ctx.scope_label == p %}
+      <option value="{{ p }}" selected>{{ p }}</option>
+      {% else %}
+      <option value="{{ p }}">{{ p }}</option>
+      {% endif %} {% endfor %}
+    </select>
+  </label>
+  {% endif %}
+  <button
+    type="submit"
+    class="btn btn--primary btn--sm"
+    style="align-self: end"
+  >
+    Update
+  </button>
+</form>
+
+{% if ctx.totals.live_count == 0 %}
+<div class="surface" style="padding: var(--s-6); text-align: center">
+  <p class="muted">
+    No lives recorded for {{ ctx.scope_label }} in this window. Pick a wider
+    range or check back later.
+  </p>
+</div>
+{% else %}
+
+<!-- KPI tiles -->
+<div class="kpi-grid" style="margin-bottom: var(--s-5)">
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">total lives</span></div>
+    <div class="kpi__value">{{ "{:,}".format(ctx.totals.live_count) }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head">
+      <span class="kpi__label">creators went live</span>
+    </div>
+    <div class="kpi__value">{{ "{:,}".format(ctx.totals.creator_count) }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head">
+      <span class="kpi__label">orders from lives</span>
+    </div>
+    <div class="kpi__value">{{ "{:,}".format(ctx.totals.orders) }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">GMV from lives</span></div>
+    <div class="kpi__value">${{ "{:,.0f}".format(ctx.totals.gmv) }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">est. commission</span></div>
+    <div class="kpi__value">${{ "{:,.0f}".format(ctx.totals.commission) }}</div>
+  </div>
+</div>
+
+<!-- Daily lives across the roster (non-cumulative — spikes show heavy days) -->
+<section style="margin-bottom: var(--s-5)">
+  <h2 style="font-size: var(--t-16); margin: 0 0 var(--s-3)">
+    Daily lives across the roster
+  </h2>
+  <div class="surface" style="padding: var(--s-4); overflow-x: auto">
+    {{ daily_total_spark|safe }}
+    <p class="muted" style="margin: var(--s-2) 0 0; font-size: var(--t-12)">
+      One mark per day from {{ ctx.start_date }} to {{ ctx.end_date }} — total
+      lives held by your roster that day.
+    </p>
+  </div>
+</section>
+
+<!-- Per-creator summary with sparklines (cumulative lives) -->
+<section style="margin-bottom: var(--s-5)">
+  <h2 style="font-size: var(--t-16); margin: 0 0 var(--s-3)">
+    Creators who went live
+  </h2>
+  <div class="surface" style="padding: 0; overflow-x: auto">
+    <table class="data-table" style="width: 100%; border-collapse: collapse">
+      <thead>
+        <tr>
+          <th
+            style="
+              text-align: left;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Creator
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Lives
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Orders
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            GMV
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Commission
+          </th>
+          <th
+            style="
+              text-align: left;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Trend (cumulative lives)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in ctx.creators_summary %}
+        <tr style="border-top: 1px solid var(--c-border)">
+          <td style="padding: var(--s-2) var(--s-3); font-weight: 500">
+            <a
+              href="/creator/{{ c.creator }}"
+              style="
+                color: var(--c-ink);
+                text-decoration: none;
+                border-bottom: 1px dotted var(--c-ink-3);
+              "
+              >{{ c.creator }}</a
+            >
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+              font-weight: 600;
+            "
+          >
+            {{ "{:,}".format(c.lives) }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+            "
+          >
+            {{ "{:,}".format(c.orders) }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+              font-weight: 600;
+            "
+          >
+            ${{ "{:,.0f}".format(c.gmv) }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+              color: var(--c-ink-3);
+            "
+          >
+            ${{ "{:,.0f}".format(c.commission) }}
+          </td>
+          <td style="padding: var(--s-2) var(--s-3)">
+            {{ sparklines[c.creator]|safe }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Top products from lives -->
+<section style="margin-bottom: var(--s-5)">
+  <h2 style="font-size: var(--t-16); margin: 0 0 var(--s-3)">
+    Top products sold in lives
+  </h2>
+  <div class="surface" style="padding: 0; overflow-x: auto">
+    <table class="data-table" style="width: 100%; border-collapse: collapse">
+      <thead>
+        <tr>
+          <th
+            style="
+              text-align: left;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Product
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Lives featuring
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Orders
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            GMV
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in ctx.products %}
+        <tr style="border-top: 1px solid var(--c-border)">
+          <td style="padding: var(--s-2) var(--s-3); font-weight: 500">
+            {{ p.product }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+            "
+          >
+            {{ p.live_count }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+            "
+          >
+            {{ "{:,}".format(p.orders) }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+              font-weight: 600;
+            "
+          >
+            ${{ "{:,.0f}".format(p.gmv) }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Lives × Products table -->
+<section>
+  <h2 style="font-size: var(--t-16); margin: 0 0 var(--s-3)">
+    Lives × products (one row per live × product)
+  </h2>
+  <div class="surface" style="padding: 0; overflow-x: auto">
+    <table class="data-table" style="width: 100%; border-collapse: collapse">
+      <thead>
+        <tr>
+          <th
+            style="
+              text-align: left;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            When
+          </th>
+          <th
+            style="
+              text-align: left;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Creator
+          </th>
+          <th
+            style="
+              text-align: left;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Product
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Orders
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            GMV
+          </th>
+          <th
+            style="
+              text-align: right;
+              padding: var(--s-2) var(--s-3);
+              font-size: var(--t-12);
+              color: var(--c-ink-3);
+            "
+          >
+            Commission
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in ctx.rows %}
+        <tr style="border-top: 1px solid var(--c-border)">
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              font-family: var(--f-mono);
+              font-size: var(--t-12);
+            "
+          >
+            {{ r.live_at.strftime("%Y-%m-%d %H:%M") if r.live_at else "—" }}
+          </td>
+          <td style="padding: var(--s-2) var(--s-3); font-weight: 500">
+            <a
+              href="/creator/{{ r.creator }}"
+              style="
+                color: var(--c-ink);
+                text-decoration: none;
+                border-bottom: 1px dotted var(--c-ink-3);
+              "
+              >{{ r.creator }}</a
+            >
+          </td>
+          <td style="padding: var(--s-2) var(--s-3)">{{ r.product }}</td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+            "
+          >
+            {{ "{:,}".format(r.orders) }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+              font-weight: 600;
+            "
+          >
+            ${{ "{:,.2f}".format(r.gmv) }}
+          </td>
+          <td
+            style="
+              padding: var(--s-2) var(--s-3);
+              text-align: right;
+              font-family: var(--f-mono);
+              color: var(--c-ink-3);
+            "
+          >
+            ${{ "{:,.2f}".format(r.commission) }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="muted" style="margin: var(--s-3) 0 0; font-size: var(--t-12)">
+    A live often appears multiple times — one row per product that was sold
+    during it. Sort manually by clicking your browser's table sort if needed (a
+    future version will add column sorting).
+  </p>
+</section>
+
+{% endif %} {% endblock %}

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Result — Rootlabs Data Portal</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px;
+        color: #222;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .meta {
+        color: #666;
+        font-size: 13px;
+      }
+      code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 13px;
+      }
+      .status {
+        padding: 14px 16px;
+        border-radius: 6px;
+        margin: 20px 0;
+        font-weight: 500;
+      }
+      .status.running {
+        background: #fef7e0;
+        color: #7c5803;
+      }
+      .status.success {
+        background: #e6f4ea;
+        color: #1e4d2b;
+      }
+      .status.error,
+      .status.timeout {
+        background: #fce8e6;
+        color: #5e1313;
+      }
+      .status.partial {
+        background: #fef0c7;
+        color: #6b4309;
+      }
+      .status.unknown {
+        background: #f1f3f4;
+        color: #555;
+      }
+      .spinner {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid #c6a300;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+        vertical-align: -2px;
+        margin-right: 8px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        background: #1a73e8;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 500;
+        margin-right: 8px;
+      }
+      .btn:hover {
+        background: #1557b0;
+      }
+      .btn.secondary {
+        background: #f1f3f4;
+        color: #222;
+      }
+      pre {
+        background: #f5f5f5;
+        padding: 16px;
+        border-radius: 4px;
+        overflow: auto;
+        font-size: 13px;
+        max-height: 600px;
+      }
+      a.back {
+        color: #1a73e8;
+        font-size: 14px;
+      }
+      .tip {
+        color: #666;
+        font-size: 13px;
+        margin: 16px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <p><a class="back" href="/">← back</a></p>
+    <h1>Result</h1>
+    <div class="meta">Task ID: <code id="task-id">{{ task_id }}</code></div>
+
+    <div id="status-box" class="status running">
+      <span class="spinner"></span> Starting…
+    </div>
+
+    <div id="actions" style="display: none">
+      <a class="btn" id="dl-csv" href="/api/result/{{ task_id }}/csv"
+        >Download CSV</a
+      >
+      <a
+        class="btn secondary"
+        id="view-md"
+        href="/api/result/{{ task_id }}/md"
+        target="_blank"
+        >View audit MD</a
+      >
+    </div>
+
+    <div class="tip" id="hint">
+      You can keep this page open, or come back to it later — bookmark
+      <code>{{ request.path }}</code>. Email will arrive when the task finishes
+      (if email is configured).
+    </div>
+
+    <pre id="error-box" style="display: none; background: #fce8e6"></pre>
+
+    <script>
+      const taskId = {{ task_id|tojson }};
+      const statusBox = document.getElementById("status-box");
+      const actions = document.getElementById("actions");
+      const errorBox = document.getElementById("error-box");
+      const hint = document.getElementById("hint");
+
+      function revealAvailableDownloads(data) {
+        // Show only download buttons whose deliverable actually exists.
+        const dlCsv = document.getElementById("dl-csv");
+        const viewMd = document.getElementById("view-md");
+        if (data.csv_path) { dlCsv.style.display = "inline-block"; } else { dlCsv.style.display = "none"; }
+        if (data.md_path)  { viewMd.style.display = "inline-block"; } else { viewMd.style.display = "none"; }
+        if (data.csv_path || data.md_path) { actions.style.display = "block"; }
+        hint.style.display = "none";
+      }
+
+      async function poll() {
+        try {
+          const r = await fetch(`/api/result/${taskId}`);
+          const data = await r.json();
+          const s = (data.status || "unknown").toLowerCase();
+          statusBox.className = "status " + s;
+
+          if (s === "running") {
+            statusBox.innerHTML = `<span class="spinner"></span> Running… (Yudhi is on it)`;
+            setTimeout(poll, 2500);
+          } else if (s === "success") {
+            statusBox.innerHTML = `Done in ${data.duration_seconds ?? "?"}s. Both deliverables ready.`;
+            revealAvailableDownloads(data);
+          } else if (s === "partial") {
+            const have = [];
+            if (data.csv_path) have.push("CSV");
+            if (data.md_path)  have.push("audit MD");
+            const missing = ["CSV", "audit MD"].filter(x => !have.includes(x));
+            statusBox.innerHTML =
+              `Partial — finished in ${data.duration_seconds ?? "?"}s with only ${have.join(" + ")}. ` +
+              `Missing: ${missing.join(", ")}. Yudhi may have refused to fabricate data; check the audit (if available) or stderr.`;
+            revealAvailableDownloads(data);
+            if (data.stderr_tail) { errorBox.style.display = "block"; errorBox.textContent = data.stderr_tail; }
+          } else if (s === "timeout") {
+            statusBox.innerHTML = `Yudhi exceeded the timeout (${data.duration_seconds ?? "?"}s). The task may still have produced partial output — check below.`;
+            revealAvailableDownloads(data);
+            if (data.stderr_tail) { errorBox.style.display = "block"; errorBox.textContent = data.stderr_tail; }
+          } else if (s === "error") {
+            statusBox.innerHTML = `Error after ${data.duration_seconds ?? "?"}s. No deliverables produced.`;
+            if (data.stderr_tail) { errorBox.style.display = "block"; errorBox.textContent = data.stderr_tail; }
+          } else {
+            statusBox.innerHTML = `Status: ${s}. (No status file yet — retrying.)`;
+            setTimeout(poll, 2500);
+          }
+        } catch (e) {
+          statusBox.innerHTML = `Network error: ${e}. Retrying…`;
+          setTimeout(poll, 4000);
+        }
+      }
+
+      poll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+[
+  {
+    "productSlug": "alpha-gummies-60s",
+    "batchNumber": "SSHG24001",
+    "manufactureDate": "2024-07",
+    "testedBy": "Equinox Labs Private Limited",
+    "testedByCIN": "U74999MH2017PTC297024",
+    "panels": [
+      {
+        "name": "Aflatoxin",
+        "parameters": 4,
+        "verdict": "All toxins below detection",
+        "summary": "BLQ on B1, B2, G1, G2 (LOQ 0.5 µg/kg)",
+        "pdfPath": "cert-pdfs/shilajit-gummies/aflatoxin.pdf"
+      },
+      {
+        "name": "Heavy Metals",
+        "parameters": 3,
+        "verdict": "Conforms to FSSAI limits",
+        "summary": "Barium BLQ · Copper 0.57 mg/kg (limit 30) · Selenium BLQ",
+        "pdfPath": "cert-pdfs/shilajit-gummies/heavy-metals.pdf"
+      },
+      {
+        "name": "Pesticide",
+        "parameters": 211,
+        "verdict": "All chemicals below detection",
+        "summary": "211 pesticides screened individually · all BLQ",
+        "pdfPath": "cert-pdfs/shilajit-gummies/pesticide.pdf"
+      },
+      {
+        "name": "Allergen",
+        "parameters": 14,
+        "verdict": "No allergens detected",
+        "summary": "Standard 14-panel screen · all BLQ",
+        "pdfPath": "cert-pdfs/shilajit-gummies/allergen.pdf"
+      },
+      {
+        "name": "Gluten",
+        "parameters": 1,
+        "verdict": "Below detection",
+        "summary": "Below 20 ppm threshold",
+        "pdfPath": "cert-pdfs/shilajit-gummies/gluten.pdf"
+      }
+    ]
+  },
+  {
+    "productSlug": "alpha-gummies-120s",
+    "batchNumber": "SSHG24001",
+    "manufactureDate": "2024-07",
+    "testedBy": "Equinox Labs Private Limited",
+    "testedByCIN": "U74999MH2017PTC297024",
+    "panels": [
+      {
+        "name": "Aflatoxin",
+        "parameters": 4,
+        "verdict": "All toxins below detection",
+        "summary": "BLQ on B1, B2, G1, G2 (LOQ 0.5 µg/kg)",
+        "pdfPath": "cert-pdfs/shilajit-gummies/aflatoxin.pdf"
+      },
+      {
+        "name": "Heavy Metals",
+        "parameters": 3,
+        "verdict": "Conforms to FSSAI limits",
+        "summary": "Barium BLQ · Copper 0.57 mg/kg (limit 30) · Selenium BLQ",
+        "pdfPath": "cert-pdfs/shilajit-gummies/heavy-metals.pdf"
+      },
+      {
+        "name": "Pesticide",
+        "parameters": 211,
+        "verdict": "All chemicals below detection",
+        "summary": "211 pesticides screened individually · all BLQ",
+        "pdfPath": "cert-pdfs/shilajit-gummies/pesticide.pdf"
+      },
+      {
+        "name": "Allergen",
+        "parameters": 14,
+        "verdict": "No allergens detected",
+        "summary": "Standard 14-panel screen · all BLQ",
+        "pdfPath": "cert-pdfs/shilajit-gummies/allergen.pdf"
+      },
+      {
+        "name": "Gluten",
+        "parameters": 1,
+        "verdict": "Below detection",
+        "summary": "Below 20 ppm threshold",
+        "pdfPath": "cert-pdfs/shilajit-gummies/gluten.pdf"
+      }
+    ]
+  }
+]

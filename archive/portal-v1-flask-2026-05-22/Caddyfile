@@ -1,0 +1,33 @@
+# Caddyfile — auto-SSL via Let's Encrypt, reverse proxy to Flask.
+#
+# Replace the domain below with your actual portal hostname (e.g.
+# portal.rootlabs.co OR portal.mosaicwellness.in OR whichever you own).
+# Caddy will automatically provision and renew the SSL cert.
+
+{$PORTAL_DOMAIN} {
+    reverse_proxy flask:5000 {
+        # Yudhi tasks can take up to YUDHI_TIMEOUT_SECONDS (default 90s).
+        # Give the proxy generous timeouts for the /upload + /ask POST flows.
+        transport http {
+            response_header_timeout 180s
+        }
+    }
+
+    # Modest rate limit on auth endpoints to dampen brute force attempts.
+    # Caddy's built-in rate-limit is community-plugin; keeping config simple
+    # and relying on Google SSO + domain restriction as primary defense.
+
+    header {
+        # Basic security headers
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+
+    log {
+        output stdout
+        format console
+    }
+}

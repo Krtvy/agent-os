@@ -1,0 +1,569 @@
+{% extends "base.html" %} {% block title %}@{{ card.handle }} · Rootlabs
+Portal{% endblock %} {% set nav_active = 'creators' %} {% block crumbs %}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<a href="/creators">Creators</a>
+<span class="sep">/</span>
+<strong>@{{ card.handle }}</strong>
+{% endblock %} {% block content %}
+
+<!-- ─── HERO ─────────────────────────────────────────────────── -->
+<div class="page__head" style="margin-bottom: var(--s-5)">
+  <div style="display: flex; align-items: center; gap: var(--s-4)">
+    <span
+      class="avatar avatar--lg avatar--accent"
+      style="font-size: var(--t-15)"
+    >
+      {{ card.handle[0]|upper }}{{ card.handle[1]|upper if card.handle|length >
+      1 else '' }}
+    </span>
+    <div>
+      <h1
+        class="page__title"
+        style="display: flex; align-items: center; gap: var(--s-3)"
+      >
+        <span
+          ><span style="color: var(--c-ink-4); font-weight: 400">@</span>{{
+          card.handle }}</span
+        >
+        <span
+          class="chip {% if card.status_key == 'top_performer' %}chip--accent{% elif card.status_key == 'cooling_off' %}chip--warn{% elif card.status_key == 'lost' %}chip--error{% elif card.status_key == 'active' %}chip--success{% else %}chip{% endif %}"
+        >
+          {{ card.status_emoji }} {{ card.status_label }}
+        </span>
+      </h1>
+      <p class="page__sub">
+        {% if card.days_silent is none %}
+        <span class="muted">No posts on record yet</span>
+        {% elif card.days_silent == 0 %}
+        <span class="delta-up">Posted today ✓</span>
+        {% elif card.days_silent <= 2 %} Posted {{ card.days_silent }}d ago {%
+        elif card.days_silent <= 7 %}
+        <span class="muted">Last post {{ card.days_silent }}d ago</span>
+        {% else %}
+        <span class="delta-down">Silent {{ card.days_silent }} days</span>
+        {% endif %} · viewed as
+        <strong style="color: var(--c-ink)">{{ card.viewing_poc }}</strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <a href="#outreach-drafter" class="btn btn--primary">📨 Draft outreach</a>
+  </div>
+</div>
+
+<!-- ─── HERO METRIC + QUICK ACTIONS ─────────────────────────── -->
+<div class="grid-2col" style="margin-bottom: var(--s-6)">
+  <div class="card">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title">Last 7 days</h3>
+        <p class="card__sub">vs prior 7-day window</p>
+      </div>
+    </div>
+    <div class="card__body">
+      <div
+        style="
+          display: flex;
+          align-items: baseline;
+          gap: var(--s-3);
+          margin-bottom: var(--s-2);
+        "
+      >
+        <span
+          style="
+            font-size: var(--t-36);
+            font-weight: 600;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            font-variant-numeric: tabular-nums;
+          "
+          >${{ '{:,.0f}'.format(card.hero.gmv_7d) }}</span
+        >
+        {% if card.hero.gmv_7d_pct is not none %} {% if card.hero.gmv_7d_pct > 0
+        %}
+        <span class="kpi__delta kpi__delta--up"
+          >▲ +{{ card.hero.gmv_7d_pct }}%</span
+        >
+        {% elif card.hero.gmv_7d_pct < 0 %}
+        <span class="kpi__delta kpi__delta--down"
+          >▼ {{ card.hero.gmv_7d_pct }}%</span
+        >
+        {% else %}
+        <span class="kpi__delta kpi__delta--flat">— flat</span>
+        {% endif %} {% else %}
+        <span class="kpi__delta kpi__delta--flat">no prior data</span>
+        {% endif %}
+      </div>
+      <p class="muted" style="font-size: var(--t-12); margin: 0">
+        prior 7d: ${{ '{:,.0f}'.format(card.hero.gmv_7d_prev) }} · {{
+        card.hero.videos_7d }} videos posted
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__head">
+      <h3 class="card__title">Quick actions</h3>
+    </div>
+    <div
+      class="card__body"
+      style="display: flex; flex-direction: column; gap: var(--s-2)"
+    >
+      <form
+        method="post"
+        action="/creator/{{ card.handle }}/status"
+        style="display: flex; gap: var(--s-2)"
+      >
+        <input type="hidden" name="status" value="top_performer" />
+        <button type="submit" class="btn btn--sm" style="flex: 1">
+          ⭐ Top performer
+        </button>
+      </form>
+      <form
+        method="post"
+        action="/creator/{{ card.handle }}/status"
+        style="display: flex; gap: var(--s-2)"
+      >
+        <input type="hidden" name="status" value="active" />
+        <button type="submit" class="btn btn--sm" style="flex: 1">
+          ✅ Active
+        </button>
+      </form>
+      <form
+        method="post"
+        action="/creator/{{ card.handle }}/status"
+        style="display: flex; gap: var(--s-2)"
+      >
+        <input type="hidden" name="status" value="cooling_off" />
+        <button type="submit" class="btn btn--sm" style="flex: 1">
+          🥶 Cooling off
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PERFORMANCE STRIP ────────────────────────────────────── -->
+<div class="card" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Performance</h3>
+    <p class="card__sub">Three windows, current vs prior, side by side</p>
+  </div>
+  <div
+    style="
+      padding: var(--s-3) var(--s-5);
+      background: var(--c-accent-soft);
+      border-bottom: 1px solid var(--c-divider);
+      font-size: var(--t-12);
+      color: var(--c-ink-2);
+      line-height: 1.5;
+    "
+  >
+    <strong>Why this creator can have $GMV with 0 videos:</strong>
+    old videos keep selling for weeks after they're posted — TikTok's algorithm
+    keeps pushing them.
+    <strong style="color: var(--c-accent-ink)">GMV from new posts</strong> =
+    revenue from videos posted ≤30 days before each order.
+    <strong style="color: var(--c-warn)">GMV from back catalog</strong> =
+    revenue from older posts that are still earning. A creator with 0 new videos
+    can still post real GMV — that's the back-catalog tail.
+  </div>
+  <div class="card__body card__body--flush">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0">
+      {% for window_key, window_label in [('7d', 'Last 7 days'), ('30d', 'Last
+      30 days'), ('90d', 'Last 90 days')] %} {% set p = card.perf[window_key] %}
+      <div
+        style="padding: var(--s-5); {% if not loop.last %}border-right: 1px solid var(--c-divider);{% endif %}"
+      >
+        <p
+          style="
+            font-size: var(--t-11);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--c-ink-3);
+            margin: 0 0 var(--s-3);
+          "
+        >
+          {{ window_label }}
+        </p>
+        {% for metric_key, metric_label, is_money in [('videos', 'videos',
+        false), ('gmv', 'GMV', true), ('commission', 'commission', true)] %} {%
+        set m = p[metric_key] %}
+        <div
+          style="display: flex; align-items: baseline; justify-content: space-between; padding: var(--s-2) 0 {% if not loop.last %}; border-bottom: 1px solid var(--c-divider){% endif %}"
+        >
+          <span class="muted" style="font-size: var(--t-12)"
+            >{{ metric_label }}</span
+          >
+          <span style="font-variant-numeric: tabular-nums; font-weight: 500">
+            {% if is_money %}${{ '{:,.0f}'.format(m.curr) }}{% else %}{{
+            '{:,}'.format(m.curr) }}{% endif %}
+          </span>
+          <span
+            style="font-size: var(--t-11); min-width: 4.5rem; text-align: right"
+          >
+            {% if m.pct is none %}<span class="muted">—</span> {% elif m.pct > 0
+            %}<span class="delta-up">▲{{ m.pct }}%</span> {% elif m.pct < 0
+            %}<span class="delta-down">▼{{ m.pct }}%</span> {% else %}<span
+              class="muted"
+              >flat</span
+            >{% endif %}
+          </span>
+        </div>
+        {% endfor %} {# New vs tail GMV split for this window #} {% if
+        p.gmv.curr > 0 and p.gmv.new_pct is not none %} {% set np =
+        p.gmv.new_pct %}
+        <div
+          style="
+            margin-top: var(--s-3);
+            padding-top: var(--s-3);
+            border-top: 1px dashed var(--c-divider);
+            font-size: var(--t-11);
+            line-height: 1.4;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              color: var(--c-ink-3);
+            "
+          >
+            <span>GMV from new posts</span>
+            <span
+              style="font-variant-numeric: tabular-nums; color: var(--c-ink-2)"
+              >${{ '{:,.0f}'.format(p.gmv.new) }}</span
+            >
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              color: var(--c-ink-3);
+              margin-top: 2px;
+            "
+          >
+            <span>GMV from back catalog</span>
+            <span
+              style="font-variant-numeric: tabular-nums; color: var(--c-ink-2)"
+              >${{ '{:,.0f}'.format(p.gmv.tail) }}</span
+            >
+          </div>
+          <div
+            style="margin-top: var(--s-2); text-align: right; font-weight: 500"
+          >
+            {% if np >= 80 %}
+            <span
+              style="color: var(--c-success)"
+              title="${{ '{:,.0f}'.format(p.gmv.new) }} of ${{ '{:,.0f}'.format(p.gmv.curr) }} came from videos posted ≤30 days before each order. Healthy — creator is earning on fresh content."
+              >{{ np }}% new ✓</span
+            >
+            {% elif np >= 30 %}
+            <span
+              style="color: var(--c-ink-2)"
+              title="${{ '{:,.0f}'.format(p.gmv.new) }} from new posts (≤30d before each order) · ${{ '{:,.0f}'.format(p.gmv.tail) }} from older videos still selling. Mixed performance."
+              >{{ np }}% new · mixed</span
+            >
+            {% elif np > 0 %}
+            <span
+              style="color: var(--c-warn)"
+              title="Only ${{ '{:,.0f}'.format(p.gmv.new) }} from new posts; ${{ '{:,.0f}'.format(p.gmv.tail) }} from back catalog (older videos still selling). Creator is mostly coasting on old hits — nudge them for fresh content."
+              >{{ np }}% new · tail-heavy</span
+            >
+            {% else %}
+            <span
+              style="color: var(--c-warn)"
+              title="All ${{ '{:,.0f}'.format(p.gmv.curr) }} came from videos posted more than 30 days ago. The creator hasn't posted recent content that's converting. Real revenue, but the tail will decay without new posts."
+              >0% new · all tail</span
+            >
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOP PRODUCTS ─────────────────────────────────────────── -->
+{% if card.top_products %}
+<div class="card" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Top products</h3>
+    <p class="card__sub">Last 90 days</p>
+  </div>
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>product</th>
+            <th class="num">orders</th>
+            <th class="num">GMV</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tp in card.top_products %}
+          <tr>
+            <td><strong>{{ tp.product }}</strong></td>
+            <td class="num">{{ tp.orders }}</td>
+            <td class="num">${{ '{:,.2f}'.format(tp.gmv) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ─── NOTES PANEL ──────────────────────────────────────────── -->
+<div class="card" id="notes-panel" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Notes</h3>
+    <p class="card__sub">
+      Private to you unless you share a note with the team
+    </p>
+  </div>
+  <div class="card__body">
+    <form
+      method="post"
+      action="/creator/{{ card.handle }}/notes"
+      style="margin-bottom: var(--s-4)"
+    >
+      <textarea
+        name="body_md"
+        rows="2"
+        class="input"
+        style="
+          width: 100%;
+          padding: var(--s-2) var(--s-3);
+          height: auto;
+          font-family: inherit;
+        "
+        placeholder="What's worth remembering? markdown supported."
+        required
+      ></textarea>
+      <div
+        style="
+          display: flex;
+          gap: var(--s-3);
+          align-items: center;
+          margin-top: var(--s-2);
+        "
+      >
+        <label
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: var(--t-12);
+            color: var(--c-ink-3);
+            margin: 0;
+          "
+        >
+          <input type="checkbox" name="is_shared" value="1" /> share with team
+        </label>
+        <button
+          type="submit"
+          class="btn btn--primary btn--sm"
+          style="margin-left: auto"
+        >
+          Add note
+        </button>
+      </div>
+    </form>
+
+    {% if card.raw_notes %}
+    <div style="display: flex; flex-direction: column; gap: var(--s-3)">
+      {% for n in card.raw_notes %}
+      <div
+        style="padding: var(--s-3); background: var(--c-sunken); border-left: 3px solid {% if n.is_shared %}var(--c-warn){% else %}var(--c-accent){% endif %}; border-radius: var(--r-3)"
+      >
+        <div
+          style="
+            display: flex;
+            gap: var(--s-2);
+            align-items: center;
+            font-size: var(--t-12);
+            color: var(--c-ink-3);
+            margin-bottom: var(--s-2);
+          "
+        >
+          <span class="avatar avatar--sm avatar--accent"
+            >{{ n.author_slug[0]|upper }}</span
+          >
+          <strong style="color: var(--c-ink-2)">{{ n.author_slug }}</strong>
+          <span>· {{ n.created_at[:10] }}</span>
+          {% if n.is_shared %}<span
+            class="chip chip--warn"
+            style="font-size: 10px; padding: 1px 6px"
+            >shared</span
+          >{% endif %} {% if n.is_own %}
+          <span style="margin-left: auto; display: flex; gap: var(--s-2)">
+            <form
+              method="post"
+              action="/creator/{{ card.handle }}/notes/{{ n.id }}/toggle-share"
+              style="display: inline"
+            >
+              <button type="submit" class="btn btn--ghost btn--sm">
+                {% if n.is_shared %}make private{% else %}share{% endif %}
+              </button>
+            </form>
+            <form
+              method="post"
+              action="/creator/{{ card.handle }}/notes/{{ n.id }}/delete"
+              style="display: inline"
+            >
+              <button
+                type="submit"
+                class="btn btn--ghost btn--sm"
+                style="color: var(--c-error)"
+              >
+                delete
+              </button>
+            </form>
+          </span>
+          {% endif %}
+        </div>
+        <div
+          style="
+            font-size: var(--t-13);
+            white-space: pre-wrap;
+            color: var(--c-ink);
+          "
+        >
+          {{ n.body_md|e }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div
+      class="muted"
+      style="text-align: center; padding: var(--s-5); font-size: var(--t-13)"
+    >
+      No notes yet — be the first to remember something about this creator.
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ─── OUTREACH DRAFTER ─────────────────────────────────────── -->
+<div class="card" id="outreach-drafter" style="margin-bottom: var(--s-5)">
+  <div class="card__head">
+    <h3 class="card__title">Draft outreach DM</h3>
+    <p class="card__sub">
+      Edit then copy. Sending wires to Periskope/Cruva later.
+    </p>
+  </div>
+  <div class="card__body">
+    <form method="post" action="/creator/{{ card.handle }}/outreach">
+      <textarea
+        name="body"
+        rows="3"
+        class="input"
+        style="
+          width: 100%;
+          padding: var(--s-2) var(--s-3);
+          height: auto;
+          font-family: inherit;
+        "
+        id="outreach-body"
+      >
+{{ outreach_draft }}</textarea
+      >
+      <div style="display: flex; gap: var(--s-2); margin-top: var(--s-2)">
+        <small class="muted" style="font-size: var(--t-12); align-self: center"
+          >Generated from the {{ card.status_label|lower }} template.</small
+        >
+        <button
+          type="button"
+          class="btn btn--sm"
+          style="margin-left: auto"
+          onclick="
+            navigator.clipboard.writeText(
+              document.getElementById('outreach-body').value,
+            );
+            this.textContent = 'Copied ✓';
+            setTimeout(() => (this.textContent = 'Copy'), 2000);
+          "
+        >
+          Copy
+        </button>
+        <button type="submit" class="btn btn--primary btn--sm">
+          Log as sent
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ─── ACTIVITY TIMELINE ────────────────────────────────────── -->
+<div class="card">
+  <div class="card__head">
+    <h3 class="card__title">Activity timeline</h3>
+    <p class="card__sub">Posts, spikes, notes, and status events — last 50</p>
+  </div>
+  <div class="card__body card__body--flush">
+    {% if card.timeline %}
+    <ol style="list-style: none; margin: 0; padding: 0">
+      {% for item in card.timeline %}
+      <li
+        style="
+          display: grid;
+          grid-template-columns: 90px 36px 1fr;
+          gap: var(--s-3);
+          padding: var(--s-3) var(--s-5);
+          border-bottom: 1px solid var(--c-divider);
+          font-size: var(--t-13);
+          align-items: center;
+        "
+      >
+        <span
+          class="muted"
+          style="font-variant-numeric: tabular-nums; font-size: var(--t-12)"
+          >{{ item.at[:10] if item.at else '—' }}</span
+        >
+        <span style="text-align: center">
+          {% if item.kind == 'video' %}📹 {% elif item.kind == 'spike' %}🔥 {%
+          elif item.kind == 'event' %}📌 {% elif item.kind == 'note' %}📝 {%
+          endif %}
+        </span>
+        <span>
+          {% if item.kind == 'video' %} Posted a
+          <strong>{{ item.payload.product }}</strong> video {% elif item.kind ==
+          'spike' %} <span class="delta-up">Order spike</span> —
+          <strong>{{ item.payload.orders }}</strong> orders · ${{
+          '{:,.0f}'.format(item.payload.gmv) }} GMV {% if item.payload.vs_median
+          %}<span class="muted">({{ item.payload.vs_median }}× median day)</span
+          >{% endif %} {% elif item.kind == 'event' %} {% set p =
+          item.payload.payload or {} %} {% if item.payload.event_type ==
+          'status_change' %} Status →
+          <strong>{{ p.status|replace('_',' ') }}</strong>
+          {% elif item.payload.event_type == 'outreach_sent' %} Outreach DM sent
+          {% else %} {{ item.payload.event_type|replace('_',' ') }} {% endif %}
+          <span class="muted">· by {{ item.payload.author_slug }}</span>
+          {% elif item.kind == 'note' %}
+          <em
+            >{{ item.payload.body_md[:140] }}{% if item.payload.body_md|length >
+            140 %}…{% endif %}</em
+          >
+          <span class="muted"
+            >· by {{ item.payload.author_slug }}{% if item.payload.is_shared %}
+            (shared){% endif %}</span
+          >
+          {% endif %}
+        </span>
+      </li>
+      {% endfor %}
+    </ol>
+    {% else %}
+    <div class="tbl-empty">No activity recorded yet.</div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

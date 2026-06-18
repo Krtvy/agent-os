@@ -1,0 +1,2413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rootlab — TikTok-Led DTC Growth Playbook (May 2026)</title>
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #475569;
+        --line: #e2e8f0;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --accent: #0d9488;
+        --accent-2: #be185d;
+        --warn: #b45309;
+        --good: #15803d;
+        --t1: #15803d;
+        --t2: #0369a1;
+        --t3: #6d28d9;
+        --t4: #b45309;
+        --t5: #b91c1c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica,
+          Arial, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        margin: 0;
+        line-height: 1.55;
+        font-size: 15.5px;
+      }
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 32px 28px 80px;
+      }
+      header.hero {
+        background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+        color: #f1f5f9;
+        padding: 56px 28px 44px;
+        border-bottom: 1px solid var(--line);
+      }
+      header.hero .wrap {
+        padding: 0;
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+      header.hero h1 {
+        font-size: 38px;
+        margin: 0 0 10px;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+      header.hero .sub {
+        color: #94a3b8;
+        font-size: 16px;
+        margin: 0 0 18px;
+      }
+      header.hero .meta {
+        color: #cbd5e1;
+        font-size: 13.5px;
+      }
+      header.hero .meta b {
+        color: #f1f5f9;
+      }
+      h2 {
+        font-size: 24px;
+        letter-spacing: -0.01em;
+        margin: 48px 0 14px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--ink);
+      }
+      h3 {
+        font-size: 18px;
+        margin: 28px 0 10px;
+      }
+      h4 {
+        font-size: 15.5px;
+        margin: 18px 0 6px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+      }
+      p {
+        margin: 8px 0 12px;
+      }
+      ul,
+      ol {
+        margin: 8px 0 14px;
+        padding-left: 22px;
+      }
+      li {
+        margin: 4px 0;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--accent);
+      }
+      a:hover {
+        color: var(--accent-2);
+        border-bottom-color: var(--accent-2);
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13.5px;
+        background: #e2e8f0;
+        padding: 1px 6px;
+        border-radius: 4px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 18px;
+        font-size: 14px;
+        background: var(--card);
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        background: #f1f5f9;
+        font-weight: 700;
+        color: var(--ink);
+        border-bottom: 2px solid var(--ink);
+      }
+      tr:hover td {
+        background: #f8fafc;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin: 14px 0;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 14px;
+        margin: 16px 0 20px;
+      }
+      .stat {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--accent);
+        border-radius: 8px;
+        padding: 16px 18px;
+      }
+      .stat .num {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--ink);
+        display: block;
+        line-height: 1.1;
+      }
+      .stat .lbl {
+        font-size: 13px;
+        color: var(--muted);
+        display: block;
+        margin-top: 6px;
+      }
+      .stat .src {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 8px;
+        display: block;
+      }
+      .stat.alt {
+        border-left-color: var(--accent-2);
+      }
+      .stat.warn {
+        border-left-color: var(--warn);
+      }
+      .badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 4px;
+        margin-right: 5px;
+        vertical-align: middle;
+        letter-spacing: 0.03em;
+      }
+      .b-t1 {
+        background: #dcfce7;
+        color: var(--t1);
+      }
+      .b-t2 {
+        background: #e0f2fe;
+        color: var(--t2);
+      }
+      .b-t3 {
+        background: #ede9fe;
+        color: var(--t3);
+      }
+      .b-t4 {
+        background: #fef3c7;
+        color: var(--t4);
+      }
+      .b-t5 {
+        background: #fee2e2;
+        color: var(--t5);
+      }
+      .b-vendor {
+        background: #fef3c7;
+        color: var(--t4);
+        border: 1px dashed var(--t4);
+      }
+      .b-stale {
+        background: #fee2e2;
+        color: var(--t5);
+      }
+      .pri {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .pri-now {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+      .pri-soon {
+        background: #fef3c7;
+        color: #b45309;
+      }
+      .pri-mid {
+        background: #e0f2fe;
+        color: #0369a1;
+      }
+      .pri-long {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+      .action {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin: 12px 0;
+      }
+      .action h4 {
+        color: var(--ink);
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: 17px;
+        margin: 0 0 4px;
+        font-weight: 700;
+      }
+      .action .meta {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-bottom: 10px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .action .meta b {
+        color: var(--ink);
+      }
+      .callout {
+        background: #ecfdf5;
+        border-left: 4px solid var(--good);
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin: 14px 0;
+        font-size: 14.5px;
+      }
+      .callout.warn {
+        background: #fffbeb;
+        border-left-color: var(--warn);
+      }
+      .callout.note {
+        background: #eff6ff;
+        border-left-color: var(--t2);
+      }
+      .toc {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px 22px;
+        margin: 20px 0 28px;
+        columns: 2;
+        column-gap: 24px;
+      }
+      .toc a {
+        display: block;
+        padding: 3px 0;
+        border: 0;
+      }
+      .toc h4 {
+        margin-top: 0;
+      }
+      .syn {
+        font-style: italic;
+        color: var(--muted);
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 36px 0;
+      }
+      .src-list {
+        font-size: 13.5px;
+      }
+      .src-list li {
+        margin: 6px 0;
+      }
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      @media print {
+        body {
+          background: white;
+        }
+        header.hero {
+          background: white;
+          color: black;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <h1>Rootlab — TikTok-Led DTC Growth Playbook</h1>
+        <p class="sub">
+          Tactical recommendations to scale a US supplement brand selling
+          Magnesium, Ashwagandha, and Alpha&nbsp;GPC through TikTok creators.
+        </p>
+        <p class="meta">
+          <b>Compiled:</b> 2026-05-06 &nbsp;·&nbsp; <b>Format:</b> Webpage (8k
+          words, ~25 min read) &nbsp;·&nbsp; <b>Sources:</b> 40+ tier-tagged
+          &nbsp;·&nbsp; <b>Confidence:</b> High on benchmarks, medium on
+          case-study figures (vendor-reported)
+        </p>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="callout note">
+        <b>Product naming note.</b> The brief listed "Alpha Gamese" —
+        interpreted here as <b>Alpha GPC</b> (a choline nootropic widely used
+        for focus/cognition stacks). If the actual SKU is something else, the
+        channel and bundling logic still apply but the Stream-4 cognitive-focus
+        framing should be re-checked. Hero SKU referenced throughout as
+        <b>MagAshwa</b> (Magnesium Glycinate + KSM-66 Ashwagandha gummies), the
+        existing Root Labs flagship.
+      </div>
+
+      <h2 id="exec">Executive Summary</h2>
+
+      <p>
+        Rootlab sits inside the single fastest-growing supplement channel of
+        2025–2026:
+        <b>US TikTok Shop wellness, doing $86M/month and up 120% YoY</b>
+        <span class="badge b-t3">T3</span>
+        <span class="small">(FordeBaker, Mar 2025)</span>. Three brands in the
+        magnesium/ashwagandha/cortisol adjacency — <b>Neuro ($10M/mo)</b>,
+        <b>Nello (8-figure, +5,600% views YoY)</b>, and
+        <b>MaryRuth's ($5.9M/mo, 220% YoY)</b> — have already shown the playbook
+        works. The bottleneck for Rootlab is no longer "does TikTok work for
+        supplements" — it's the operational scaffolding around the channel.
+      </p>
+
+      <p><b>The three highest-leverage moves, in order:</b></p>
+
+      <ol>
+        <li>
+          <b>Compound the creator volume.</b> The brands doing $5M–$10M/month
+          run thousands of affiliates posting daily, with paid Spark-Ad
+          amplification on the top 10% organic winners. Rootlab needs
+          <b>both</b> a <i>broad-volume</i> seeding engine (500–1,000+
+          creators/month) and a <i>narrow-deep</i> tier (~100 trusted creators
+          producing multiple pieces/month). Layer in credentialed creators (RDs,
+          MDs) as Spark-Ad whitelist for compliance + conversion.
+        </li>
+        <li>
+          <b>Build a stack-funnel on DTC, not just product pages.</b> TikTok
+          Shop captures impulse first-buyers; the DTC site has to convert them
+          into bundled, subscribed customers. A quiz funnel ("Sleep, Focus, or
+          Calm?") routing to pre-built MagAshwa + Alpha-GPC + Magnesium stacks
+          lifts AOV 20–55% and conversion 73% vs. flat PDPs. Hero bundles +
+          free-shipping threshold at <b>$85</b> (above current AOV) is the
+          Phase-1 quick win.
+        </li>
+        <li>
+          <b>Treat subscription as the retention machine.</b> Subscribers carry
+          <b>5.2× CLV</b> vs. one-time buyers
+          <span class="badge b-t4">T4</span>. The compounding wins are
+          <i>pause-first cancel flows</i> (saves 58% of cancellers), a
+          <i>tenure ladder</i> (28% churn cut at month 3, 44% at month 6), and a
+          <i>wallet-pass reorder timer</i> (3.2× higher 6-month retention). None
+          of these are creative — they are infrastructure.
+        </li>
+      </ol>
+
+      <p class="syn">
+        <i>Synthesis:</i> Rootlab's TikTok presence is acquisition-rich but
+        likely conversion- and retention-poor. The playbook below treats TikTok
+        as a "top of funnel machine" (Bloom Nutrition's framing) and invests
+        behind it, not just inside it.
+      </p>
+
+      <div class="toc">
+        <h4>Contents</h4>
+        <a href="#dashboard">→ Key Metrics Dashboard</a>
+        <a href="#acquisition"
+          >→ Stream 1: Acquisition (TikTok creator economy)</a
+        >
+        <a href="#retention">→ Stream 2: Retention &amp; Loyalty</a>
+        <a href="#conversion">→ Stream 3: Conversion &amp; AOV</a>
+        <a href="#habits">→ Stream 4: Habit Formation</a>
+        <a href="#competitive">→ Stream 5: Competitive Whitespace</a>
+        <a href="#actions">→ Prioritized Action Plan</a>
+        <a href="#bibliography">→ Source Bibliography</a>
+        <a href="#confidence">→ Confidence &amp; Gaps</a>
+      </div>
+
+      <h2 id="dashboard">Key Metrics Dashboard</h2>
+      <p class="small">
+        The numbers below frame what "winning" looks like in this category.
+        Targets, not promises.
+      </p>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <span class="num">$23B</span>
+          <span class="lbl"
+            >US TikTok Shop GMV (2025) — 68% of all US social commerce</span
+          >
+          <span class="src"
+            ><span class="badge b-t4">T4</span> Talk Shop, Apr 2026</span
+          >
+        </div>
+        <div class="stat">
+          <span class="num">$86M/mo</span>
+          <span class="lbl">US TikTok Shop health category revenue</span>
+          <span class="src"
+            ><span class="badge b-t3">T3</span> FordeBaker, Mar 2025</span
+          >
+        </div>
+        <div class="stat">
+          <span class="num">+120%</span>
+          <span class="lbl">YoY growth in US TikTok supplement sales</span>
+          <span class="src"
+            ><span class="badge b-t3">T3</span> FordeBaker, Mar 2025</span
+          >
+        </div>
+        <div class="stat alt">
+          <span class="num">5.2×</span>
+          <span class="lbl">Subscriber CLV multiple vs. one-time buyer</span>
+          <span class="src"
+            ><span class="badge b-t4">T4</span> JeriCommerce, Mar 2026</span
+          >
+        </div>
+        <div class="stat alt">
+          <span class="num">4–5×</span>
+          <span class="lbl"
+            >Respectable TikTok Shop ROAS (top performers hit ~10×)</span
+          >
+          <span class="src"
+            ><span class="badge b-t3">T3</span> Beauty Independent, May
+            2025</span
+          >
+        </div>
+        <div class="stat alt">
+          <span class="num">3×</span>
+          <span class="lbl">90-day ROI on creator product seeding</span>
+          <span class="src"
+            ><span class="badge b-t3">T3</span> TikTok via Beauty
+            Independent</span
+          >
+        </div>
+        <div class="stat warn">
+          <span class="num">5–10%</span>
+          <span class="lbl"
+            >Monthly subscription churn in DTC supplements (best-in-class
+            &lt;4%)</span
+          >
+          <span class="src"
+            ><span class="badge b-t4">T4</span> Propel, May 2026</span
+          >
+        </div>
+        <div class="stat warn">
+          <span class="num">$28–$65</span>
+          <span class="lbl">TikTok supplement CPA range (Meta: $22–$50)</span>
+          <span class="src"
+            ><span class="badge b-t4">T4</span> MHI Growth Engine, Feb
+            2026</span
+          >
+        </div>
+        <div class="stat">
+          <span class="num">73%</span>
+          <span class="lbl"
+            >Higher conversion rate from quiz-based bundles vs. flat PDPs</span
+          >
+          <span class="src"
+            ><span class="badge b-t4">T4</span> Appfox, Feb 2025</span
+          >
+        </div>
+      </div>
+
+      <h2 id="acquisition">Stream 1 — Acquisition (TikTok creator economy)</h2>
+
+      <h3>1.1 The category proof</h3>
+      <p>
+        Three case studies are directly translatable to Rootlab's stack
+        (Magnesium / Ashwagandha / Alpha&nbsp;GPC):
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 18%">Brand</th>
+            <th style="width: 17%">TikTok Revenue</th>
+            <th>What They Did</th>
+            <th style="width: 14%">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <b>Neuro</b><br /><span class="small">Nootropic gum/mints</span>
+            </td>
+            <td>
+              $10M/month, $100M+ valuation; fastest-growing TikTok Shop brand
+              2024
+            </td>
+            <td>
+              Thousands of affiliates; repurposed Joe Rogan / Forbes / podcast
+              clips into 15–30s videos linking to TikTok Shop; Spark Ads on top
+              organic posts
+            </td>
+            <td>
+              <span class="badge b-t2">T2</span> Inc., Apr 2025<br /><span
+                class="badge b-t4"
+                >T4</span
+              >
+              Stormy AI, Feb 2026
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Nello</b><br /><span class="small"
+                >Cortisol supplement — direct ashwagandha competitor</span
+              >
+            </td>
+            <td>
+              11.6M weekly views (+5,600% YoY); 1M+ units sold; 8-figure revenue
+            </td>
+            <td>
+              Thousands of affiliates posting daily; TikTok proof-of-concept →
+              Target nationwide launch
+            </td>
+            <td><span class="badge b-t2">T2</span> WWD, Apr 2025</td>
+          </tr>
+          <tr>
+            <td>
+              <b>MaryRuth's</b><br /><span class="small">General wellness</span>
+            </td>
+            <td>
+              $5.9M/month; 220% YoY; 58% of views from TikTok Shop content
+            </td>
+            <td>
+              "Credibility playbook" — gives creators science-backed talking
+              points + claims compliance, but creative freedom; bundle/sub
+              checkout optimization
+            </td>
+            <td>
+              <span class="badge b-t3">T3</span> NutraIngredients, Oct 2025
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>SNAP Supplements</b><br /><span class="small"
+                >Men's health</span
+              >
+            </td>
+            <td>$40M/year on TikTok Shop; #1 men's brand</td>
+            <td>
+              Influencers filmed inside retail stores → drove TikTok viewers
+              in-store. Flywheeled into 8,000 retail doors in &lt;3 years.
+            </td>
+            <td><span class="badge b-t3">T3</span> ECRM, Mar 2026</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="syn">
+        <i>My read:</i> <b>Nello is the closest comp to Rootlab</b> — same pain
+        point (cortisol/stress), similar adaptogen mechanism, same channel.
+        Their 5,600% views jump came from an industrial-scale affiliate fleet,
+        not a single hero video.
+      </p>
+
+      <h3>1.2 The two-track creator strategy (broad + deep)</h3>
+
+      <p>
+        Best practice in 2026 is <b>not</b> "find one viral creator." It is two
+        parallel tracks running at the same time:
+      </p>
+
+      <div class="card">
+        <h4 style="margin-top: 0">
+          Track A — Broad volume (Truly Beauty / Nello model)
+        </h4>
+        <ul>
+          <li>
+            Use TikTok Shop's native affiliate marketplace to filter by follower
+            count + audience demographics, then blast outreach to thousands of
+            creators simultaneously.
+          </li>
+          <li>
+            Goal: <b>500–1,000+ creators per month</b> seeded with samples. Most
+            posts won't move the needle individually; volume is the moat.
+          </li>
+          <li>
+            Truly Beauty:
+            <i
+              >"Any one video probably didn't do that much in sales, but if we
+              have a thousand of those videos together, it adds up."</i
+            >
+            Now does <b>10–15% of total sales</b> from this surface alone
+            <span class="badge b-t3">T3</span>.
+          </li>
+          <li>
+            Commission norm: <b>10–20%</b> of GMV per creator (TikTok takes
+            platform cut on top).
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top: 0">
+          Track B — Narrow & deep (Abi Amé / UpTik model)
+        </h4>
+        <ul>
+          <li>
+            Top <b>~100 creators</b> who post <i>multiple times per month</i>.
+            More content per creator = more algorithm signal + audience trust
+            compounding.
+          </li>
+          <li>
+            Abi Amé: seeded ~100 products/month,
+            <b>10× GMV growth in one year</b>.
+            <b>7 of 10 viral moments came from Stitch content</b>
+            <span class="badge b-t3">T3</span>.
+          </li>
+          <li>
+            Gamify: "Hit X views → unlock gift package. Hit X GMV → bonus."
+            Shifts dynamic from <i>brand as prize</i> to
+            <i>creator as partner</i>
+            <span class="badge b-t3">T3</span> NetInfluencer/UpTik, Jun 2025.
+          </li>
+          <li>
+            UpTik benchmark: 5–6 weeks of foundational work →
+            <b>$400K GMV in next 30 days, 17× ROAS</b>.
+          </li>
+        </ul>
+      </div>
+
+      <h3>1.3 Credentialed creators are the 2026 unlock</h3>
+
+      <p>
+        The single biggest creative shift this year:
+        <b
+          >RDs, MDs, dermatologists, certified trainers with 10k–50k
+          followers</b
+        >
+        outperform generalist influencers on supplement conversion. Format that
+        wins:
+      </p>
+
+      <ol>
+        <li>Credentialed expert <b>stitches</b> a bad-advice video</li>
+        <li>
+          Corrects with science (cortisol → magnesium → ashwagandha mechanism)
+        </li>
+        <li>Pivots to product ingredient as solution</li>
+        <li>
+          Run as <b>Spark Ad</b> — the professional title on the profile lends
+          instant credibility
+        </li>
+      </ol>
+
+      <p>
+        <span class="badge b-t4">T4</span> TikAdTools (Jan 2026) framed it
+        bluntly: <i>"The era of the Fit Tea Influencer is dead."</i> Rootlab's
+        stress/sleep/focus claims are exactly the surface area where
+        compliance-aware credentialed creators outperform — and where the
+        competitor (Nello) is already loading up.
+      </p>
+
+      <h3>1.4 Content formats that convert</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Format</th>
+            <th>Why it works for Rootlab</th>
+            <th>Example angle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Morning/evening routine</b></td>
+            <td>
+              Anchors product to existing daily ritual; native to "GRWM" trend
+            </td>
+            <td>"5am routine for someone who used to wake up wired"</td>
+          </tr>
+          <tr>
+            <td><b>Ingredient deep-dive</b></td>
+            <td>
+              High purchase-intent search-bait; sidesteps medical-claim policies
+            </td>
+            <td>
+              "Why I take ashwagandha every night (and the magnesium I pair it
+              with)"
+            </td>
+          </tr>
+          <tr>
+            <td><b>Stitch / myth-bust</b></td>
+            <td>Highest-converting format — 7/10 viral moments at Abi Amé</td>
+            <td>
+              Stitch a "ashwagandha is dangerous" video → expert correction
+            </td>
+          </tr>
+          <tr>
+            <td><b>Repurposed authority clips</b></td>
+            <td>
+              Neuro's $10M/mo formula. Forbes, Huberman Lab, Joe Rogan clips
+              re-cut to 15–30s
+            </td>
+            <td>Huberman on magnesium glycinate clips → Rootlab CTA</td>
+          </tr>
+          <tr>
+            <td><b>Visual ASMR — "the Fizz / the Squish"</b></td>
+            <td>
+              88% of TikTok users say sound is essential; gummy macro shots stop
+              scroll
+            </td>
+            <td>Macro-close-up gummy squeeze with bite-crunch sound</td>
+          </tr>
+          <tr>
+            <td><b>Trend hijack</b></td>
+            <td>Apply trending audio to wellness moment; high reach</td>
+            <td>Use viral sound over "what's in my wind-down drawer"</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>1.5 Multi-account angle strategy</h3>
+
+      <p>
+        Brands doing $10M+ in organic TikTok-attributed revenue run
+        <b>10–50+ brand accounts</b>, each targeting one angle of the same
+        product line <span class="badge b-t4">T4</span> TokPortal:
+      </p>
+      <ul>
+        <li><b>@rootlab</b> — flagship</li>
+        <li><b>@rootlab.sleep</b> — magnesium + sleep angle</li>
+        <li><b>@rootlab.calm</b> — ashwagandha + cortisol</li>
+        <li>
+          <b>@rootlab.focus</b> — Alpha&nbsp;GPC angle (taps the "@neuro"
+          nootropic audience directly)
+        </li>
+        <li>
+          <b>@rootlab.peri</b> — perimenopause/40+ women's health (huge
+          underserved consumer vocab in MagAshwa data:
+          <i>"perimenopause wrecked my sleep"</i>)
+        </li>
+        <li><b>@rootlab.science</b> — credentialed-expert content only</li>
+      </ul>
+
+      <div class="callout warn">
+        <b>Operational warning:</b> Don't try to fake this with VPNs/proxies.
+        TikTok device fingerprinting catches multi-account proxy creation within
+        48 hours and shadowbans <span class="badge b-t4">T4</span>. Each account
+        needs a real device, real SIM, real operator.
+      </div>
+
+      <h3>1.6 Paid amplification — Spark Ads + GMV Max</h3>
+
+      <ul>
+        <li>
+          <b>Spark Ads (whitelisting):</b> Monitor creator videos; the moment
+          one gains organic traction, put paid spend behind it. Preserves
+          authentic feel while turning organic discovery into a
+          targeting-optimized campaign.
+        </li>
+        <li>
+          <b>GMV Max</b> is <i>mandatory</i> for all TikTok Shop campaigns since
+          mid-2025. Product seeding generates ~3× ROI after 90 days; GMV Max
+          amplifies it <span class="badge b-t3">T3</span> Beauty Independent.
+        </li>
+        <li>
+          <b>Top-quartile TikTok ad benchmarks (3,847+ accounts):</b> CPM $5.18,
+          CPC $0.97, CTR 2.87%, CPA $18.21, ROAS 3.5×+
+          <span class="badge b-t4">T4</span> PPC Info, Jan 2026.
+        </li>
+        <li>
+          <b>Creative testing &gt; targeting:</b> Brands prioritizing creative
+          testing see <b>47% lower CPA</b> than those relying on targeting
+          alone. Iterate creative weekly; expect ad fatigue at ~1.7M
+          impressions.
+        </li>
+      </ul>
+
+      <h3>1.7 Compliance — must-not-say, must-say</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 50%">Banned (instant flag)</th>
+            <th>Safe equivalent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"Cures anxiety", "treats insomnia", "fixes adrenal fatigue"</td>
+            <td>
+              "Supports a calm nervous system", "promotes restful sleep", "helps
+              you wind down"
+            </td>
+          </tr>
+          <tr>
+            <td>"Stops cortisol", "eliminates stress"</td>
+            <td>
+              "Supports a healthy stress response", "helps your body adapt to
+              stress"
+            </td>
+          </tr>
+          <tr>
+            <td>Extreme before/after weight loss visuals</td>
+            <td>"My 30-day morning routine — what changed in my sleep"</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Rootlab should ship this as a one-page
+        <b>creator compliance card</b> bundled with every sample shipment —
+        MaryRuth's "credibility playbook" is the model.
+      </p>
+
+      <hr />
+
+      <h2 id="retention">Stream 2 — Retention &amp; Loyalty</h2>
+
+      <h3>2.1 The math: why retention is the actual lever</h3>
+
+      <div class="stat-grid">
+        <div class="stat alt">
+          <span class="num">+5%</span>
+          <span class="lbl"
+            >Retention improvement → +25–95% profit (Harvard Business
+            School)</span
+          >
+          <span class="src"
+            ><span class="badge b-t1">T1</span> via MageLoyalty 2026</span
+          >
+        </div>
+        <div class="stat alt">
+          <span class="num">3×</span>
+          <span class="lbl"
+            >Repeat customer spend vs. first-time (5× for loyal)</span
+          >
+          <span class="src"
+            ><span class="badge b-t4">T4</span> MageLoyalty</span
+          >
+        </div>
+        <div class="stat alt">
+          <span class="num">35%</span>
+          <span class="lbl"
+            >Of total revenue comes from top 5% of customers</span
+          >
+          <span class="src"
+            ><span class="badge b-t4">T4</span> MageLoyalty</span
+          >
+        </div>
+        <div class="stat alt">
+          <span class="num">27 → 49 → 62%</span>
+          <span class="lbl"
+            >Repeat purchase probability after 1st / 2nd / 3rd order</span
+          >
+          <span class="src"
+            ><span class="badge b-t4">T4</span> MageLoyalty</span
+          >
+        </div>
+      </div>
+
+      <h3>2.2 Subscription mechanics</h3>
+
+      <ul>
+        <li>
+          <b>Standard subscribe-and-save:</b> 10–20% off (15% is the sweet spot
+          for ~70% margin gummy products) <span class="badge b-t4">T4</span>.
+        </li>
+        <li>
+          <b>Target Renewal Invoice Paid Rate (RIPR):</b> 95.6%+. Below 90% =
+          serious churn problem <span class="badge b-t4">T4</span>.
+        </li>
+        <li>
+          <b>Target monthly churn:</b> &lt;5%, ideally &lt;4%. Best-in-class
+          brands hit it via personalization + flexibility.
+        </li>
+      </ul>
+
+      <h4>Pause/skip/swap — the highest-leverage retention surface</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Mechanic</th>
+            <th>Impact</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pause/skip/swap with no penalty</td>
+            <td>20–30% churn reduction</td>
+            <td><span class="badge b-t4">T4</span> Propel</td>
+          </tr>
+          <tr>
+            <td>Pause-first cancel flow</td>
+            <td>
+              <b
+                >58% of would-be cancellers pause instead. 71% resume within 60
+                days.</b
+              >
+            </td>
+            <td><span class="badge b-t4">T4</span> JeriCommerce</td>
+          </tr>
+          <tr>
+            <td>Frequency adjustment ("too much product")</td>
+            <td>41% lower churn than those who outright cancel</td>
+            <td><span class="badge b-t4">T4</span> JeriCommerce</td>
+          </tr>
+          <tr>
+            <td>Reason-based cancel-flow responses</td>
+            <td>2% → 12% reactivation rate (segmented vs. blanket)</td>
+            <td><span class="badge b-t4">T4</span> Swell</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Rootlab's cancel flow needs five branching responses, each tied to the
+        chosen reason:
+      </p>
+      <ul>
+        <li>
+          <b>"Too expensive"</b> → smaller pack OR 20% loyalty credit for one
+          renewal cycle
+        </li>
+        <li>
+          <b>"Too much product"</b> → 30/60-day pause + frequency adjustment
+        </li>
+        <li>
+          <b>"Not seeing results"</b> → free wellness-advisor / coach consult on
+          dosing &amp; expectations
+        </li>
+        <li>
+          <b>"Trying a different product"</b> → swap within Rootlab catalog
+          (cross-sell to Alpha&nbsp;GPC focus stack, etc.)
+        </li>
+        <li>
+          <b>"Forgot I was subscribed"</b> → flag for lifecycle re-engagement;
+          this is a content failure, not a product one
+        </li>
+      </ul>
+
+      <h4>Tenure ladder — the under-built lever</h4>
+      <p>
+        A nootropics brand using subscription tenure-based escalation cut churn
+        <b>28% at month 3</b> and <b>44% at month 6</b>; year-2 subscribers hit
+        <b>92% monthly retention</b>
+        <span class="badge b-t4">T4</span> JeriCommerce.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Tenure</th>
+            <th>Reward unlock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Month 1–3</td>
+            <td>Standard subscribe-and-save discount</td>
+          </tr>
+          <tr>
+            <td>Month 4–6 (the first churn cliff)</td>
+            <td>+ Free expedited shipping</td>
+          </tr>
+          <tr>
+            <td>Month 7–12</td>
+            <td>+ Exclusive products / limited drops first access</td>
+          </tr>
+          <tr>
+            <td>Year 2+</td>
+            <td>+ VIP pricing across the catalog, founder-call invites</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2.3 Loyalty program structure</h3>
+
+      <div class="card">
+        <h4 style="margin-top: 0">
+          Recommended Rootlab loyalty design (wellness-aligned, 60–75% margin)
+        </h4>
+        <ul>
+          <li>1 point per $1 spent (industry standard for the category)</li>
+          <li>First reward at 200 points (~3 orders): $5 off</li>
+          <li>
+            Bonus earning: 50 pts review · 100 pts photo review · 150 pts
+            wellness quiz · 25 pts social follow
+          </li>
+          <li>
+            <b>Tier names</b> matter — wellness-coded labels (e.g.,
+            <b>Seed → Bloom → Thrive</b>, or root-themed like
+            <b>Sprout → Grow → Root</b>) outperform Silver/Gold/Platinum for
+            this category
+          </li>
+          <li>
+            Use <b>experiential rewards</b> (nutritionist consult, early access,
+            founder Q&amp;A, free samples) over deep % discounts — wellness
+            customers read deep discounts as "cheap ingredients"
+          </li>
+          <li>Points expire at 12 months with 30-day warning</li>
+        </ul>
+        <p class="small">
+          Source: <span class="badge b-t4">T4</span> JeriCommerce wellness
+          loyalty guide, Mar 2026
+        </p>
+      </div>
+
+      <p><b>Validated case results:</b></p>
+      <ul>
+        <li>
+          The Turmeric Co. — 12 months post-launch:
+          <b>2× CLTV, +60% retention rate</b>
+          <span class="badge b-t4">T4</span>.
+        </li>
+        <li>
+          DTC adaptogen brand: <b>22% → 38% repeat purchase</b> in 6 months;
+          <b>−34% blended CAC</b> as referrals grew to 18% of new customers;
+          loyalty members generated <b>2.7× more revenue</b> over 12 months
+          <span class="badge b-t4">T4</span>.
+        </li>
+        <li>
+          74% of supplement consumers say loyalty rewards strongly influence
+          brand choice for recurring purchases.
+        </li>
+      </ul>
+
+      <h3>2.4 Wallet pass — the retention infrastructure most brands skip</h3>
+
+      <div class="callout">
+        <b
+          >This is the single highest-impact-per-dollar retention investment.</b
+        >
+        Most brands don't build it. The numbers:
+        <ul>
+          <li>
+            <b>85–95% delivery rate</b> on wallet push (vs. 21% email open,
+            50–60% SMS) <span class="badge b-t4">T4</span>
+          </li>
+          <li>
+            <b>+64% on-time reorders</b> from wallet reorder timers (countdown
+            to "your magnesium runs out in 3 days")
+            <span class="badge b-t4">T4</span>
+          </li>
+          <li>
+            <b>3.2× higher 6-month retention</b> for customers with timer active
+          </li>
+          <li>
+            <b>40% lower cancellation</b> vs. customers managing via email links
+          </li>
+          <li>
+            Target: <b>65–75% wallet adoption within 30 days of launch</b>
+          </li>
+        </ul>
+      </div>
+
+      <h3>2.5 Onboarding lifecycle — the first 30 days</h3>
+
+      <p>
+        Supplements have a structural retention problem: most products take 4–8
+        weeks to show effects, but customers evaluate in week 1–2. The
+        onboarding flow's job is to <b>delay the verdict</b> while building the
+        habit.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Message</th>
+            <th>Goal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              Welcome + "What to expect": weeks 1–2 adjustment, weeks 3–4
+              initial changes, weeks 5–8 full effects
+            </td>
+            <td>Set timeline; delay the "is it working" question</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              "How to take MagAshwa for max absorption" — timing, food pairings,
+              what to avoid
+            </td>
+            <td>Reduce dosing-error churn</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>
+              First check-in + FAQ on early experiences (subtle adjustment,
+              vivid dreams from magnesium, etc.)
+            </td>
+            <td>Normalize early sensations</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>
+              Halfway-marker: "Here's what's happening in your body right now"
+            </td>
+            <td>Sustain motivation across compliance gap</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>
+              Social proof from customers with similar profiles who saw results
+              at 4–6 weeks
+            </td>
+            <td>Reframe expectation</td>
+          </tr>
+          <tr>
+            <td>28</td>
+            <td>Renewal reinforcement + wellness profile completion CTA</td>
+            <td>Pre-empt cancel intent</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        <b>Wellness profile completion</b> is the single highest-leverage
+        onboarding action: completers spend <b>$340/year vs. $126</b> for
+        non-completers (<b>2.7× LTV</b>)
+        <span class="badge b-t4">T4</span> JeriCommerce. Target completion rate:
+        42%+.
+      </p>
+
+      <h3>2.6 Win-back — segment by reason, not by time</h3>
+      <p>
+        Blanket "we miss you, here's 20% off" sequences hit ~2% reactivation.
+        Reason-segmented sequences hit ~12%. Validated 90-day Klaviyo + wallet
+        sequence recovered
+        <b
+          >18% of churned subscribers; recovered subscribers stayed 7+
+          additional months</b
+        >
+        <span class="badge b-t4">T4</span> JeriCommerce.
+      </p>
+
+      <hr />
+
+      <h2 id="conversion">Stream 3 — Conversion &amp; AOV</h2>
+
+      <h3>3.1 The bundle play — Rootlab's biggest near-term lever</h3>
+
+      <p>
+        Rootlab has three SKUs that map cleanly onto three purchase intents:
+        <b>Ashwagandha (calm)</b>, <b>Magnesium (sleep)</b>,
+        <b>Alpha&nbsp;GPC (focus)</b>. This is exactly the catalog shape that
+        bundles best.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Bundle</th>
+            <th>SKUs</th>
+            <th>Pain anchor</th>
+            <th>Suggested discount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>The Sleep Stack</b></td>
+            <td>MagAshwa + extra Magnesium</td>
+            <td>"Perimenopause wrecked my sleep" / melatonin alternative</td>
+            <td>20–22%</td>
+          </tr>
+          <tr>
+            <td><b>The Calm Stack</b></td>
+            <td>Ashwagandha + MagAshwa</td>
+            <td>Cortisol / "everything changed at 37"</td>
+            <td>22%</td>
+          </tr>
+          <tr>
+            <td><b>The Focus Stack</b></td>
+            <td>Alpha GPC + Ashwagandha</td>
+            <td>Brain fog / sustainable energy</td>
+            <td>20%</td>
+          </tr>
+          <tr>
+            <td><b>The Rootlab Foundation</b></td>
+            <td>
+              All three SKUs (the "everyday") — anchor as <i>Most Popular</i>
+            </td>
+            <td>Whole-system stress reset</td>
+            <td>25%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><b>Validated bundle math:</b></p>
+      <ul>
+        <li>
+          Bundles lift AOV <b>20–55%</b> when executed well; supplement-specific
+          case studies show <b>$47 → $89 AOV (89%)</b> at Garden of Life and
+          <b>$54 → $79 (47%)</b> at a verified DTC sports nutrition brand
+          <span class="badge b-t4">T4</span>.
+        </li>
+        <li>
+          Quiz-based bundle funnels: <b>+73% conversion vs. flat PDPs</b>
+          <span class="badge b-t4">T4</span> Appfox.
+        </li>
+        <li>
+          Customers with <b>3+ product stacks retain at 2.4×</b> the rate of
+          single-product buyers <span class="badge b-t4">T4</span> JeriCommerce.
+        </li>
+        <li>
+          Smart bundle pricing: 20–25% discount for premium/3-SKU bundles;
+          cheaper than that erodes margin without lifting AOV.
+        </li>
+      </ul>
+
+      <div class="callout">
+        <b>Quick rule from Harvard Business research:</b> always sell components
+        individually <i>and</i> as a bundle. Bundle-only offers underperform —
+        the bundle has to feel like a meaningful choice, not the only choice.
+      </div>
+
+      <h3>3.2 The quiz funnel — Rootlab's missing front door</h3>
+
+      <p>A quiz funnel does three jobs at once:</p>
+      <ol>
+        <li><b>Conversion lift:</b> 73% higher than flat product pages</li>
+        <li>
+          <b>Retention architecture:</b> quiz completers spend 4.3× more
+          annually
+        </li>
+        <li>
+          <b>Zero-party data capture</b> for all downstream lifecycle messaging
+        </li>
+      </ol>
+
+      <p><b>Recommended Rootlab quiz structure (5 questions, ≤2 min):</b></p>
+      <ol>
+        <li>
+          What's your #1 issue right now?
+          <i>Sleep / Stress / Brain fog / Energy / All of the above</i>
+        </li>
+        <li>
+          When does it hit hardest?
+          <i>Morning / Afternoon crash / Evening wind-down / All day</i>
+        </li>
+        <li>
+          Have you tried magnesium or ashwagandha before?
+          <i>Yes — works / Yes — didn't notice / No</i>
+        </li>
+        <li>
+          How regimented are you?
+          <i>I take supplements daily / On-and-off / This is new for me</i>
+        </li>
+        <li>
+          Age + life stage (25-34 / 35-44 / 45+ / perimenopause / postpartum)
+        </li>
+      </ol>
+
+      <p>
+        The result page recommends a stack with <b>reasoning shown</b> ("Sleep +
+        perimenopause + magnesium-experienced → MagAshwa + extra Magnesium
+        nightly. Why: KSM-66 + magnesium glycinate target the cortisol rebound
+        that disrupts sleep at 3 AM…"). Top-performing brands show <i>why</i>,
+        not just <i>what</i>.
+      </p>
+
+      <p>
+        Follow with a 5-day educational email sequence — converts at
+        <b>35% vs. 12%</b> for one-off emails
+        <span class="badge b-t4">T4</span> Appfox.
+      </p>
+
+      <h3>3.3 Free shipping — set at $85</h3>
+
+      <p>
+        The benchmark formula across multiple sources: free shipping threshold =
+        <b>20–30% above current AOV</b>.
+      </p>
+
+      <ul>
+        <li>
+          Supplement category AOV benchmark: <b>~$70</b>
+          <span class="badge b-t4">T4</span> MageLoyalty
+        </li>
+        <li>Health &amp; supplements AOV range on Shopify: <b>$68–$85</b></li>
+        <li><b>Recommended Rootlab threshold: $85</b></li>
+        <li>
+          Display it as a progress bar above the fold ("$12 away from free
+          shipping") not just at checkout — adds <b>3–5 points to AOV</b>
+          <span class="badge b-t4">T4</span> Kanal.
+        </li>
+        <li>
+          48% of US shoppers add items specifically to qualify for free shipping
+          <span class="badge b-t3">T3</span> Baymard.
+        </li>
+      </ul>
+
+      <h3>3.4 The TikTok funnel — the $9.99 sample pack hack</h3>
+
+      <p>
+        TikAdTools' 2026 funnel is purpose-built for TikTok-Shop-led brands:
+        <b>$9.99 sample pack</b> at break-even or slight loss, then automated
+        post-purchase email upsell to full product / subscription. The logic:
+        $10 is an impulse buy, $60 is a barrier. The sample captures email +
+        shipping + intent.
+      </p>
+
+      <p>
+        For Rootlab, this could be a
+        <b>3-day MagAshwa pouch + Alpha GPC sachet</b> at $9.99 — high
+        TikTok-Shop conversion velocity, then "Loved the sample? Get 20% off
+        your first full bottle" 7 days later.
+      </p>
+
+      <h3>3.5 Cart, checkout, post-purchase</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Surface</th>
+            <th>Tactic</th>
+            <th>AOV/CR Lift</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Product page</td>
+            <td>
+              "Complete Your Stack" — manually curated cross-sells with 1-line
+              scientific rationale per pairing
+              (Manual&nbsp;&gt;&nbsp;algorithmic by 41% in supplement category)
+            </td>
+            <td>+8.40 per conversion; CTR 31%</td>
+          </tr>
+          <tr>
+            <td>Cart drawer</td>
+            <td>
+              Free-shipping progress bar + 1–3 add-on suggestions + free-gift
+              threshold (triple-stack motivational structure)
+            </td>
+            <td>+10–20% AOV</td>
+          </tr>
+          <tr>
+            <td>Checkout</td>
+            <td>
+              Express pay (Shop Pay, Apple Pay), guest checkout default, account
+              post-purchase
+            </td>
+            <td>Reduces abandonment</td>
+          </tr>
+          <tr>
+            <td>Checkout (Shopify Plus)</td>
+            <td>
+              Native checkout extension upsells (small accessory or
+              supplement-stack add)
+            </td>
+            <td>+5–15% AOV</td>
+          </tr>
+          <tr>
+            <td>Post-purchase one-click upsell</td>
+            <td>
+              One offer only: a sample of the next stack item, &lt;30% of order
+              value
+            </td>
+            <td>
+              +15–25% AOV; 3–8% acceptance baseline, 15–25% on Shopify Plus
+            </td>
+          </tr>
+          <tr>
+            <td>WhatsApp post-purchase</td>
+            <td>
+              Cross-sell sent 20–40 min after fulfillment webhook — 90%+ open
+              rate vs. 21% email; converts ~3× better than 48-hr email
+            </td>
+            <td>+5–9% AOV</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>3.6 Discounting discipline — what to avoid</h3>
+
+      <div class="callout warn">
+        <b>Don't blanket-discount.</b> A 10% off everything code on a $70 cart =
+        $63 — a pure margin loss to dedicated buyers who would have paid full
+        price. Worse, it trains the customer to wait for sales. Use:
+        <ul>
+          <li>
+            <b>Gift-with-purchase</b> over % off (no training effect, +10–20%
+            AOV)
+          </li>
+          <li>
+            <b>Tiered spend incentives</b> (free shipping at $X, free sample at
+            $Y, free gift at $Z)
+          </li>
+          <li>
+            <b>Volume discounts</b> on consumables (buy 2 save 10%, buy 3 save
+            18%) — pulls reorder cycles forward and reduces fulfillment
+            cost-per-unit
+          </li>
+          <li>
+            Always keep a countdown — open-ended discounts teach customers to
+            defer
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <h2 id="habits">
+        Stream 4 — Habit Formation (the retention force-multiplier)
+      </h2>
+
+      <p>
+        Supplements have a structural disadvantage vs. medications:
+        <b>perceived optionality</b>. No one feels clinical consequences for
+        skipping a magnesium gummy. The brands winning at retention treat habit
+        formation as a product-design problem, not a marketing one.
+      </p>
+
+      <h3>4.1 The cue-routine-reward loop applied to Rootlab's stack</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Cue (anchor habit)</th>
+            <th>Reward layer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>MagAshwa / Magnesium</b> (PM)</td>
+            <td>
+              Brushing teeth at night, bedtime tea, putting phone on charger
+            </td>
+            <td>
+              Calm "I'm winding down" identity signal; chewable gummy =
+              treat-not-chore
+            </td>
+          </tr>
+          <tr>
+            <td><b>Ashwagandha</b> (AM or PM)</td>
+            <td>Morning coffee or kettle boiling (Symprove model)</td>
+            <td>"Stress-proofing my day" identity</td>
+          </tr>
+          <tr>
+            <td><b>Alpha GPC</b> (AM)</td>
+            <td>
+              Sitting down at desk / opening laptop (The Herbtender model)
+            </td>
+            <td>"Switch on" cognitive ritual</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        <b>Key insight from Symprove:</b> their Head of Insight role exists
+        specifically to optimize habit formation. They ran multi-stage taste
+        tests (blind + 1,000-person algorithmic survey across 20 flavours)
+        before launching new flavors because
+        <i>"liking your flavour makes consistency much easier"</i>
+        <span class="badge b-t4">T4</span>. Flavor is a retention variable for a
+        gummy brand, not just a marketing one.
+      </p>
+
+      <h3>4.2 Make it identity-based, not outcome-based</h3>
+
+      <p>
+        James Clear's principle is the strongest single content shift available.
+        Compare:
+      </p>
+      <ul>
+        <li>
+          <b>Outcome framing</b> (weak): <i>"I want better sleep"</i> — fades
+          when results are slow
+        </li>
+        <li>
+          <b>Identity framing</b> (strong):
+          <i>"I am someone who takes care of their nervous system"</i> —
+          self-reinforcing
+        </li>
+      </ul>
+      <p>
+        Every Rootlab touchpoint — packaging copy, post-purchase emails, app
+        push, creator briefs — should anchor to <b>identity language</b>.
+        <i>"Every dose is a vote for the person you want to be."</i>
+      </p>
+
+      <h3>4.3 Packaging that drives compliance</h3>
+
+      <ul>
+        <li>
+          <b>Make it visible.</b> Counter, not cabinet. Rootlab packaging should
+          look at home next to a coffee machine — not look like a "vitamin
+          bottle." Legendairy Milk:
+          <i
+            >"invest in a cute supplement organizer that doesn't scream
+            grandma's pill case."</i
+          >
+        </li>
+        <li>
+          <b>Daily dose markers</b> on the bottle (visual checkbox per day for
+          the first 30 days). Free, gamifies compliance without an app.
+        </li>
+        <li>
+          <b>Travel sachets</b> for MagAshwa — Forest Fresh Honey's
+          Jarrah-sachet model. Maintains ritual continuity on the road, and
+          travel is when supplement habits break down.
+        </li>
+        <li>
+          <b>Pill / gummy color psychology:</b> Blue tones for sleep/calm SKUs
+          (calmness association); warm/red for AM focus SKU. Cited PMC 2022
+          research: <span class="badge b-t1">T1</span> peer-reviewed
+          <span class="badge b-t3">T3</span> via Science of Retail.
+        </li>
+      </ul>
+
+      <h3>4.4 Gamified compliance — the Duolingo-streak model</h3>
+
+      <p>
+        Recommended directly by Dr. Kasey Jo Orvidas (PhD Psychology, Needed
+        brand expert Q&amp;A):
+        <i>"people get crazy about protecting their streak."</i>
+      </p>
+
+      <ul>
+        <li>
+          <b>App-light streak tracker</b> via wallet pass — daily tap to mark
+          dose
+        </li>
+        <li>
+          <b>Milestone celebrations</b> at 30 / 60 / 100 days (bonus points +
+          personalized congrats). 100-day streak celebrators showed
+          <b>88% 12-month retention</b>
+          <span class="badge b-t4">T4</span> JeriCommerce.
+        </li>
+        <li>
+          <b>Limited drops to loyalty members first</b> (48-hr head start) —
+          <b>3× revenue per SKU</b> on standard launches.
+        </li>
+      </ul>
+
+      <h3>4.5 Reorder-trigger engineering — preventing the empty-jar break</h3>
+
+      <p>
+        Forest Fresh Honey nailed this: the single biggest ritual-break is
+        <b>running out</b>. The gap weakens the loop; restart requires fresh
+        willpower. Subscribe-and-save isn't a discount mechanic — it's "the
+        infrastructure of the ritual."
+      </p>
+
+      <ul>
+        <li>
+          <b>Predictive SMS/wallet reminders</b> — fire 5 days before predicted
+          run-out, not on a generic 30-day cycle
+          <span class="badge b-t4">T4</span> Appstle.
+        </li>
+        <li>
+          <b>Surplus prevention</b> — proactively offer to extend interval if
+          data shows accumulation. Customers who feel in control churn 35% less.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2 id="competitive">Stream 5 — Competitive Whitespace</h2>
+
+      <h3>5.1 Where the competitor map is crowded</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Pain</th>
+            <th>Crowded by</th>
+            <th>Rootlab's edge?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sleep / magnesium</td>
+            <td>MaryRuth's, Olly, Nature Made</td>
+            <td>
+              Glycinate + ashwagandha combo (KSM-66) is the differentiated
+              mechanism — not just "magnesium"
+            </td>
+          </tr>
+          <tr>
+            <td>Cortisol / ashwagandha</td>
+            <td><b>Nello</b> (8-figure, dominant)</td>
+            <td>
+              Format (gummy) and pairing (with magnesium) are the
+              differentiators. Direct head-on positioning is risky; angle around
+              <i>nighttime cortisol &amp; sleep</i> rather than daytime stress.
+            </td>
+          </tr>
+          <tr>
+            <td>Nootropic / focus</td>
+            <td><b>Neuro</b> ($10M/mo, gum format), Magic Mind</td>
+            <td>
+              Alpha&nbsp;GPC is meaningfully different from Neuro's
+              caffeine+L-theanine stack — true cognitive-enhancement angle vs.
+              "wired calm." Lean into this.
+            </td>
+          </tr>
+          <tr>
+            <td>General wellness gummies</td>
+            <td>Goli, MaryRuth's, Bloom</td>
+            <td>
+              Don't compete here. Rootlab should not chase "everyday gummy."
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>
+        5.2 Underserved consumer vocabularies (real Reddit/Amazon language)
+      </h3>
+
+      <p>
+        From the AshwaMag product brief, three consumer entry-points are
+        <b>under-targeted</b> in current ad/content libraries:
+      </p>
+
+      <ol>
+        <li>
+          <b>Perimenopause sleep:</b> <i>"perimenopause wrecked my sleep"</i> —
+          direct quote, high search volume, low brand competition. Magnesium
+          glycinate + ashwagandha is the perfect mechanism story for this
+          audience. <b>Build a dedicated content vertical (@rootlab.peri).</b>
+        </li>
+        <li>
+          <b>Mechanism literacy:</b>
+          <i
+            >"stress burns through your magnesium faster than your diet can
+            replace it"</i
+          >
+          — consumer-vetted mechanism phrase. Use as creator hook, ad copy, PDP
+          copy. Performs because it's <i>provably true</i> and explains
+          <i>why</i> a stack matters.
+        </li>
+        <li>
+          <b>Soil/food-deficiency framing:</b>
+          <i
+            >"even if you eat perfectly, your food doesn't have the magnesium it
+            used to"</i
+          >
+          — an entry point that doesn't require a problem (good for
+          general-wellness halo).
+        </li>
+      </ol>
+
+      <h3>5.3 Format whitespace</h3>
+      <ul>
+        <li>
+          <b>The "nighttime ritual kit"</b> — physical bundle with MagAshwa + a
+          small ceramic spoon / glass / herbal tea sachet. Forest Fresh Honey's
+          "ritual kit" packaging plays here. No major US adaptogen brand has
+          done this at scale.
+        </li>
+        <li>
+          <b>Travel sachet line</b> — under-served in ashwagandha; nearly nobody
+          offers it.
+        </li>
+        <li>
+          <b>Live-shopping daily 8am–5pm</b> (BeWell model) — significant
+          operational lift, but live AOV-uplift data is real ($1M–$2M Canvas
+          Beauty single-stream records).
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2 id="actions">Prioritized Action Plan</h2>
+
+      <p class="small">
+        Each action: what to do · expected impact · effort · benchmark cited.
+      </p>
+
+      <h3>Immediate (next 30 days) — highest impact, lowest effort</h3>
+
+      <div class="action">
+        <span class="pri pri-now">Now</span>
+        <h4>
+          1. Set free-shipping threshold to $85 with a cart-drawer progress bar
+        </h4>
+        <div class="meta">
+          <span><b>Impact:</b> +12–18% AOV</span
+          ><span><b>Effort:</b> 1 dev-day</span
+          ><span><b>Benchmark:</b> 100xElevate, Kanal</span>
+        </div>
+        <p>
+          Display "$X away from free shipping" above the fold. This single
+          change is the highest impact-to-effort ratio on the entire site.
+        </p>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-now">Now</span>
+        <h4>
+          2. Ship 4 hero bundles: Sleep Stack, Calm Stack, Focus Stack,
+          Foundation
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> +20–55% AOV; +2.4× retention vs. single-product
+            buyers</span
+          ><span><b>Effort:</b> 1–2 weeks (PDP build + bundle SKU setup)</span
+          ><span><b>Benchmark:</b> Rework, JeriCommerce, Appfox</span>
+        </div>
+        <p>
+          Sell each component individually too (HBS rule). Anchor "Foundation"
+          as Most Popular. Hand bundle copy to creators as a default
+          talking-point package.
+        </p>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-now">Now</span>
+        <h4>
+          3. Implement pause-first cancellation flow with 5 reason-branched
+          responses
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Saves 58% of cancellers; 71% of pausers resume in 60
+            days</span
+          ><span><b>Effort:</b> 1 week (subscription platform config)</span
+          ><span><b>Benchmark:</b> JeriCommerce, Propel, Swell</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-now">Now</span>
+        <h4>4. Ship the creator compliance card + creative sandbox</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Cuts policy-flag churn; speeds creator output</span
+          ><span><b>Effort:</b> 1 designer + 1 legal review</span
+          ><span><b>Benchmark:</b> MaryRuth's "credibility playbook"</span>
+        </div>
+        <p>
+          One-page card bundled with every sample box: banned terms, safe
+          equivalents, 5 hook-frame examples, 3 stitch-target categories.
+        </p>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-now">Now</span>
+        <h4>
+          5. Stand up the broad seeding pipeline — 500 creators in month 1,
+          1,000 by month 3
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> 3× ROI at 90 days on product seeding (TikTok
+            benchmark)</span
+          ><span><b>Effort:</b> 1 affiliate ops hire + sample logistics</span
+          ><span><b>Benchmark:</b> Truly Beauty, Nello</span>
+        </div>
+        <p>
+          Use TikTok Shop's native creator filtering by follower band and
+          audience demographics. Target US-based, female-leaning creators in
+          #WellnessTok / #SleepTok / #StressRelief / #PerimenopauseTikTok /
+          #BiohackingFemale.
+        </p>
+      </div>
+
+      <h3>Short-term (60–90 days) — high impact, moderate effort</h3>
+
+      <div class="action">
+        <span class="pri pri-soon">60–90d</span>
+        <h4>6. Build the quiz funnel + 5-day educational email sequence</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> +73% conversion vs. flat PDPs; quiz completers 4.3×
+            annual spend</span
+          ><span><b>Effort:</b> 2–3 weeks (quiz tool + Klaviyo flow)</span
+          ><span><b>Benchmark:</b> Appfox, Propel</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-soon">60–90d</span>
+        <h4>7. Launch wallet pass with reorder timer + tier display</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> +64% on-time reorders; 3.2× 6-month retention; 40%
+            lower cancel rate</span
+          ><span
+            ><b>Effort:</b> 2 weeks (wallet platform — Apple/Google Wallet
+            integration)</span
+          ><span><b>Benchmark:</b> JeriCommerce</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-soon">60–90d</span>
+        <h4>8. Stand up narrow-deep creator track (50–100 creators)</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Abi Amé saw 10× GMV in one year on this model; 17×
+            ROAS achievable (UpTik)</span
+          ><span><b>Effort:</b> 1 creator-relations lead + sample budget</span
+          ><span><b>Benchmark:</b> Abi Amé / UpTik</span>
+        </div>
+        <p>
+          Recruit 10 RDs, 10 MDs, 10 wellness coaches, 10 perimenopause-niche
+          creators, 50 mid-tier UGC creators (10k–50k followers, evidence of
+          past supplement posts). Monthly content commitment, gamified GMV
+          milestones.
+        </p>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-soon">60–90d</span>
+        <h4>
+          9. Launch $9.99 TikTok-Shop sample pack as acquisition front door
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Lower-friction first conversion; captures email +
+            shipping for upsell</span
+          ><span><b>Effort:</b> 1 SKU + automated email flow</span
+          ><span><b>Benchmark:</b> TikAdTools recommended funnel</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-soon">60–90d</span>
+        <h4>
+          10. Build the 6-touch onboarding email sequence with timeline-setting
+          messaging
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> +34% 90-day retention (collagen-brand
+            benchmark)</span
+          ><span><b>Effort:</b> 1 week of copy + Klaviyo</span
+          ><span><b>Benchmark:</b> JeriCommerce, Propel</span>
+        </div>
+      </div>
+
+      <h3>Medium-term (3–6 months) — requires infrastructure</h3>
+
+      <div class="action">
+        <span class="pri pri-mid">3–6mo</span>
+        <h4>11. Spin up multi-account TikTok angles</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Multiplies organic surface area; de-risks
+            main-account dependency</span
+          ><span
+            ><b>Effort:</b> Real-device, real-SIM ops; 1 content lead per active
+            account</span
+          ><span><b>Benchmark:</b> TokPortal</span>
+        </div>
+        <p>
+          Start with @rootlab.sleep, @rootlab.peri, @rootlab.science. Add
+          @rootlab.focus and @rootlab.calm in month 4–5.
+        </p>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-mid">3–6mo</span>
+        <h4>
+          12. Launch loyalty program (Sprout/Grow/Root tiers, 1pt/$1,
+          experiential rewards)
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> 2× CLTV (Turmeric Co. benchmark); +60% retention;
+            2.7× revenue from members</span
+          ><span
+            ><b>Effort:</b> Loyalty platform ($150/mo) + 4 weeks
+            design/launch</span
+          ><span><b>Benchmark:</b> JeriCommerce, Peel Insights</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-mid">3–6mo</span>
+        <h4>13. Launch the tenure ladder inside subscription</h4>
+        <div class="meta">
+          <span><b>Impact:</b> −28% churn at month 3; −44% at month 6</span
+          ><span><b>Effort:</b> 2 weeks (subscription platform rules)</span
+          ><span><b>Benchmark:</b> JeriCommerce nootropics case</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-mid">3–6mo</span>
+        <h4>
+          14. Build Spark Ad pipeline — auto-flag organic posts hitting
+          threshold velocity
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> +5% Spark ROAS lift over standard creative (Neuro
+            model); creative testing brands see 47% lower CPA</span
+          ><span><b>Effort:</b> Analytics tooling + media buyer</span
+          ><span><b>Benchmark:</b> Stormy AI / Neuro, PPC Info</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-mid">3–6mo</span>
+        <h4>15. Build a Klaviyo 3-factor churn-risk score</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Recovers 24% of high-risk customers before they
+            churn</span
+          ><span><b>Effort:</b> Klaviyo segmentation + analyst time</span
+          ><span><b>Benchmark:</b> JeriCommerce supplement brand case</span>
+        </div>
+        <p>
+          Inputs: days-since-last-order vs. avg cycle, support ticket count,
+          pause/email/wallet engagement.
+        </p>
+      </div>
+
+      <h3>Long-term (6–12 months) — strategic investments</h3>
+
+      <div class="action">
+        <span class="pri pri-long">6–12mo</span>
+        <h4>
+          16. Launch a content-led community surface (closed FB group / Discord
+          / Substack)
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> 2.5× repeat purchase rate vs. transactional brands;
+            "Wellness Circle" benchmark 73% annual retention vs. 41%</span
+          ><span><b>Effort:</b> Community manager + content cadence</span
+          ><span><b>Benchmark:</b> JeriCommerce, MageLoyalty</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-long">6–12mo</span>
+        <h4>17. "Ask a Nutritionist" / "Ask an MD" monthly live</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Members attending ≥1 session show 56% higher annual
+            spend</span
+          ><span><b>Effort:</b> Practitioner retainer + ops</span
+          ><span><b>Benchmark:</b> JeriCommerce</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-long">6–12mo</span>
+        <h4>18. Test live shopping (start 2× weekly, expand based on data)</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Use as flash-sale + drop mechanic; not a primary
+            revenue driver</span
+          ><span><b>Effort:</b> Studio + host + ops</span
+          ><span
+            ><b>Benchmark:</b> Truly Beauty (3–4×/wk), BeWell (daily
+            8a–5p)</span
+          >
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-long">6–12mo</span>
+        <h4>19. Travel sachet line (MagAshwa singles, Alpha-GPC sachets)</h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> Habit-continuity / impulse-friendly TikTok-Shop SKU;
+            format whitespace</span
+          ><span><b>Effort:</b> Manufacturing + packaging redesign</span
+          ><span><b>Benchmark:</b> Forest Fresh Honey Jarrah sachet model</span>
+        </div>
+      </div>
+
+      <div class="action">
+        <span class="pri pri-long">6–12mo</span>
+        <h4>
+          20. Retail launch riding the TikTok halo (Target / Vitamin Shoppe /
+          GNC playbook)
+        </h4>
+        <div class="meta">
+          <span
+            ><b>Impact:</b> SNAP went from TikTok to 8,000 doors in &lt;3 yrs;
+            Nello → Target nationwide</span
+          ><span
+            ><b>Effort:</b> Major — retail team, broker relations, channel
+            pricing</span
+          ><span><b>Benchmark:</b> SNAP, Nello, BeWell</span>
+        </div>
+        <p>
+          The TikTok halo gives retail buyers the proof case they need. Don't
+          lead with retail; let TikTok be the leverage.
+        </p>
+      </div>
+
+      <hr />
+
+      <h2 id="confidence">Confidence Assessment &amp; Gaps</h2>
+
+      <h3>What we're highly confident on</h3>
+      <ul>
+        <li>
+          <b>The TikTok-Shop opportunity is real and large.</b> Multiple T2/T3
+          sources triangulate on $86M/mo US health category, 120% YoY growth,
+          and the Neuro / Nello / MaryRuth's case studies.
+          <span class="badge b-t2">T2</span> coverage from Inc., WWD,
+          Entrepreneur.
+        </li>
+        <li>
+          <b>The retention math.</b> Harvard Business School's
+          5%-retention-→-25-95%-profit finding is the single most-cited number
+          in DTC; reproduced across multiple sources
+          <span class="badge b-t1">T1</span> via aggregators.
+        </li>
+        <li>
+          <b>Bundle and free-shipping AOV mechanics.</b> Triangulated across 6+
+          sources (ConvertCart, Rework, 100xElevate, Appfox, Kanal, EasyApps).
+        </li>
+        <li>
+          <b>Habit science principles</b> — Duhigg, Fogg, Clear, Eyal frameworks
+          are peer-reviewed-derived <span class="badge b-t1">T1</span>; brand
+          applications are vendor-blog-tier but consistent.
+        </li>
+      </ul>
+
+      <h3>What's medium confidence</h3>
+      <ul>
+        <li>
+          <b>Specific case-study numbers</b> (Garden of Life 89% AOV lift,
+          sports-nutrition 47% AOV lift, "Turmeric Co. 2× CLTV") are
+          vendor-reported and possibly cherry-picked. Treat as directional, not
+          as guaranteed Rootlab outcomes.
+        </li>
+        <li>
+          <b>Brand-blog "X% lift from Y tactic"</b> claims (most
+          JeriCommerce/Propel/Swell numbers) are
+          <span class="badge b-t4">T4</span>. The pattern across many sources is
+          the right signal; specific percentages are noisy.
+        </li>
+        <li>
+          <b>17× ROAS (UpTik), 10× ROAS (Neuro top-perf):</b> single-case-study,
+          top-decile outcomes. Use 4–5× ROAS as the realistic
+          <i>respectable</i> target <span class="badge b-t3">T3</span> Beauty
+          Independent.
+        </li>
+      </ul>
+
+      <h3>What we don't know yet (gaps)</h3>
+      <ul>
+        <li>
+          <b>Rootlab's current numbers.</b> No baseline AOV, CAC, conversion,
+          churn, or TikTok ROAS was provided. All targets above are category
+          benchmarks.
+          <i
+            >The first action item before executing this playbook is to gather
+            Rootlab's actual current-state metrics so deltas can be measured.</i
+          >
+        </li>
+        <li>
+          <b>"Alpha Gamese" identity.</b> Working assumption: Alpha&nbsp;GPC.
+          Confirm before printing creator briefs.
+        </li>
+        <li>
+          <b>Mobile app vs web ROI</b> — none of the sources had clean
+          comparative data for supplement brands. The data slightly favors
+          fixing mobile-web AOV before building an app.
+        </li>
+        <li>
+          <b>India ↔ US operational handoff.</b> The user's Mosaic Wellness
+          email suggests the team operates from India for a US brand — TikTok
+          Shop creator outreach, sample logistics, FDA labeling, and live
+          shopping all benefit from US-based operations. Worth scoping.
+        </li>
+        <li>
+          <b>Subscription platform.</b> Many tactics above (pause-first, tenure
+          ladder, predictive reminders, cancel reason branching) require a
+          subscription platform that supports it. Recharge, Skio, Loop, or
+          Appstle likely needed.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2 id="bibliography">Source Bibliography</h2>
+
+      <p class="small">
+        Tier badges: <span class="badge b-t1">T1</span> primary/peer-reviewed,
+        <span class="badge b-t2">T2</span> established reporting,
+        <span class="badge b-t3">T3</span> specialized expert,
+        <span class="badge b-t4">T4</span> use with caution (vendor blog /
+        single-source). Vendor-affiliated sources flagged where relevant.
+      </p>
+
+      <h4>Acquisition</h4>
+      <ol class="src-list">
+        <li>
+          <span class="badge b-t2">T2</span> "Neuro Was the Fastest-Growing
+          Brand on TikTok Shop Last Year" — Inc., 2025-04-17.
+          <a
+            href="https://www.inc.com/annabel-burba/neuro-was-the-fastest-growing-brand-on-tiktok-shop-last-year-it-has-joe-rogan-to-thank/91177090"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t2">T2</span> "TikTok-famous Supplement Brand
+          Nello Launches at Target" — WWD, 2025-04-16.
+          <a
+            href="https://wwd.com/beauty-industry-news/wellness/tiktok-nello-cortisol-supplement-target-launch-1237088747/"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t2">T2</span> "How Bloom Nutrition is Using
+          TikTok Shop to Power UK Expansion" — Entrepreneur, 2025-08-21.
+          <a
+            href="https://uk.entrepreneur.com/lifestyle/how-bloom-nutrition-is-using-tiktok-shop-to-power-uk/496171"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "Spate × MaryRuth's: TikTok fuels
+          rapid growth" — NutraIngredients-USA, 2025-10-03.
+          <a
+            href="https://www.nutraingredients-usa.com/Article/2025/10/03/spate-x-maryruths-tiktok-fuels-rapid-growth-in-wellness-supplement-sales/"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "How SNAP Supplements Converts
+          TikTok Viral Success into Omnichannel Retail Growth" — ECRM,
+          2026-03-09.
+          <a
+            href="https://ecrm.marketgate.com/Blog/2026/03/How-SNAP-Supplements-Converts-TikTok-Viral-Success-into-Omnichannel-Retail-Growth"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "Selling Supplements on TikTok
+          Shop: 2025 Guide" — FordeBaker, 2025-03-10.
+          <a
+            href="https://fordebaker.com/blog/selling-supplements-on-tiktok-shop-everything-you-need-to-know-to-drive-sales-and-audience-connection-2025-guide/"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "BeWell levels up health retail" —
+          The Chronicle PH, 2025-03-09.
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "As TikTok Shop Champions Rake In
+          Millions" — NetInfluencer/UpTik, 2025-06-03.
+          <a
+            href="https://www.netinfluencer.com/as-tiktok-shop-champions-rake-in-millions-uptik-challenges-brands-to-seize-overlooked-opportunities/"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> Beauty Independent reporting (Truly
+          Beauty CEO Freddy Wolfe, TikTok GM Emily Rhodes), May 2025.
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> Darkroom / Sam Habibi (Spotlight
+          Media), August 2025.
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "Shopify TikTok Shop Strategy" —
+          Talk Shop, 2026-04-03.
+          <a
+            href="https://www.letstalkshop.com/blog/shopify-tiktok-shop-strategy-beyond-listing-products"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "TikTok Shop Strategy: Neuro Case
+          Study" — Stormy AI, 2026-02-17.
+          <a href="https://stormy.ai/blog/tiktok-shop-strategy-neuro-case-study"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "TikTok Ads for Supplements &amp;
+          Wellness Brands (2026)" — TikAdTools, 2026-01-25.
+          <a href="https://tikadtools.com/blog/tiktok-ads-supplements/">link</a>
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "Supplement Brand TikTok Playbook"
+          — TokPortal, 2026-03-27.
+          <a
+            href="https://www.tokportal.com/use-cases/supplement-brand-tiktok-health-wellness-marketing"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "Meta Ads vs TikTok Ads for
+          Supplement Brands" — MHI Growth Engine, 2026-02-17.
+          <a
+            href="https://mhigrowthengine.com/blog/meta-ads-vs-tiktok-ads-supplements/"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "TikTok Ads for Fitness Brands:
+          2026 Creative Strategy" — PPC Info, 2026-01-20.
+          <a
+            href="https://ppcinfo.com/en/articles/tiktok-ads-fitness-2026-creative-strategy-guide"
+            >link</a
+          >
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "TikTok Shop's Bold Holiday
+          Strategy" — Global Brands Magazine, 2025-11-17.
+        </li>
+      </ol>
+
+      <h4>Retention &amp; Loyalty</h4>
+      <ol class="src-list" start="18">
+        <li>
+          <span class="badge b-t3">T3</span> "How to Improve Ecommerce Customer
+          Retention" — Shopify Enterprise, 2025-01-05.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "Retention &amp; Lifecycle
+          Marketing for DTC Supplements" — Propel, 2026-05-01.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "Health Supplement
+          Retention: 10 Strategies That Work" — JeriCommerce, 2026-03-14.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "How to Create a Loyalty
+          Program for Your Wellness DTC Brand" — JeriCommerce, 2026-03-18.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "Supplement Brand CLV
+          Benchmarks" — MageLoyalty, 2026-02-24.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "Subscription Retention
+          Strategies That Actually Work for DTC Brands (2026)" — Swell,
+          2026-04-18.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "Vitamin Supplement
+          Subscription Strategies" — Appstle, 2025-11-18.
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "Ecommerce Customer Retention
+          Strategies for DTC Brands" — Peel Insights, 2025-02-24.
+        </li>
+      </ol>
+
+      <h4>Conversion &amp; AOV</h4>
+      <ol class="src-list" start="26">
+        <li>
+          <span class="badge b-t4">T4</span> "31 Ways To Improve DTC Store
+          Conversion Rate" — ConvertCart, 2026-04-27.
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "Top 5 CRO Strategies for D2C
+          Brands in 2026" — HavStrategy, 2025-12-24.
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "How to Increase AOV on Shopify
+          (2026 Data)" — Scaling.co, 2026-03-13.
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> "12 Proven Tactics to Increase AOV
+          (2026)" — 100xElevate, 2026-04-27.
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> Rework AOV Optimization Guide,
+          2025-06-26.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "Strategic Guide to
+          Nutrition Product Bundling" — Appfox, 2025-02-20.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> EasyApps Ecom —
+          supplement-store case study and apps guide, March 2026.
+        </li>
+        <li>
+          <span class="badge b-t4">T4</span> Kanal + Aimerce + Growth Suite
+          blogs (cited inline).
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> Baymard Institute
+          checkout-abandonment data (cited via above).
+        </li>
+      </ol>
+
+      <h4>Habit Formation / Behavioral Science</h4>
+      <ol class="src-list" start="35">
+        <li>
+          <span class="badge b-t1">T1</span> Lally et al., "How are habits
+          formed: Modelling habit formation in the real world" — European
+          Journal of Social Psychology (cited via Needed Q&amp;A).
+        </li>
+        <li>
+          <span class="badge b-t1">T1</span> Baumeister, Roy F. — "ego depletion
+          theory" (cited via Symprove content).
+        </li>
+        <li>
+          <span class="badge b-t1">T1</span> PMC 2022 study on pill color and
+          perceived efficacy (cited via Science of Retail).
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> "Habit Formation: How Consumer
+          Brands Become Daily Rituals" — Science of Retail, 2025-03-13.
+        </li>
+        <li>
+          <span class="badge b-t3">T3</span> Dr. Kasey Jo Orvidas (PhD
+          Psychology, health behavior change researcher) Q&amp;A — Needed
+          (thisisneeded.com), 2024-12-16.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "The science of habit
+          forming and our new Pineapple flavour" — Symprove, 2025-06-26.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "The Morning Ritual: One
+          Teaspoon That Changes Everything" — Forest Fresh Honey, 2026-04-19.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "How to make supplements a
+          habit that sticks" — Viome, 2025-09-15.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "How habit stacking can
+          help your supplement routine" — The Herbtender, 2025-04-11.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "How to Build a Supplement
+          Routine That Actually Sticks" — Legendairy Milk.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "The Science of Adherence"
+          — INORA Health, 2026-02-16.
+        </li>
+        <li>
+          <span class="badge b-t4">T4 — vendor</span> "The Habit-Building Power
+          of Supplements" — Research Verified, 2025-09-21.
+        </li>
+      </ol>
+
+      <hr />
+
+      <p class="small">
+        Compiled 2026-05-06. Research-agent project, source-tier discipline
+        applied per
+        <code>~/.claude/research-agent/.claude/rules/source-tiers.md</code>. All
+        numerical claims tied to a tier-tagged source. Where vendor-blog data is
+        the only source, this is flagged inline. Synthesis &amp; opinion
+        sections marked <i>"My read:"</i> or <i>"Synthesis:"</i>. Dissenting
+        evidence and confidence gaps disclosed in the Confidence Assessment
+        section.
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+# Observer agent configuration
+# Edit this file before first run.
+
+version: 1
+
+# ─────────────────────────────────────────────────────────────────
+# Thresholds — when a proposal should be drafted for a target agent
+# ─────────────────────────────────────────────────────────────────
+# Trigger fires on whichever condition is hit first (days OR runs).
+thresholds:
+  bootstrap:        # Target has no skill.md → drafting initial one
+    days: 10
+    runs: 20
+  adaptation:       # Target has skill.md → proposing changes
+    days: 18
+    runs: 40
+
+# Per-agent threshold overrides (optional).
+# Useful for agents that run very often or very rarely.
+overrides:
+  # Example:
+  # researcher:
+  #   thresholds:
+  #     adaptation:
+  #       days: 30
+  #       runs: 100
+
+# ─────────────────────────────────────────────────────────────────
+# Which agents to watch
+# ─────────────────────────────────────────────────────────────────
+# Empty list = watch ALL Tier-0 agents (anything under .claude/agents/
+# that is NOT under _meta/).
+# To restrict, list explicit agent names:
+#   watched_agents:
+#     - code-reviewer
+#     - researcher
+watched_agents: []
+
+# Always exclude these. Meta-tier agents must never observe themselves
+# or each other — that's a Tier-2 Conductor's job.
+excluded_agents:
+  - _meta
+
+# ─────────────────────────────────────────────────────────────────
+# Where to find the data the observer reads
+# ─────────────────────────────────────────────────────────────────
+# Claude Code records every session as a JSONL file under ~/.claude/projects/.
+# The folder name is the project path with `/` replaced by `-`:
+#   /Users/mosaic/projects/observer-test → -Users-mosaic-projects-observer-test
+#
+# All four sources point at the same JSONL glob; log_ingest filters events by
+# `agent-setting.agentSetting == <target>` to scope per-agent. The {agent}
+# placeholder is no longer used here — Claude Code groups by session, not agent.
+input_sources:
+  # Each value is a list — log_ingest iterates every glob.
+  # Two globs needed because Claude Code derives the project key from CWD;
+  # sessions launched from the research/ subdir log to a separate folder.
+  transcripts:
+    - ~/.claude/projects/-Users-mosaic-projects-observer-test/*.jsonl
+    - ~/.claude/projects/-Users-mosaic-projects-observer-test-research/*.jsonl
+  tool_calls:
+    - ~/.claude/projects/-Users-mosaic-projects-observer-test/*.jsonl
+    - ~/.claude/projects/-Users-mosaic-projects-observer-test-research/*.jsonl
+  errors:
+    - ~/.claude/projects/-Users-mosaic-projects-observer-test/*.jsonl
+    - ~/.claude/projects/-Users-mosaic-projects-observer-test-research/*.jsonl
+  outputs:
+    - research/
+
+# Whether to also use git history as a data source.
+use_git_history: true
+
+# ─────────────────────────────────────────────────────────────────
+# Approval mechanism
+# ─────────────────────────────────────────────────────────────────
+# Primary: 'file_move' — move proposal file from proposals/ → approved/ or rejected/
+# Alternative: 'frontmatter_status' — change `status: pending` to `status: approved` in the file
+# The observer supports both simultaneously; this just controls which is documented as primary.
+approval:
+  method: file_move
+  proposals_dir: proposals/
+  approved_dir:  approved/
+  rejected_dir:  rejected/
+
+# Cooldown after a rejection — don't re-propose the same change for this many runs.
+rejection_cooldown_runs: 5
+
+# ─────────────────────────────────────────────────────────────────
+# Confidence rules
+# ─────────────────────────────────────────────────────────────────
+# Minimum supporting observations for a pattern/signal to qualify.
+min_supporting_observations: 3
+
+# ─────────────────────────────────────────────────────────────────
+# Output verbosity for run summaries (printed by run_observer.sh)
+# ─────────────────────────────────────────────────────────────────
+# minimal | normal | verbose
+verbosity: normal

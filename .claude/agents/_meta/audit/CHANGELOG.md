@@ -1,0 +1,18 @@
+# Sahadeva (Audit) — Changelog
+
+Append-only log of **agent-level** changes (identity, file structure, scope, cadence). Skill-level changes track in `skill.md`. Weekly audit reports live in `reports/`.
+
+## 2026-05-11
+
+- Added `README.md` and `CHANGELOG.md` per agent-template standard.
+- **Phase 2 G2 — Rubric diversity rewrite.** `skill.md` rebuilt around playbook's core finding (monitor architecture > monitor capability). Added explicit "what Sahadeva is NOT" framing + side-by-side Sanjaya/Sahadeva rubric table. New procedures: P3 (R23 approval-tier compliance with auto-approval retrospective audit), P5 (quantitative trend audit replacing pattern-narrative duplication of Sanjaya), P10 (adversarial test-set evaluation), P11 (metric-trend snapshot table). Model rotation documented as planned-not-active. R-rule range corrected R1–R20 → R1–R23 throughout.
+- **Phase 2 G3 — First adversarial test set.** `_meta/audit/test-set/2026-Q2.md` created with 15 implanted-violation cases across R1, R2, R3, R4, R5, R7, R8, R10, R11, R23 (×3), MAST FM-1.x, hash-mismatch, and heartbeat-gap categories. Pre-registered for the quarter; refresh due 2026-08-01. Weekly detection rate <80% over 2 consecutive weeks triggers `severity: critical` self-flag for recalibration.
+- **Body R-rule range corrected.** `agent.md` § "Bhishma compliance" referenced R1–R20; updated to R1–R23 with note to cross-check `bhishma.md` § "Last reviewed" each run.
+- Bundle reference `_meta/observer/.bundle-reference/agent.md` left at R1–R20 (frozen reference snapshot; mirrors Bhishma R5 append-only spirit for archived artifacts).
+- **Runners-build phase — Sahadeva runner created.** `run_sahadeva.sh` shipped (~4.8 KB). Lockfile guard for overlapping runs, ISO-week computation for report filename (`reports/<YYYY-WW>.md`), current-quarter test-set lookup (`test-set/<YYYY-Qn>.md` with warning if absent), Claude CLI invocation with `--agent sahadeva --permission-mode bypassPermissions`, env-var exports (`BHISHMA_AGENT=sahadeva` + `BHISHMA_RUN_ID`) for when the post-tool hook is eventually wired in, best-effort `trace-writer.sh init`/`finalise` calls. **Sahadeva is now actually runnable** — first weekly run is just `./run_sahadeva.sh` away.
+- **Cron scheduled.** Weekly entry installed via `crontab -e`: `0 10 * * 0 cd /Users/mosaic/projects/observer-test && .claude/agents/_meta/audit/run_sahadeva.sh >> .claude/agents/_meta/audit/run.log 2>&1`. Host TZ is IST (Asia/Kolkata), so `0 10 * * 0` is Sunday 10:00 IST (= Sunday 04:30 UTC). First firing: **Sunday 2026-05-17 10:00 IST**. The original header documentation said `30 4 * * 0` (which would be correct only on a UTC host) — fixed in this commit to show both IST and UTC forms with a note to pick by `date +%Z`.
+- **Hooks wired into harness ahead of Sahadeva's first run (2026-05-12 00:05 IST).** Both `lib/bhishma-pretool-hook.sh` and `lib/post-tool-hook.sh` now active via `.claude/settings.json`. When `run_sahadeva.sh` fires at 10:00 IST Sunday 2026-05-17, the Claude Code session will have both hooks live; the runner's `BHISHMA_AGENT=sahadeva` + `BHISHMA_RUN_ID` exports activate them. P4 Bhishma compliance will have real `logs/bhishma-blocks.log` data to consume; P5 quantitative trend audit will have structured traces from that very run to baseline against. **First-run Sahadeva audit task:** assess whether the constitutional override pattern (Kartavya directs change via Claude Code, override of R23 cooling-off+endorsement) is becoming a habit. If yes, raise as a calibration issue. If rare and deliberate, document the discipline and move on.
+
+## 2026-05-10
+
+- Bootstrap — initial Tier-Audit definition committed. Stateless, weekly cadence, read-only on entire repo. Reports directly to Kartavya.

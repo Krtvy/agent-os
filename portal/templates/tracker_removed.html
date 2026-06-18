@@ -1,0 +1,73 @@
+{% extends "base.html" %} {% block title %}Removed · {{ tracker.title }} ·
+Rootlabs Portal{% endblock %} {% set nav_active = 'trackers' %} {% block crumbs
+%}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<a href="/trackers">Trackers</a>
+<span class="sep">/</span>
+<a href="/trackers/{{ tracker.id }}">{{ tracker.title }}</a>
+<span class="sep">/</span>
+<strong>Removed</strong>
+{% endblock %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">🗑 Removed creators · {{ tracker.title }}</h1>
+    <p class="page__sub">
+      Soft-removed rows. Restore brings them back into the tracker with all
+      their manual fields intact.
+    </p>
+  </div>
+  <div class="row">
+    <a href="/trackers/{{ tracker.id }}" class="btn"
+      >← Back to {{ tracker.title }}</a
+    >
+  </div>
+</div>
+
+{% if rows %}
+<div class="card">
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>creator</th>
+            <th>POC</th>
+            <th>removed by</th>
+            <th>removed at</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+          <tr>
+            <td class="handle"><strong>@{{ r.handle }}</strong></td>
+            <td>{{ r.poc }}</td>
+            <td class="muted">{{ r.removed_by or '—' }}</td>
+            <td class="muted">{{ (r.removed_at or '')[:10] }}</td>
+            <td>
+              <form
+                method="post"
+                action="/trackers/{{ tracker.id }}/creators/{{ r.handle }}/restore"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn--sm">↩ Restore</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="empty">
+  <div class="empty__icon">🗑</div>
+  <p class="empty__title">No removed creators</p>
+  <p class="empty__sub">
+    When you remove a creator from the tracker, they'll appear here for restore.
+  </p>
+</div>
+{% endif %} {% endblock %}

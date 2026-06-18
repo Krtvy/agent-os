@@ -1,0 +1,356 @@
+{% extends "base.html" %} {% block title %}Dashboard · Rootlabs Portal{%
+endblock %} {% block content %} {% if not is_poc %}
+<div class="hi-block">
+  <p class="hi-line">🎩 Operator view</p>
+  <h2 class="hi-headline">All POCs at a glance</h2>
+  <p class="subtitle" style="margin-top: 0.25rem">
+    {{ op.curr_start }} → {{ op.curr_end }} ({{ op.span_days }} days) · roster
+    total: <strong>{{ op.totals.roster }} creators</strong> · compared to {{
+    op.prev_start }} → {{ op.prev_end }} {% if op.product_filter %}· filtered to
+    <strong>{{ op.product_filter }}</strong>{% endif %}
+  </p>
+</div>
+
+<form
+  method="get"
+  action="/dashboard"
+  class="surface"
+  data-loading="true"
+  data-loading-pool="operator"
+  style="margin-bottom: 1rem"
+>
+  <div class="spec-row" style="grid-template-columns: 1fr 1fr 1fr auto">
+    <label style="margin: 0">
+      <small class="muted">Start</small>
+      <input
+        type="date"
+        name="start"
+        value="{{ op.curr_start }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">End</small>
+      <input
+        type="date"
+        name="end"
+        value="{{ op.curr_end }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">Product filter</small>
+      <select name="product" style="margin: 0">
+        {% if not op.product_filter %}
+        <option value="" selected>All products</option>
+        {% else %}
+        <option value="">All products</option>
+        {% endif %} {% for p in hero_products %} {% if p.name ==
+        op.product_filter %}
+        <option value="{{ p.name }}" selected>{{ p.name }}</option>
+        {% else %}
+        <option value="{{ p.name }}">{{ p.name }}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </label>
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.6rem 1.25rem; align-self: end"
+    >
+      Update
+    </button>
+  </div>
+</form>
+
+<div class="dash-grid">
+  <div class="dash-tile">
+    <div class="dash-tile-label">📹 Videos posted</div>
+    <div class="dash-tile-value">{{ '{:,}'.format(op.totals.videos) }}</div>
+  </div>
+  <div class="dash-tile">
+    <div class="dash-tile-label">🔴 Lives done</div>
+    <div class="dash-tile-value">{{ '{:,}'.format(op.totals.lives) }}</div>
+  </div>
+  <div class="dash-tile">
+    <div class="dash-tile-label">🛒 Orders</div>
+    <div class="dash-tile-value">{{ '{:,}'.format(op.totals.orders) }}</div>
+  </div>
+  <div class="dash-tile">
+    <div class="dash-tile-label">💰 GMV</div>
+    <div class="dash-tile-value">${{ '{:,.0f}'.format(op.totals.gmv) }}</div>
+  </div>
+  <div class="dash-tile">
+    <div class="dash-tile-label">💵 Est. commission</div>
+    <div class="dash-tile-value">
+      ${{ '{:,.0f}'.format(op.totals.commission) }}
+    </div>
+  </div>
+</div>
+
+<h3 class="section-heading" style="margin-top: 2rem">Per-POC breakdown</h3>
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>POC</th>
+        <th>roster</th>
+        <th>videos</th>
+        <th>lives</th>
+        <th>orders</th>
+        <th>GMV</th>
+        <th>commission</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in op.pocs %}
+      <tr>
+        <td><strong>{{ p.name }}</strong></td>
+        <td>{{ p.roster_size }}</td>
+        <td>{{ '{:,}'.format(p.videos) }}</td>
+        <td>{{ '{:,}'.format(p.lives) }}</td>
+        <td>{{ '{:,}'.format(p.orders) }}</td>
+        <td>${{ '{:,.0f}'.format(p.gmv) }}</td>
+        <td>${{ '{:,.0f}'.format(p.commission) }}</td>
+        <td>
+          <a
+            href="/logout"
+            onclick="event.preventDefault();fetch('/logout').then(()=>location.href='/login?as={{ p.name|lower }}@mosaicwellness.in')"
+            class="muted"
+            >act as →</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+
+<div class="hi-block">
+  <p class="hi-line">👋 Hey {{ first_name }}</p>
+  <h2 class="hi-headline">Your dashboard</h2>
+  <p class="subtitle" style="margin-top: 0.25rem">
+    {{ ctx.curr_start }} → {{ ctx.curr_end }} ({{ ctx.span_days }} days) ·
+    roster: <strong>{{ ctx.roster_size }} creators</strong> · compared to {{
+    ctx.prev_start }} → {{ ctx.prev_end }} {% if ctx._from_cache %}<span
+      class="cache-pill"
+      style="margin-left: 0.5rem"
+      >⚡ cached ·
+      <a
+        href="?start={{ ctx.curr_start }}&end={{ ctx.curr_end }}&refresh=1"
+        style="color: inherit"
+        >refresh</a
+      ></span
+    >{% endif %}
+  </p>
+</div>
+
+<form
+  method="get"
+  action="/dashboard"
+  class="surface"
+  data-loading="true"
+  data-loading-pool="operator"
+  style="margin-bottom: 1rem"
+>
+  <div class="spec-row" style="grid-template-columns: 1fr 1fr 1fr auto">
+    <label style="margin: 0">
+      <small class="muted">Start</small>
+      <input
+        type="date"
+        name="start"
+        value="{{ ctx.curr_start }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">End</small>
+      <input
+        type="date"
+        name="end"
+        value="{{ ctx.curr_end }}"
+        style="margin: 0"
+      />
+    </label>
+    <label style="margin: 0">
+      <small class="muted">Product filter</small>
+      <select name="product" style="margin: 0">
+        {% if not ctx.product_filter %}
+        <option value="" selected>All products</option>
+        {% else %}
+        <option value="">All products</option>
+        {% endif %} {% for p in hero_products %} {% if p.name ==
+        ctx.product_filter %}
+        <option value="{{ p.name }}" selected>{{ p.name }}</option>
+        {% else %}
+        <option value="{{ p.name }}">{{ p.name }}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </label>
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.6rem 1.25rem; align-self: end"
+    >
+      Update
+    </button>
+  </div>
+  <small class="muted" style="display: block; margin-top: 0.5rem">
+    Pick any window — the comparison auto-shifts to the same span immediately
+    preceding. {% if ctx.product_filter %}· filtered to
+    <strong>{{ ctx.product_filter }}</strong>{% endif %}
+  </small>
+</form>
+
+<div class="dash-grid">
+  {% for k, label, prefix in [ ('videos', '📹 Videos posted', ''), ('lives', '🔴
+  Lives done', ''), ('orders', '🛒 Orders', ''), ('gmv', '💰 GMV', '$'),
+  ('commission', '💵 Est. commission', '$') ] %} {% set s = ctx.stats[k] %}
+  <div class="dash-tile">
+    <div class="dash-tile-label">{{ label }}</div>
+    <div class="dash-tile-value">
+      {% if k in ('gmv', 'commission') %}{{ prefix }}{{ '{:,.0f}'.format(s.curr)
+      }}{% else %}{{ '{:,}'.format(s.curr) }}{% endif %}
+    </div>
+    <div class="dash-tile-meta">
+      {% if s.pct is none %}
+      <span class="muted">no prior data</span>
+      {% elif s.pct > 0 %}
+      <span class="trend-up">▲ +{{ s.pct }}%</span>
+      {% elif s.pct < 0 %}
+      <span class="trend-dn">▼ {{ s.pct }}%</span>
+      {% else %}
+      <span class="muted">— flat</span>
+      {% endif %}
+      <span class="muted" style="margin-left: 0.5rem">
+        vs {% if k in ('gmv', 'commission') %}{{ prefix }}{{
+        '{:,.0f}'.format(s.prev) }}{% else %}{{ '{:,}'.format(s.prev) }}{% endif
+        %}
+      </span>
+    </div>
+    <div class="dash-tile-spark">{{ tile_sparklines[k]|safe }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="surface" style="margin-top: 1.5rem">
+  <div
+    style="
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    "
+  >
+    <h3 style="margin: 0; font-size: 1rem">
+      Daily GMV trend ({{ ctx.span_days }} days)
+    </h3>
+    <small class="muted"
+      >{{ ctx.daily_gmv|length }} day{{ "" if ctx.daily_gmv|length == 1 else "s"
+      }} of data</small
+    >
+  </div>
+  {{ main_chart|safe }}
+  <div class="chart-legend">
+    <span><span class="legend-swatch curr"></span> this period</span>
+    <span
+      ><span class="legend-swatch prev"></span> prior {{ ctx.span_days }} days
+      (dashed)</span
+    >
+    <small class="muted" style="margin-left: 1rem"
+      >hover any dot for the day's value</small
+    >
+  </div>
+</div>
+
+<h3 class="section-heading" style="margin-top: 2rem">
+  📦 Videos & GMV by product
+</h3>
+{% if ctx.products %}
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>product</th>
+        <th>videos posted</th>
+        <th>GMV from product</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in ctx.products %}
+      <tr>
+        <td><strong>{{ p.product }}</strong></td>
+        <td>{{ '{:,}'.format(p.videos) }}</td>
+        <td>${{ '{:,.2f}'.format(p.gmv) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 1rem">
+  No videos or product-attributed sales in this period.
+</article>
+{% endif %}
+
+<h3
+  class="section-heading"
+  style="
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  "
+>
+  <span>⭐ Top creators this period</span>
+  <a
+    href="/creators?start={{ ctx.curr_start }}&end={{ ctx.curr_end }}"
+    style="
+      font-size: 0.85rem;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+    "
+    >View all {{ ctx.roster_size }} →</a
+  >
+</h3>
+{% if ctx.top_creators %}
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>creator</th>
+        <th>orders</th>
+        <th>GMV</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in ctx.top_creators %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>
+          <a href="/creator/{{ c.creator }}" style="font-weight: 600"
+            >{{ c.creator }}</a
+          >
+        </td>
+        <td>{{ c.orders }}</td>
+        <td>${{ '{:,.2f}'.format(c.gmv) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<article class="muted" style="text-align: center; padding: 1rem">
+  No creator activity in this period.
+</article>
+{% endif %}
+
+<div class="cta-row" style="margin-top: 2rem">
+  <a href="/run/creator-content-counts" role="button">Run full report</a>
+  <a href="/roster" role="button" class="secondary">My creators</a>
+  <a href="/products" role="button" class="secondary">Products</a>
+</div>
+
+{% endif %} {% endblock %}

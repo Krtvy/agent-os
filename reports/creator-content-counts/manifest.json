@@ -1,0 +1,34 @@
+{
+  "slug": "creator-content-counts",
+  "title": "Creator video & live counts (date range)",
+  "description": "For every creator active in the given date range (IST day boundary): unique videos posted (from tt_video) + unique livestreams done (from affiliate orders with content_type='Livestream'). Optionally restrict to one POC's roster from May Sheet PoC.csv. Sorted by video count, then live count.",
+  "inputs": [
+    {
+      "name": "start_date",
+      "label": "Start date (IST, inclusive)",
+      "type": "date",
+      "default": "2026-05-01",
+      "required": true
+    },
+    {
+      "name": "end_date",
+      "label": "End date (IST, inclusive)",
+      "type": "date",
+      "default": "2026-05-31",
+      "required": true
+    },
+    {
+      "name": "poc",
+      "label": "POC scope",
+      "type": "poc",
+      "default": "",
+      "required": false,
+      "placeholder": "All POCs"
+    }
+  ],
+  "owner_poc": [],
+  "data_sources": [
+    "tiktok_raw_data.tt_video",
+    "tiktok_raw_data.tiktok_affiliate_orders"
+  ]
+}

@@ -1,0 +1,93 @@
+{% extends "base.html" %} {% block title %}{{ report.title }} · Rootlabs
+Portal{% endblock %} {% block content %}
+<nav class="breadcrumb">
+  <a href="/menu">Reports</a>
+  <span class="sep">›</span>
+  <span>{{ report.title }}</span>
+</nav>
+
+<div class="page-header">
+  <h2>{{ report.title }}</h2>
+  <p class="subtitle">
+    task <code class="kbd">{{ task_id }}</code> · bookmark this page to come
+    back later {% if from_cache %} · <span class="cache-pill">⚡ cached</span>{%
+    endif %}
+  </p>
+</div>
+
+{% if status == "running" %}
+<div
+  class="status-panel running"
+  id="status-panel"
+  hx-get="/result/{{ task_id }}/fragment"
+  hx-trigger="every 2s"
+  hx-target="#status-panel"
+  hx-swap="outerHTML"
+>
+  <p class="headline"><span class="spinner"></span> Running…</p>
+  <p class="sub">
+    Started {{ started_at }}. Page auto-refreshes every 2 seconds — safe to
+    close and come back.
+  </p>
+</div>
+
+{% elif status == "ok" %}
+<div class="status-panel ok" id="status-panel">
+  <p class="headline">
+    ✓ {{ row_count }} row{{ "" if row_count == 1 else "s" }} returned
+  </p>
+  <p class="sub">Finished in {{ duration_s }}s.</p>
+</div>
+
+<div class="cta-row">
+  <a href="/result/{{ task_id }}/csv" role="button">Download CSV</a>
+</div>
+
+{% if preview_cols %}
+<h3 class="section-heading">
+  Data {% if total_rows > preview_rows|length %}— first {{ preview_rows|length
+  }} of {{ total_rows }} rows{% endif %}
+</h3>
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        {% for col in preview_cols %}
+        <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in preview_rows %}
+      <tr>
+        {% for cell in row %} {% set col = preview_cols[loop.index0] %} {% if
+        col == "creator" and cell %}
+        <td>
+          <a href="/creator/{{ cell }}" style="font-weight: 600">{{ cell }}</a>
+        </td>
+        {% else %}
+        <td>{{ cell if cell else "—" }}</td>
+        {% endif %} {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if total_rows > preview_rows|length %}
+<p class="muted" style="margin-top: 0.5rem; font-size: 0.85rem">
+  Showing first {{ preview_rows|length }} of {{ total_rows }} rows. Download the
+  CSV for the full result.
+</p>
+{% endif %} {% endif %} {% else %}
+<div class="status-panel error" id="status-panel">
+  <p class="headline">✗ Error</p>
+  <p class="sub">{{ error or "See audit below for details." }}</p>
+</div>
+{% endif %} {% if audit_md %}
+<details {% if status !="ok" %}open{% endif %} style="margin-top: 1.5rem">
+  <summary class="muted" style="font-size: 0.85rem">
+    Audit · query + timing
+  </summary>
+  <pre style="margin-top: 0.5rem"><code>{{ audit_md }}</code></pre>
+</details>
+{% endif %} {% endblock %}

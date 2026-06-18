@@ -1,0 +1,471 @@
+[
+  {
+    "slug": "ashwa-mag",
+    "handle": "ashwa-mag-1",
+    "name": "Magnesium + Ashwagandha Gummies",
+    "fullName": "Root Labs Liposomal Magnesium + Ashwagandha Gummies with Beadlet Technology",
+    "pack": "30 day supply",
+    "subtitle": "",
+    "price": 32.0,
+    "mrp": 39.0,
+    "currency": "USD",
+    "image": "products/ashwa-mag.png",
+    "gallery": [
+      "products/ashwa-mag.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "ashwagandha"
+    ],
+    "goals": [
+      "energy",
+      "vitality",
+      "general"
+    ],
+    "description": "Most magnesium never makes it past your gut. AshwaMag does.",
+    "longDescription": "Most magnesium never makes it past your gut. AshwaMag does.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.7,
+    "reviewCount": 78,
+    "inStock": true,
+    "family": "ashwa"
+  },
+  {
+    "slug": "alpha-gummies-60s",
+    "handle": "alpha-gummies-60s",
+    "name": "Alpha Gummies 60s",
+    "fullName": "Alpha Gummies 60s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 32.0,
+    "mrp": null,
+    "currency": "USD",
+    "image": "products/alpha-gummies-60s.png",
+    "gallery": [
+      "products/alpha-gummies-60s.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "shilajit",
+      "ashwagandha"
+    ],
+    "goals": [
+      "energy",
+      "vitality",
+      "general"
+    ],
+    "description": "Root Labs Alpha Gummies \u2013 New &amp; Improved Formula",
+    "longDescription": "Root Labs Alpha Gummies \u2013 New &amp; Improved Formula",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.8,
+    "reviewCount": 59,
+    "inStock": true,
+    "family": "alpha"
+  },
+  {
+    "slug": "alpha-gummies-120s",
+    "handle": "alpha-gummies-120s",
+    "name": "Alpha Gummies 120s",
+    "fullName": "Alpha Gummies 120s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 56.99,
+    "mrp": null,
+    "currency": "USD",
+    "image": "products/alpha-gummies-120s.png",
+    "gallery": [
+      "products/alpha-gummies-120s.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "shilajit",
+      "ashwagandha"
+    ],
+    "goals": [
+      "energy",
+      "vitality",
+      "general"
+    ],
+    "description": "Root Labs Alpha Gummies \u2013 New &amp; Improved Formula",
+    "longDescription": "Root Labs Alpha Gummies \u2013 New &amp; Improved Formula",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.5,
+    "reviewCount": 46,
+    "inStock": true,
+    "family": "alpha"
+  },
+  {
+    "slug": "immunity-combo",
+    "handle": "immunity-combo",
+    "name": "Immunity Combo",
+    "fullName": "Immunity Combo",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 45.0,
+    "mrp": 75.0,
+    "currency": "USD",
+    "image": "products/immunity-combo.png",
+    "gallery": [
+      "products/immunity-combo.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "shilajit",
+      "sea-moss",
+      "turmeric"
+    ],
+    "goals": [
+      "immunity",
+      "general"
+    ],
+    "description": "Root Labs Immunity Combo: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Immunity Combo: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.7,
+    "reviewCount": 43,
+    "inStock": true,
+    "family": "immunity"
+  },
+  {
+    "slug": "shilajit-gummies-60s",
+    "handle": "shilajit-gummies-60s",
+    "name": "Shilajit Gummies 60s",
+    "fullName": "Shilajit Gummies 60s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 24.0,
+    "mrp": 50.0,
+    "currency": "USD",
+    "image": "products/shilajit-gummies.png",
+    "gallery": [
+      "products/shilajit-gummies.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "shilajit"
+    ],
+    "goals": [
+      "energy",
+      "vitality",
+      "general"
+    ],
+    "description": "Root Labs Shilajit Gummies 60s: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Shilajit Gummies 60s: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.7,
+    "reviewCount": 138,
+    "inStock": true,
+    "family": "shilajit"
+  },
+  {
+    "slug": "shilajit-gummies-120s",
+    "handle": "root-labs-shilajit-gummies",
+    "name": "Shilajit Gummies 120s",
+    "fullName": "Shilajit Gummies 120s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 45.0,
+    "mrp": 80.0,
+    "currency": "USD",
+    "image": "products/shilajit-gummies.png",
+    "gallery": [
+      "products/shilajit-gummies.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "shilajit"
+    ],
+    "goals": [
+      "energy",
+      "vitality",
+      "general"
+    ],
+    "description": "Root Labs Shilajit Gummies 120s: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Shilajit Gummies 120s: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.4,
+    "reviewCount": 90,
+    "inStock": true,
+    "family": "shilajit"
+  },
+  {
+    "slug": "sea-moss-gummies-60s",
+    "handle": "sea-moss-gummies-60s",
+    "name": "Sea Moss Gummies 60s",
+    "fullName": "Sea Moss Gummies 60s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 24.0,
+    "mrp": 40.0,
+    "currency": "USD",
+    "image": "products/sea-moss-gummies.png",
+    "gallery": [
+      "products/sea-moss-gummies.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "sea-moss"
+    ],
+    "goals": [
+      "immunity",
+      "vitality"
+    ],
+    "description": "Root Labs Sea Moss Gummies 60s: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Sea Moss Gummies 60s: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.7,
+    "reviewCount": 33,
+    "inStock": true,
+    "family": "sea moss"
+  },
+  {
+    "slug": "sea-moss-gummies-120s",
+    "handle": "root-labs-sea-moss-gummies",
+    "name": "Sea Moss Gummies 120s",
+    "fullName": "Sea Moss Gummies 120s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 49.99,
+    "mrp": 70.0,
+    "currency": "USD",
+    "image": "products/sea-moss-gummies.png",
+    "gallery": [
+      "products/sea-moss-gummies.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "sea-moss"
+    ],
+    "goals": [
+      "immunity",
+      "vitality"
+    ],
+    "description": "Root Labs Sea Moss Gummies 120s: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Sea Moss Gummies 120s: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.6,
+    "reviewCount": 37,
+    "inStock": true,
+    "family": "sea moss"
+  },
+  {
+    "slug": "turmeric-gummies-60s",
+    "handle": "turmeric-gummies-60s",
+    "name": "Turmeric Gummies 60s",
+    "fullName": "Turmeric Gummies 60s",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 24.0,
+    "mrp": 40.0,
+    "currency": "USD",
+    "image": "products/turmeric-gummies.png",
+    "gallery": [
+      "products/turmeric-gummies.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "turmeric"
+    ],
+    "goals": [
+      "immunity",
+      "general"
+    ],
+    "description": "Root Labs Turmeric Gummies 60s: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Turmeric Gummies 60s: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.5,
+    "reviewCount": 61,
+    "inStock": true,
+    "family": "turmeric"
+  },
+  {
+    "slug": "turmeric-gummies",
+    "handle": "turmeric-gummies",
+    "name": "Turmeric Gummies 60s - Pack of 2",
+    "fullName": "Turmeric Gummies 60s - Pack of 2",
+    "pack": "Default Title",
+    "subtitle": "",
+    "price": 45.0,
+    "mrp": 80.0,
+    "currency": "USD",
+    "image": "products/turmeric-gummies.png",
+    "gallery": [
+      "products/turmeric-gummies.png"
+    ],
+    "claims": [
+      "High Potency",
+      "No Sugar Added",
+      "Clean & Vegan",
+      "Made for the American customer"
+    ],
+    "ingredients": [
+      "turmeric"
+    ],
+    "goals": [
+      "immunity",
+      "general"
+    ],
+    "description": "Root Labs Turmeric Gummies 60s - Pack of 2: clean, science-backed, made for the American customer.",
+    "longDescription": "Root Labs Turmeric Gummies 60s - Pack of 2: clean, science-backed, made for the American customer.",
+    "subscription": {
+      "available": true,
+      "interval": "monthly",
+      "discountPct": 15
+    },
+    "certs": [
+      "aflatoxin",
+      "allergen",
+      "gluten",
+      "heavy-metals",
+      "pesticide"
+    ],
+    "rating": 4.5,
+    "reviewCount": 131,
+    "inStock": true,
+    "family": "turmeric"
+  }
+]

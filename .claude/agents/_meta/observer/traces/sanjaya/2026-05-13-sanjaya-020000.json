@@ -1,0 +1,81 @@
+{
+  "$schema": "lib/trace-schema.md#v1",
+  "run_id": "2026-05-13-sanjaya-020000",
+  "agent_name": "sanjaya",
+  "tier": 1,
+  "parent_run_id": null,
+  "bhishma_hash": "0323c47eb7d2c72d9df42fab01e402da045547b1f0d1cdc014795967d3929133",
+  "started_at": "2026-05-13T20:30:00Z",
+  "ended_at": "2026-05-13T21:15:00Z",
+  "duration_ms": null,
+  "tool_calls": [
+    "Read(traces/sanjaya/2026-05-13-sanjaya-203000.json)",
+    "Glob(proposals/*.md)",
+    "Glob(journals/*.md)",
+    "Read(proposals/2026-05-13_hanuman-platforms-awareness.md)",
+    "Glob(**)",
+    "Read(config.yml)",
+    "Read(journal/hanuman.md)",
+    "Read(journal/arjuna.md)",
+    "Read(journal/narada.md)",
+    "Read(journal/nakula.md)",
+    "Read(journal/_observer-self.md)",
+    "Read(journal/research-agent.md)",
+    "Read(agents/yudhishthira/agent.md)",
+    "Bash(git log)",
+    "Glob(pocs/**)",
+    "Read(agents/yudhishthira/skill.md)",
+    "Read(agents/yudhishthira/CHANGELOG.md)",
+    "Read(agents/yudhishthira/deliverables/...)",
+    "Read(agents/yudhishthira/memories.md)",
+    "Bash(git show --stat 902090e)",
+    "Read(agents/narada/skill.md)",
+    "Bash(ls agents/narada/voice-samples/)",
+    "Bash(ls approved/ rejected/)",
+    "Read(templates/pattern-report.template.md)",
+    "Read(templates/proposal.template.md)",
+    "Write(journal/yudhishthira.md)",
+    "Edit(journal/hanuman.md x3)",
+    "Edit(journal/arjuna.md x3)",
+    "Edit(journal/narada.md x3)",
+    "Edit(journal/nakula.md x3)",
+    "Edit(journal/research-agent.md x2)",
+    "Edit(journal/_observer-self.md)"
+  ],
+  "decision_points": [
+    {
+      "point": "approvals-poll",
+      "outcome": "no-action — proposal 20260513-hanuman-platforms-awareness status=pending; cooling-off elapsed but Sahadeva endorsement pending; Kartavya has not approved"
+    },
+    {
+      "point": "new-agent-discovery",
+      "outcome": "yudhishthira discovered — agent.md explicitly references Sanjaya; journal created"
+    },
+    {
+      "point": "threshold-check-research-agent",
+      "outcome": "14/20 runs, 8/10 days — not reached"
+    },
+    {
+      "point": "threshold-check-yudhishthira",
+      "outcome": "4/40 runs, 1/18 days — not reached (new agent)"
+    },
+    {
+      "point": "threshold-check-hanuman",
+      "outcome": "1/40 runs, 5/18 days — not reached; open proposal pending"
+    },
+    {
+      "point": "threshold-check-arjuna-narada-nakula",
+      "outcome": "1/40 runs, 5/18 days each — not reached"
+    },
+    {
+      "point": "proposal-generation",
+      "outcome": "no new proposals — no threshold reached; hanuman proposal already open"
+    }
+  ],
+  "mast_codes": [],
+  "bhishma_blocks": [],
+  "tokens_total": 0,
+  "cost_usd": null,
+  "final_outcome": "completed — 6 journals updated (5 existing + 1 created), 0 proposals applied, 0 proposals generated",
+  "error": null
+}

@@ -1,0 +1,194 @@
+{% extends "base.html" %} {% block title %}Sign in · Rootlabs Portal{% endblock
+%} {% block content %}
+<div class="login">
+  <section class="login__brand-pane">
+    <div class="login__brand">
+      <span class="login__brand-mark">R</span>
+      <span class="login__brand-name">Rootlabs Portal</span>
+    </div>
+
+    <div>
+      <p
+        style="
+          font-size: var(--t-12);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: var(--c-ink-3);
+          margin-bottom: var(--s-4);
+        "
+      >
+        For Mosaic Wellness creator ops
+      </p>
+      <h2 class="login__hero">
+        One cockpit for your TikTok roster —
+        <span>creators, videos, lives, GMV, commission. Daily.</span>
+      </h2>
+
+      <div
+        style="
+          display: flex;
+          gap: var(--s-6);
+          margin-top: var(--s-7);
+          font-size: var(--t-12);
+          color: var(--c-ink-3);
+        "
+      >
+        <span
+          ><strong
+            style="
+              color: var(--c-ink);
+              font-family: var(--f-mono);
+              font-size: var(--t-14);
+            "
+            >{{ poc_count }}</strong
+          ><br />POCs</span
+        >
+        <span
+          ><strong
+            style="
+              color: var(--c-ink);
+              font-family: var(--f-mono);
+              font-size: var(--t-14);
+            "
+            >{{ creator_count }}</strong
+          ><br />creators tracked</span
+        >
+        <span
+          ><strong
+            style="
+              color: var(--c-ink);
+              font-family: var(--f-mono);
+              font-size: var(--t-14);
+            "
+            >{{ sku_count }}</strong
+          ><br />SKUs</span
+        >
+      </div>
+    </div>
+
+    <p style="font-size: var(--t-12); color: var(--c-ink-4)">
+      Internal tool · Mosaic Wellness Pvt. Ltd. · v2.0
+    </p>
+  </section>
+
+  <section class="login__form-pane">
+    {% if stage == "password" %}
+    <form class="login__form" method="post" action="/login/password">
+      <h1>Enter your password</h1>
+      <p class="sub">
+        Signing in as
+        <code
+          style="
+            font-family: var(--f-mono);
+            background: var(--c-sunken);
+            padding: 1px 5px;
+            border-radius: 3px;
+          "
+          >{{ pending_email }}</code
+        >
+      </p>
+
+      {% if error %}
+      <div
+        style="
+          background: var(--c-error-soft);
+          color: var(--c-error);
+          padding: var(--s-3);
+          border-radius: var(--r-3);
+          font-size: var(--t-13);
+          margin-bottom: var(--s-4);
+        "
+      >
+        {{ error }}
+      </div>
+      {% endif %}
+
+      <label class="label" for="password">Password</label>
+      <input
+        id="password"
+        class="input input--lg"
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        autofocus
+        required
+      />
+
+      <button
+        type="submit"
+        class="btn btn--primary btn--lg"
+        style="width: 100%; margin-top: var(--s-4)"
+      >
+        Sign in →
+      </button>
+
+      <p class="login__hint">
+        Not you?
+        <a
+          href="/login?reset=1"
+          style="color: var(--c-ink-2); text-decoration: underline"
+          >Use a different email</a
+        >
+      </p>
+    </form>
+    {% else %}
+    <form class="login__form" method="post" action="/login">
+      <h1>Sign in</h1>
+      <p class="sub">
+        Use your
+        <code
+          style="
+            font-family: var(--f-mono);
+            background: var(--c-sunken);
+            padding: 1px 5px;
+            border-radius: 3px;
+          "
+          >@mosaicwellness.in</code
+        >
+        email. First time? You'll set your password on the next screen.
+      </p>
+
+      {% if error %}
+      <div
+        style="
+          background: var(--c-error-soft);
+          color: var(--c-error);
+          padding: var(--s-3);
+          border-radius: var(--r-3);
+          font-size: var(--t-13);
+          margin-bottom: var(--s-4);
+        "
+      >
+        {{ error }}
+      </div>
+      {% endif %}
+
+      <label class="label" for="email">Work email</label>
+      <input
+        id="email"
+        class="input input--lg"
+        type="email"
+        name="email"
+        placeholder="you@mosaicwellness.in"
+        autocomplete="username"
+        autofocus
+        required
+      />
+
+      <button
+        type="submit"
+        class="btn btn--primary btn--lg"
+        style="width: 100%; margin-top: var(--s-4)"
+      >
+        Continue →
+      </button>
+
+      <p class="login__hint">
+        Access is limited to the 8 POCs + ops. If your email isn't recognized,
+        ping Kartavvya.
+      </p>
+    </form>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

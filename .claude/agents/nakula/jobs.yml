@@ -1,0 +1,22 @@
+# Nakula job manifest — Kartavya owns this file. Nakula reads, never writes.
+# Schema documented at .claude/agents/nakula/agent.md (lines 109-117).
+# Validator: bash .claude/agents/nakula/scripts/validate-jobs.sh
+#
+# Each job listed here is invoked by `scripts/nakula-run.sh <name>`.
+# The schedule field is informational today (cron is the actual scheduler);
+# it becomes authoritative if/when Nakula takes over scheduling in v2.
+
+jobs:
+  - name: sanjaya
+    schedule: "0 2 * * *"                              # 02:00 IST daily (host TZ)
+    command: ".claude/agents/_meta/observer/run_observer.sh"
+    timeout_minutes: 30                                # 2026-05-22 real-run measured ~20m; 30m gives 50% margin
+    retry: false
+    on_failure: alert-file
+
+  - name: sahadeva
+    schedule: "0 10 * * 0"                             # 10:00 IST Sunday (host TZ)
+    command: ".claude/agents/_meta/audit/run_sahadeva.sh"
+    timeout_minutes: 45
+    retry: false
+    on_failure: alert-file

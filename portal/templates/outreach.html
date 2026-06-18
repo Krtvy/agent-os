@@ -1,0 +1,108 @@
+{% extends "base.html" %} {% block title %}Outreach pipeline · Rootlabs Portal{%
+endblock %} {% set nav_active = 'outreach' %} {% block crumbs %}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<strong>Outreach pipeline</strong>
+{% endblock %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">Outreach pipeline</h1>
+    <p class="page__sub">
+      Every creator in your roster, in their current stage. Move a card by
+      picking a new stage — the change lands in their activity timeline.
+    </p>
+  </div>
+</div>
+
+<div
+  style="display: grid; grid-template-columns: repeat({{ kanban.statuses|length }}, minmax(180px, 1fr)); gap: var(--s-3); overflow-x: auto; padding-bottom: var(--s-5)"
+>
+  {% for col in kanban.columns %}
+  <div
+    style="
+      background: var(--c-sunken);
+      border-radius: var(--r-4);
+      padding: var(--s-3);
+      min-width: 180px;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        gap: var(--s-2);
+        margin-bottom: var(--s-3);
+        padding: 0 var(--s-2);
+      "
+    >
+      <span style="font-size: var(--t-14)">{{ col.emoji }}</span>
+      <span
+        style="font-size: var(--t-13); font-weight: 600; color: var(--c-ink)"
+        >{{ col.label }}</span
+      >
+      <span
+        class="chip"
+        style="margin-left: auto; font-family: var(--f-mono); font-size: 11px"
+        >{{ col.count }}</span
+      >
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--s-2)">
+      {% for h in col.handles %}
+      <div class="card" style="padding: var(--s-3); box-shadow: none">
+        <a
+          href="/creator-card/{{ h }}"
+          style="
+            display: flex;
+            align-items: center;
+            gap: var(--s-2);
+            color: var(--c-ink);
+            font-weight: 500;
+            font-size: var(--t-13);
+            text-decoration: none;
+            margin-bottom: var(--s-2);
+          "
+        >
+          <span class="avatar avatar--sm">{{ h[0]|upper }}</span>
+          <span
+            style="
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            "
+            >@{{ h }}</span
+          >
+        </a>
+        <form method="post" action="/outreach/move" style="margin: 0">
+          <input type="hidden" name="handle" value="{{ h }}" />
+          <select
+            name="status"
+            onchange="this.form.submit()"
+            class="select"
+            style="height: 26px; font-size: var(--t-12); padding: 0 6px"
+          >
+            <option value="" disabled selected>move →</option>
+            {% for s in kanban.statuses %} {% if s != col.key %}
+            <option value="{{ s }}">{{ s|replace('_',' ') }}</option>
+            {% endif %} {% endfor %}
+          </select>
+        </form>
+      </div>
+      {% else %}
+      <div
+        class="muted"
+        style="
+          text-align: center;
+          font-size: var(--t-12);
+          padding: var(--s-3) 0;
+        "
+      >
+        —
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

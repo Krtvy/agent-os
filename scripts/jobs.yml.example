@@ -1,0 +1,47 @@
+# Nakula jobs.yml — example configuration.
+# Copy to ~/projects/observer-test/.claude/agents/nakula/jobs.yml
+# and edit per your actual data sources and schedules.
+#
+# Schema (validated by Nakula on every read):
+#   jobs:                      list, required
+#     - name:                  string, required, unique within file
+#       schedule:              cron expression, required
+#       command:               string, required
+#       timeout_minutes:       int, required
+#       retry:                 bool, required
+#       upstream_freshness_check:  optional
+#         path:                string, required if section present
+#         max_age_hours:       int, required if section present
+#       on_failure:            one of [alert-slack, alert-file, alert-email, none]
+
+jobs:
+  - name: kalodata-daily-sync
+    schedule: "0 9 * * *"          # every day at 09:00 local
+    command: "bash ~/projects/observer-test/.claude/agents/nakula/scripts/kalodata-sync.sh"
+    timeout_minutes: 15
+    retry: false
+    on_failure: alert-slack
+
+  - name: cruva-weekly-rollup
+    schedule: "0 10 * * 1"         # Mondays at 10:00
+    command: "bash ~/projects/observer-test/.claude/agents/nakula/scripts/cruva-rollup.sh"
+    timeout_minutes: 30
+    retry: false
+    upstream_freshness_check:
+      path: ~/projects/observer-test/logs/heartbeat.json
+      max_age_hours: 25            # don't run rollup if daily-sync is stale
+    on_failure: alert-slack
+
+  - name: competitor-monthly-refresh
+    schedule: "0 11 1 * *"         # 1st of each month at 11:00
+    command: "bash ~/projects/observer-test/.claude/agents/nakula/scripts/competitor-refresh.sh"
+    timeout_minutes: 60
+    retry: false
+    on_failure: alert-file
+
+  - name: log-rotation
+    schedule: "0 2 * * *"          # daily at 02:00
+    command: "bash ~/projects/observer-test/.claude/agents/nakula/scripts/rotate-logs.sh"
+    timeout_minutes: 10
+    retry: false
+    on_failure: alert-file

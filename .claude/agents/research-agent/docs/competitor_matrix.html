@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Rootlab — Competitor Execution Matrix (15 Brands × 4 Dimensions)
+    </title>
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #475569;
+        --line: #e2e8f0;
+        --bg: #f8fafc;
+        --card: #fff;
+        --tier-a: #15803d;
+        --tier-b: #0369a1;
+        --tier-c: #6d28d9;
+        --known: #ecfdf5;
+        --partial: #fffbeb;
+        --gap: #fef2f2;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica,
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        margin: 0;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+      header {
+        background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+        color: #f1f5f9;
+        padding: 36px 28px 28px;
+      }
+      header h1 {
+        font-size: 26px;
+        margin: 0 0 6px;
+        letter-spacing: -0.01em;
+      }
+      header .sub {
+        color: #94a3b8;
+        margin: 0 0 14px;
+        font-size: 14.5px;
+      }
+      header .meta {
+        color: #cbd5e1;
+        font-size: 12.5px;
+      }
+      .wrap {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+      h2 {
+        font-size: 19px;
+        margin: 32px 0 12px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--ink);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        margin: 12px 0 24px;
+        font-size: 12.8px;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        background: #f1f5f9;
+        font-weight: 700;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        font-size: 12px;
+      }
+      th.brand-col {
+        width: 110px;
+      }
+      td.brand {
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .tier {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 3px;
+        margin-left: 4px;
+        vertical-align: middle;
+        letter-spacing: 0.04em;
+      }
+      .tier-a {
+        background: #dcfce7;
+        color: var(--tier-a);
+      }
+      .tier-b {
+        background: #e0f2fe;
+        color: var(--tier-b);
+      }
+      .tier-c {
+        background: #ede9fe;
+        color: var(--tier-c);
+      }
+      .cell-known {
+        background: var(--known);
+      }
+      .cell-partial {
+        background: var(--partial);
+      }
+      .cell-gap {
+        background: var(--gap);
+        color: #b91c1c;
+        font-style: italic;
+        font-size: 11.5px;
+      }
+      .legend {
+        display: flex;
+        gap: 14px;
+        margin: 12px 0 16px;
+        font-size: 12px;
+        flex-wrap: wrap;
+      }
+      .legend span {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .syn {
+        background: #fef3c7;
+        padding: 10px 14px;
+        border-left: 3px solid #b45309;
+        border-radius: 4px;
+        margin: 8px 0 18px;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Rootlab — Competitor Execution Matrix</h1>
+      <p class="sub">
+        15 reference brands × 4 dimensions (D1 creator program · D2 site/app ·
+        D3 deals/campaigns · D4 habit-change). Compiled 2026-05-06.
+      </p>
+      <p class="meta">
+        Tiers: <b>A</b> = TikTok-Shop natives (Rootlab's direct channel
+        competitors) · <b>B</b> = adjacent stress/sleep/focus · <b>C</b> =
+        established/retail benchmarks
+      </p>
+    </header>
+
+    <div class="wrap">
+      <div class="legend">
+        <span class="cell-known">■ Known — sourced</span>
+        <span class="cell-partial">■ Partial — inferred or single-source</span>
+        <span class="cell-gap">■ Gap — searched, not found</span>
+      </div>
+
+      <h2>D1 — Creator Program & Affiliate Design</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="brand-col">Brand</th>
+            <th>Commission %</th>
+            <th>Creator scale</th>
+            <th>Filtering</th>
+            <th>Spark Ads</th>
+            <th>Compliance brief</th>
+            <th>Distinctive move</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="brand">Nello <span class="tier tier-a">A</span></td>
+            <td class="cell-partial">"Performance-based, revisited"</td>
+            <td class="cell-known">
+              Thousands; <b>Shopify Collabs</b> payouts
+            </td>
+            <td class="cell-partial">Application-based ("Nello-obsessed")</td>
+            <td class="cell-partial">Implied yes</td>
+            <td class="cell-known">
+              <b>Nello Nation FB group + monthly competitions + meet-ups</b>
+            </td>
+            <td class="cell-known">
+              Closed-community + competitions = creator retention moat
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Neuro <span class="tier tier-a">A</span></td>
+            <td class="cell-partial">unknown specific %</td>
+            <td class="cell-known">
+              Thousands; <b>13% national awareness 2024</b>
+            </td>
+            <td class="cell-partial">Broad + credentialed mix</td>
+            <td class="cell-known">Yes — explicit, on credentialed creators</td>
+            <td class="cell-known">
+              <b>Discord-tier creator guild</b> with GMV thresholds + luxury
+              rewards
+            </td>
+            <td class="cell-known">
+              Clip-mining + creator guild architecture (Scooter Braun / GaryVee
+              / Aoki investors)
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">SNAP <span class="tier tier-a">A</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Inferred large ($40M/yr scale)</td>
+            <td class="cell-known">Men's health + retail-store filming</td>
+            <td class="cell-partial">Implied yes</td>
+            <td class="cell-gap">unknown — FTC-sensitive</td>
+            <td class="cell-known">
+              Creators film inside Vitamin Shoppe / GNC
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">MaryRuth's <span class="tier tier-a">A</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Thousands across mom/wellness niches</td>
+            <td class="cell-known">Female-skewed, mom-niche, RDs</td>
+            <td class="cell-partial">Implied yes</td>
+            <td class="cell-known">
+              <b>"Credibility playbook"</b> — talking points + claim guardrails
+            </td>
+            <td class="cell-known">
+              Distributed creators + credibility playbook
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Goli <span class="tier tier-a">A</span></td>
+            <td class="cell-known">
+              <b>10–25% tiered</b>; 25% unlocks at $5K GMV
+            </td>
+            <td class="cell-known">
+              Thousands; $4.1M/mo TT Shop + $3.8M Amazon halo
+            </td>
+            <td class="cell-partial">Volume + tier-escalation</td>
+            <td class="cell-partial">Implied yes</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">
+              <b>iPhones / Miami retreats / BMW</b> for top affiliates
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Bloom <span class="tier tier-a">A</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Thousands; in-house team</td>
+            <td class="cell-known">Tiered: celebrity / mid / micro 20K-100K</td>
+            <td class="cell-partial">Implied yes</td>
+            <td class="cell-known">No-rigid-script — natural integration</td>
+            <td class="cell-known">
+              <b>In-house creator-ops team</b> + niche-by-niche dominance
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Magic Mind <span class="tier tier-b">B</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Smaller; podcast-heavy</td>
+            <td class="cell-partial">Knowledge-worker creators</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Podcast-host endorsements + free trial</td>
+          </tr>
+          <tr>
+            <td class="brand">Moon Juice <span class="tier tier-b">B</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Editorial press over creator volume</td>
+            <td class="cell-partial">Wellness-prestige</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Aesthetic-led editorial content engine</td>
+          </tr>
+          <tr>
+            <td class="brand">Hims/Hers <span class="tier tier-b">B</span></td>
+            <td class="cell-gap">N/A</td>
+            <td class="cell-known">Minimal creator-volume play</td>
+            <td class="cell-known">Meta + Google primary</td>
+            <td class="cell-gap">N/A</td>
+            <td class="cell-known">Telehealth-grade compliance</td>
+            <td class="cell-known">
+              Quiz funnel as universal acquisition front-door
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">
+              Natural Vitality CALM <span class="tier tier-b">B</span>
+            </td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Light TikTok creator volume</td>
+            <td class="cell-partial">Wellness-mindfulness</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">App-user-base activation as channel</td>
+          </tr>
+          <tr>
+            <td class="brand">AG1 <span class="tier tier-c">C</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Curated; podcast-led</td>
+            <td class="cell-known">
+              Tiered: Authority → Performance → Lifestyle
+            </td>
+            <td class="cell-partial">Implied</td>
+            <td class="cell-known">
+              Compliance via host scripts + brand voice
+            </td>
+            <td class="cell-known">
+              $50M/yr podcast spend; trackable URLs day 1
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Ritual <span class="tier tier-c">C</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">700+ podcasts; thousands of micro</td>
+            <td class="cell-known">
+              5K-50K wellness micro-creators; education-led
+            </td>
+            <td class="cell-partial">unknown</td>
+            <td class="cell-known">Authentic education over discount codes</td>
+            <td class="cell-known">
+              Founder-as-podcast-guest (vs sponsor) → 20% LTV lift
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Seed <span class="tier tier-c">C</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">CPA-disciplined size</td>
+            <td class="cell-known">Must pass Seed University exam</td>
+            <td class="cell-partial">unknown</td>
+            <td class="cell-known">
+              <b>Seed University</b> — 59-min training + exam
+            </td>
+            <td class="cell-known">Exam-gated influencer credentialing</td>
+          </tr>
+          <tr>
+            <td class="brand">Olly <span class="tier tier-c">C</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Mid-tier; retail-driving</td>
+            <td class="cell-known">Lifestyle creators directed to retail</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Unilever-grade compliance</td>
+            <td class="cell-known">Creators drive retail purchase, not DTC</td>
+          </tr>
+          <tr>
+            <td class="brand">Momentous <span class="tier tier-c">C</span></td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Curated; researcher-led</td>
+            <td class="cell-known">Researchers/PhDs as partners</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">
+              Co-developed protocols → built-in compliance
+            </td>
+            <td class="cell-known">
+              Researchers as product co-creators (Huberman, Sims)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="syn">
+        <b>D1 synthesis:</b> Specific commission percentages are the largest
+        single gap in the dataset — across all 15 brands, only the industry-norm
+        range (10–20%) is verifiable. Highest-impact distinctive moves: Bloom's
+        in-house creator-ops team, Seed's exam-gated credentialing, MaryRuth's
+        credibility playbook, Neuro's clip-mining brief, and SNAP's retail-store
+        film-in. These five moves are the menu of "structural creator-program
+        upgrades" Rootlab can choose from.
+      </div>
+
+      <h2>D2 — Site &amp; App Teardown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="brand-col">Brand</th>
+            <th>Quiz funnel?</th>
+            <th>Bundle structure</th>
+            <th>Free shipping</th>
+            <th>Sub default?</th>
+            <th>Sub discount</th>
+            <th>App?</th>
+            <th>Distinctive</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="brand">Nello</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">No</td>
+            <td class="cell-partial">Site closes; TikTok converts</td>
+          </tr>
+          <tr>
+            <td class="brand">Neuro</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Multi-pack discount</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-partial">~20% (verify)</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">Press-bar PDP (Rogan, Forbes)</td>
+          </tr>
+          <tr>
+            <td class="brand">SNAP</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">No</td>
+            <td class="cell-partial">Retail-shelf as trust signal</td>
+          </tr>
+          <tr>
+            <td class="brand">MaryRuth's</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-known">Bundle-and-sub optimized PDP</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">Founder-story trust + bundle checkout</td>
+          </tr>
+          <tr>
+            <td class="brand">Goli</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Multi-pack default</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">Mass-retail logos as trust bar</td>
+          </tr>
+          <tr>
+            <td class="brand">Bloom</td>
+            <td class="cell-known">Yes (flavor + goal)</td>
+            <td class="cell-known">Multi-pack + accessory bundles</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">
+              Branded shaker as ritual artifact + UGC asset
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Magic Mind</td>
+            <td class="cell-known">Yes (sleep/focus split)</td>
+            <td class="cell-partial">Trial + sub bundle</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes — default</td>
+            <td class="cell-known">60% off first 15 days</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">Aggressive trial pricing → auto-sub</td>
+          </tr>
+          <tr>
+            <td class="brand">Moon Juice</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">"Ritual" bundles</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">Editorial-coded site UX</td>
+          </tr>
+          <tr>
+            <td class="brand">Hims/Hers</td>
+            <td class="cell-known"><b>Yes — universal entry</b></td>
+            <td class="cell-known">Bundle within telehealth sub</td>
+            <td class="cell-known">Free with sub</td>
+            <td class="cell-known">Yes — default</td>
+            <td class="cell-partial">Telehealth-bundle</td>
+            <td class="cell-known"><b>Yes — primary</b></td>
+            <td class="cell-known">Quiz-everywhere; app as habit moat</td>
+          </tr>
+          <tr>
+            <td class="brand">Natural Vitality CALM</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">Multi-pack at retail</td>
+            <td class="cell-known">Retail-platform-dependent</td>
+            <td class="cell-partial">Amazon S&S</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">
+              Best-selling magnesium since 1982; retail-shelf is the surface
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">AG1</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">Welcome kit + travel sachets</td>
+            <td class="cell-known">Free with sub</td>
+            <td class="cell-known">Yes — 80%+ buy sub</td>
+            <td class="cell-partial">~20% (verify)</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">
+              "Foundational" PDP language; one daily dose
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Ritual</td>
+            <td class="cell-known">No (educational LP)</td>
+            <td class="cell-known">Life-stage progression</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes — default</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">
+              "Made Traceable" page; clear-bottle visual
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Seed</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Refill packs</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Yes — default</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-partial">Auggi gut app (acquired)</td>
+            <td class="cell-known"><b>Refillable jar</b> — habit artifact</td>
+          </tr>
+          <tr>
+            <td class="brand">Olly</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-partial">Variety pack</td>
+            <td class="cell-known">Free over $X</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">
+              Benefit-first naming (Sleep / Mood / Immunity)
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Momentous</td>
+            <td class="cell-partial">Protocol selector</td>
+            <td class="cell-known">Stack bundles ("Three")</td>
+            <td class="cell-known">Free with sub</td>
+            <td class="cell-known">Yes — default</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-known">No</td>
+            <td class="cell-known">
+              Co-created expert protocols as PDP framing
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="syn">
+        <b>D2 synthesis:</b> Three patterns dominate winners. (1)
+        <b>Default-to-subscription PDPs</b> — every Tier-C brand and most Tier-A
+        do this; many smaller brands invert it and lose 30%+ AOV. (2)
+        <b>Bundle-anchor over single-SKU as primary entry</b> — Goli,
+        MaryRuth's, Bloom, AG1, Momentous all anchor on multi-pack/bundle PDPs.
+        (3) <b>Quiz funnel adoption is split</b>: Hims/Hers, Bloom, Magic Mind,
+        MaryRuth's, Calm yes; AG1, Ritual, Olly no. Quiz advantage is largest
+        where personalization meaningfully changes the recommendation; for a
+        3-SKU brand like Rootlab (Magnesium / Ashwagandha / Alpha GPC), quiz is
+        high-leverage because each customer maps cleanly to one stack.
+      </div>
+
+      <h2>D3 — Deals &amp; Campaign Cadence</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="brand-col">Brand</th>
+            <th>Sub discount</th>
+            <th>Bundle discount</th>
+            <th>BFCM mechanic</th>
+            <th>Promo cadence</th>
+            <th>Volume discount</th>
+            <th>Distinctive deal mechanic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="brand">Nello</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">
+              Creator-content-driven, light site promo
+            </td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Affiliate codes do work of discount</td>
+          </tr>
+          <tr>
+            <td class="brand">Neuro</td>
+            <td class="cell-partial">~20%</td>
+            <td class="cell-partial">10–15% multi-pack</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Always-on subscription, light flash</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-known">Subscription-as-discount preserves price</td>
+          </tr>
+          <tr>
+            <td class="brand">SNAP</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Likely</td>
+            <td class="cell-gap">unknown</td>
+          </tr>
+          <tr>
+            <td class="brand">MaryRuth's</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Time-bound creator-paired drops</td>
+            <td class="cell-known">Yes via bundle</td>
+            <td class="cell-known">"48-hr exclusive" + creator wave</td>
+          </tr>
+          <tr>
+            <td class="brand">Goli</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Multi-pack discount</td>
+            <td class="cell-partial">Aggressive (mass-market)</td>
+            <td class="cell-partial">Heavier discounting</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-partial">Mass-retail-coordinated promotions</td>
+          </tr>
+          <tr>
+            <td class="brand">Bloom</td>
+            <td class="cell-partial">10–15%</td>
+            <td class="cell-known">Multi-flavor bundles</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Sub-driven, not heavy promos</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-known">Influencer-only codes at scale</td>
+          </tr>
+          <tr>
+            <td class="brand">Magic Mind</td>
+            <td class="cell-known">Standard</td>
+            <td class="cell-partial">Trial + sub bundle</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Always-on trial offer</td>
+            <td class="cell-gap">N/A (single SKU)</td>
+            <td class="cell-known"><b>60% off first 15 days</b> trial</td>
+          </tr>
+          <tr>
+            <td class="brand">Moon Juice</td>
+            <td class="cell-known">Lunar loyalty program</td>
+            <td class="cell-known">Ritual bundles</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Discount-light</td>
+            <td class="cell-partial">Some</td>
+            <td class="cell-known">Loyalty over promotional</td>
+          </tr>
+          <tr>
+            <td class="brand">Hims/Hers</td>
+            <td class="cell-known">Bundle within sub</td>
+            <td class="cell-known">Telehealth attach</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Always-on sub pricing</td>
+            <td class="cell-known">Yes via tier</td>
+            <td class="cell-known">Supplement priced as sub-attach</td>
+          </tr>
+          <tr>
+            <td class="brand">Natural Vitality CALM</td>
+            <td class="cell-partial">App+supplement bundle</td>
+            <td class="cell-partial">App+supplement</td>
+            <td class="cell-partial">Q4 gifting</td>
+            <td class="cell-known">Q4/January push</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Bundle with app sub (free month)</td>
+          </tr>
+          <tr>
+            <td class="brand">AG1</td>
+            <td class="cell-known">Sub-only discount</td>
+            <td class="cell-known">Welcome kit + travel sachets</td>
+            <td class="cell-known">Light Q4</td>
+            <td class="cell-known">
+              Always-on sub; ritual reposition campaigns
+            </td>
+            <td class="cell-partial">Annual prepay</td>
+            <td class="cell-known">No flash sales — preserve premium</td>
+          </tr>
+          <tr>
+            <td class="brand">Ritual</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-partial">Life-stage</td>
+            <td class="cell-partial">Light Q4</td>
+            <td class="cell-known">Discount-light by design</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">"Dear Congress" advocacy as marketing</td>
+          </tr>
+          <tr>
+            <td class="brand">Seed</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-partial">Refill bundle</td>
+            <td class="cell-known">
+              Target-launch exclusive (DS-01 14-Day Reset)
+            </td>
+            <td class="cell-known">Discount-light</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">
+              Retail-exclusive products to avoid channel conflict
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Olly</td>
+            <td class="cell-known">Standard</td>
+            <td class="cell-known">Variety packs</td>
+            <td class="cell-known">Retail-coordinated</td>
+            <td class="cell-known">Retail-shelf-driven cadence</td>
+            <td class="cell-known">Yes</td>
+            <td class="cell-known">
+              Receipt-scan loyalty for retail purchasers
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Momentous</td>
+            <td class="cell-partial">Standard</td>
+            <td class="cell-known">"Three" stack bundle</td>
+            <td class="cell-partial">Light</td>
+            <td class="cell-known">Discount-light by category</td>
+            <td class="cell-partial">Bundle</td>
+            <td class="cell-known">
+              Sports-partnership news cycles as marketing
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="syn">
+        <b>D3 synthesis:</b> The premium-positioned brands (AG1, Ritual, Seed,
+        Momentous, Moon Juice) are <i>discount-light by design</i>; they
+        preserve price integrity and use loyalty + sub mechanics + news-cycle
+        moments as the alternative to flash sales. Mass-market brands (Goli,
+        Olly) discount more heavily because retail-shelf parity demands it.
+        <b
+          >The most replicable single tactic for Rootlab is MaryRuth's "48-hour
+          creator-paired exclusive drop"</b
+        >
+        — bursty velocity + algorithmic signal without the always-on training
+        effect of broad discounts.
+      </div>
+
+      <h2>D4 — Habit-Change Tactics</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="brand-col">Brand</th>
+            <th>Format / dose primitive</th>
+            <th>Identity framing</th>
+            <th>Lifecycle / SMS</th>
+            <th>Community</th>
+            <th>Streak / gamification</th>
+            <th>Distinctive habit primitive</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="brand">Nello</td>
+            <td class="cell-known">Single-serve drink stick</td>
+            <td class="cell-partial">"Supercalm"</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">No prominent surface</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">
+              Sachet = binary done/not-done; travel-friendly
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Neuro</td>
+            <td class="cell-known">Pocket gum/mints</td>
+            <td class="cell-partial">"High performer"</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-gap">N/A — as-needed format</td>
+            <td class="cell-known">
+              Situational use, not daily — bypasses optionality trap
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">SNAP</td>
+            <td class="cell-partial">Capsule/powder</td>
+            <td class="cell-known">"Men over 40 / vitality"</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-partial">Retail-trip habituation</td>
+          </tr>
+          <tr>
+            <td class="brand">MaryRuth's</td>
+            <td class="cell-known">Liquid + gummy</td>
+            <td class="cell-known">"Family caregiver"</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Buy-for-family compounds basket</td>
+          </tr>
+          <tr>
+            <td class="brand">Goli</td>
+            <td class="cell-known">Gummy multi-dose</td>
+            <td class="cell-known">"Easy wellness"</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Lowest-friction compliance design</td>
+          </tr>
+          <tr>
+            <td class="brand">Bloom</td>
+            <td class="cell-known">Powder + branded shaker</td>
+            <td class="cell-known">"Bloom girl"</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">UGC ecosystem</td>
+            <td class="cell-partial">Implicit via UGC ritual</td>
+            <td class="cell-known">
+              Filmable consumption ritual (mixing + shaker)
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Magic Mind</td>
+            <td class="cell-known">2oz shot bottle</td>
+            <td class="cell-known">"Productivity"</td>
+            <td class="cell-partial">Trial-to-sub email</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">
+              Sleep variant explicitly bedtime-anchored
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Moon Juice</td>
+            <td class="cell-known">Powder "Dust"</td>
+            <td class="cell-known">Ritual ("Spirit / Dream / Sex")</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-gap">unknown</td>
+            <td class="cell-known">Lunar loyalty</td>
+            <td class="cell-known">Explicit "ritual" vocabulary across line</td>
+          </tr>
+          <tr>
+            <td class="brand">Hims/Hers</td>
+            <td class="cell-partial">Multi-format</td>
+            <td class="cell-known">"Take care of yourself"</td>
+            <td class="cell-known">App-driven</td>
+            <td class="cell-known">Implicit</td>
+            <td class="cell-known">App tracking</td>
+            <td class="cell-known">
+              <b>App attaches supplement to telehealth habit</b>
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Natural Vitality CALM</td>
+            <td class="cell-known">Gummy</td>
+            <td class="cell-known">"Calm" itself is identity</td>
+            <td class="cell-known">App push</td>
+            <td class="cell-known">100M+ user base</td>
+            <td class="cell-known">App streaks</td>
+            <td class="cell-known">
+              <b>Supplement rides on existing nightly app ritual</b>
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">AG1</td>
+            <td class="cell-known">
+              Daily powder + branded shaker + travel sachets
+            </td>
+            <td class="cell-known"><b>"Foundational daily habit"</b></td>
+            <td class="cell-known">SMS sub mgmt (-15% churn)</td>
+            <td class="cell-partial">Light</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">Welcome kit as ritual-establishment UX</td>
+          </tr>
+          <tr>
+            <td class="brand">Ritual</td>
+            <td class="cell-known">Clear capsule clear bottle</td>
+            <td class="cell-known">"Future of vitamins is clear"</td>
+            <td class="cell-known">Education email engine</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">
+              Visual-transparency packaging as daily cue
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Seed</td>
+            <td class="cell-known"><b>Refillable dark glass jar</b></td>
+            <td class="cell-known">Microbiome/planetary</td>
+            <td class="cell-known">Education</td>
+            <td class="cell-partial">Mission-aligned</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">
+              Refillable jar as habit artifact + branded reorder event
+            </td>
+          </tr>
+          <tr>
+            <td class="brand">Olly</td>
+            <td class="cell-known">Gummy</td>
+            <td class="cell-known">
+              <b>Benefit-named identity</b> ("I take Sleep")
+            </td>
+            <td class="cell-known">Email + SMS segmented</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">Benefit-first naming = identity-coded</td>
+          </tr>
+          <tr>
+            <td class="brand">Momentous</td>
+            <td class="cell-partial">Powder + capsule</td>
+            <td class="cell-known">"Performance for life"</td>
+            <td class="cell-known">Education-led</td>
+            <td class="cell-gap">Light</td>
+            <td class="cell-gap">No</td>
+            <td class="cell-known">
+              Co-created expert protocol = clinical ritual
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="syn">
+        <b>D4 synthesis:</b> The most powerful habit primitives in the dataset
+        are <b>structural format choices</b>, not lifecycle tactics: Nello/Magic
+        Mind's single-serve sachets/shots eliminate measurement friction;
+        Bloom's branded shaker turns consumption into UGC; Seed's refillable jar
+        makes the artifact daily-visible; Calm/Hims-Hers attach the supplement
+        to a non-supplement habit. The lifecycle layers (welcome kit, SMS,
+        education email) are necessary but secondary.
+        <b
+          >For Rootlab, the highest-leverage habit move is a deliberate "ritual
+          artifact"</b
+        >
+        — branded gummy jar designed to live counter-side, daily-dose markers on
+        the bottle, travel sachet line — combined with Olly's benefit-first
+        naming + AG1's "foundational daily habit" identity language.
+      </div>
+
+      <hr />
+      <p class="small">
+        Compiled 2026-05-06 from <code>docs/competitor_profiles/*.md</code>.
+        Cells marked "unknown" are explicit gaps for next snapshot cycle. Source
+        detail in individual profile files. Tier badges per CLAUDE.md project
+        rules.
+      </p>
+    </div>
+  </body>
+</html>

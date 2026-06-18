@@ -1,0 +1,179 @@
+{% extends "base.html" %} {% block title %}Campaigns · Rootlabs Portal{%
+endblock %} {% set nav_active = 'campaigns' %} {% block crumbs %}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<strong>Campaigns</strong>
+{% endblock %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">Campaigns</h1>
+    <p class="page__sub">
+      Coordinated pushes — ops picks creators + brief + dates, POCs see who
+      they're assigned, the portal tracks who posted and the GMV uplift.
+    </p>
+  </div>
+  <div class="row">
+    <button
+      class="btn btn--primary"
+      onclick="document.getElementById('new-campaign').open = true"
+    >
+      + New campaign
+    </button>
+  </div>
+</div>
+
+<details id="new-campaign" class="card" style="margin-bottom: var(--s-5)">
+  <summary
+    style="
+      cursor: pointer;
+      padding: var(--s-4) var(--s-5);
+      font-weight: 600;
+      font-size: var(--t-14);
+    "
+  >
+    Create a new campaign
+  </summary>
+  <div class="card__body" style="border-top: 1px solid var(--c-divider)">
+    <form
+      method="post"
+      action="/campaigns/new"
+      style="display: flex; flex-direction: column; gap: var(--s-3)"
+    >
+      <div>
+        <label class="label" for="campaign-name">Name</label>
+        <input
+          id="campaign-name"
+          class="input"
+          type="text"
+          name="name"
+          required
+          placeholder="MagAshwa May Push"
+        />
+      </div>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: var(--s-3);
+        "
+      >
+        <div>
+          <label class="label" for="campaign-product">Product</label>
+          <select id="campaign-product" class="select" name="product" required>
+            {% for p in hero_products %}
+            <option value="{{ p.name }}">{{ p.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="label" for="campaign-start">Start</label>
+          <input
+            id="campaign-start"
+            class="input"
+            type="date"
+            name="start_date"
+            required
+          />
+        </div>
+        <div>
+          <label class="label" for="campaign-end">End</label>
+          <input
+            id="campaign-end"
+            class="input"
+            type="date"
+            name="end_date"
+            required
+          />
+        </div>
+      </div>
+      <div>
+        <label class="label" for="campaign-brief">Brief (markdown)</label>
+        <textarea
+          id="campaign-brief"
+          class="input"
+          name="brief_md"
+          rows="4"
+          style="
+            height: auto;
+            padding: var(--s-2) var(--s-3);
+            font-family: inherit;
+          "
+        ></textarea>
+      </div>
+      <p class="muted" style="font-size: var(--t-12); margin: 0">
+        Creator assignment per-POC happens in v2 — this scaffolds the campaign
+        record.
+      </p>
+      <div>
+        <button type="submit" class="btn btn--primary">Create campaign</button>
+      </div>
+    </form>
+  </div>
+</details>
+
+{% if campaigns %}
+<div style="display: flex; flex-direction: column; gap: var(--s-4)">
+  {% for c in campaigns %}
+  <div class="card">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title">{{ c.name }}</h3>
+        <p class="card__sub">
+          Product:
+          <strong style="color: var(--c-ink)">{{ c.product }}</strong> · created
+          {{ c.created_at[:10] }}
+        </p>
+      </div>
+      <div class="card__spacer"></div>
+      <span class="chip">{{ c.start_date }} → {{ c.end_date }}</span>
+    </div>
+    {% if c.brief_md %}
+    <div class="card__body">
+      <details>
+        <summary class="muted" style="cursor: pointer; font-size: var(--t-12)">
+          view brief
+        </summary>
+        <pre
+          style="
+            white-space: pre-wrap;
+            font-family: inherit;
+            margin: var(--s-3) 0 0;
+            font-size: var(--t-13);
+            color: var(--c-ink-2);
+            padding: var(--s-3);
+            background: var(--c-sunken);
+            border-radius: var(--r-3);
+          "
+        >
+{{ c.brief_md }}</pre
+        >
+      </details>
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <div class="empty__icon">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  </div>
+  <p class="empty__title">No campaigns yet</p>
+  <p class="empty__sub">
+    Create the first one above. Campaign coordinator UI lights up once you have
+    at least one.
+  </p>
+</div>
+{% endif %} {% endblock %}

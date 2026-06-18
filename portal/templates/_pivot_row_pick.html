@@ -1,0 +1,16 @@
+<div class="spec-row" style="grid-template-columns: 1fr auto">
+  <select name="rows">
+    <option value="">— pick a column to group by —</option>
+    {% for c in columns %}
+    <option value="{{ c.name }}">{{ c.label }} · {{ c.data_type }}</option>
+    {% endfor %}
+  </select>
+  <button
+    type="button"
+    class="remove-btn"
+    onclick="this.parentElement.remove()"
+    title="Remove"
+  >
+    ×
+  </button>
+</div>

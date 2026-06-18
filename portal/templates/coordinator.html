@@ -1,0 +1,214 @@
+{% extends "base.html" %} {% block title %}Coordinator · Rootlabs Portal{%
+endblock %} {% set nav_active = 'coordinator' %} {% block crumbs %}
+<a href="/standup">Today</a>
+<span class="sep">/</span>
+<strong>Coordinator</strong>
+{% endblock %} {% block content %}
+
+<div class="page__head">
+  <div>
+    <h1 class="page__title">Coordinator scorecard</h1>
+    <p class="page__sub">
+      How each POC is tracking against their half-month target for the focus
+      product. Targets are PM-set; achievement is live from the database.
+    </p>
+  </div>
+</div>
+
+<!-- Product toggle + period selector -->
+<div
+  class="surface"
+  style="
+    margin-bottom: var(--s-5);
+    padding: var(--s-3) var(--s-4);
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+    flex-wrap: wrap;
+  "
+>
+  <div class="seg" role="tablist" aria-label="Product">
+    {% for pkey, plabel in [('hgr', '🌱 HGR'), ('magashwa', '💎 MagAshwa')] %}
+    <a
+      href="?product={{ pkey }}&period={{ ctx.period }}"
+      class="seg__opt {% if ctx.product_key == pkey %}is-active{% endif %}"
+      >{{ plabel }}</a
+    >
+    {% endfor %}
+  </div>
+
+  <label style="display: flex; align-items: center; gap: var(--s-2); margin: 0">
+    <small class="muted" style="font-size: var(--t-12)">Period</small>
+    <select
+      onchange="window.location='?product={{ ctx.product_key }}&period='+this.value"
+      class="select"
+      style="
+        height: 28px;
+        font-size: var(--t-12);
+        padding: 0 var(--s-2);
+        width: auto;
+      "
+    >
+      {% for p in periods %} {% if p == ctx.period %}
+      <option value="{{ p }}" selected>{{ p }}</option>
+      {% else %}
+      <option value="{{ p }}">{{ p }}</option>
+      {% endif %} {% endfor %}
+    </select>
+  </label>
+
+  <div style="margin-left: auto; font-size: var(--t-12); color: var(--c-ink-3)">
+    {{ ctx.period_start }} → {{ ctx.period_end }}
+  </div>
+</div>
+
+<!-- Roll-up KPIs -->
+<div class="kpi-grid" style="margin-bottom: var(--s-5)">
+  <div class="kpi">
+    <div class="kpi__head">
+      <span class="kpi__label">{{ ctx.product_emoji }} GMV target</span>
+    </div>
+    <div class="kpi__value">${{ '{:,.0f}'.format(ctx.totals.target_gmv) }}</div>
+    <div class="kpi__foot">across all POCs</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">GMV achieved</span></div>
+    <div class="kpi__value">
+      ${{ '{:,.0f}'.format(ctx.totals.achieved_gmv) }}
+    </div>
+    <div class="kpi__foot">
+      {% if ctx.totals.target_gmv > 0 %} {% set pct = (ctx.totals.achieved_gmv /
+      ctx.totals.target_gmv * 100)|round(0)|int %}
+      <span
+        class="{% if pct >= 80 %}delta-up{% elif pct < 30 %}delta-down{% endif %}"
+        >{{ pct }}% of target</span
+      >
+      {% else %}<span class="muted">no target set</span>{% endif %}
+    </div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">videos target</span></div>
+    <div class="kpi__value">{{ '{:,}'.format(ctx.totals.target_videos) }}</div>
+    <div class="kpi__foot">across all POCs</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi__head"><span class="kpi__label">videos achieved</span></div>
+    <div class="kpi__value">
+      {{ '{:,}'.format(ctx.totals.achieved_videos) }}
+    </div>
+    <div class="kpi__foot">
+      {% if ctx.totals.target_videos > 0 %} {% set pct =
+      (ctx.totals.achieved_videos / ctx.totals.target_videos * 100)|round(0)|int
+      %}
+      <span
+        class="{% if pct >= 80 %}delta-up{% elif pct < 30 %}delta-down{% endif %}"
+        >{{ pct }}% of target</span
+      >
+      {% else %}<span class="muted">no target set</span>{% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Per-POC table -->
+<div class="card">
+  <div class="card__head">
+    <h3 class="card__title">Per-POC performance · {{ ctx.product_label }}</h3>
+    <p class="card__sub">
+      Sorted by GMV achieved descending. Click a POC row to see their roster.
+    </p>
+  </div>
+  <div class="card__body card__body--flush">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>POC</th>
+            <th class="num">roster</th>
+            <th class="num">GMV target</th>
+            <th class="num">GMV live</th>
+            <th class="num">GMV %</th>
+            <th class="num">videos target</th>
+            <th class="num">videos live</th>
+            <th class="num">videos %</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in ctx.rows %}
+          <tr>
+            <td><strong>{{ r.poc_name }}</strong></td>
+            <td class="num">{{ r.roster }}</td>
+            <td class="num">
+              {% if r.target.gmv > 0 %}${{ '{:,.0f}'.format(r.target.gmv) }} {%
+              else %}<span class="muted">—</span>{% endif %}
+            </td>
+            <td class="num">${{ '{:,.0f}'.format(r.achieved.gmv) }}</td>
+            <td class="num">
+              {% if r.gmv_pct is none %}<span class="muted">—</span> {% elif
+              r.gmv_pct >= 100 %}<span class="chip chip--success"
+                >{{ r.gmv_pct }}% ✓</span
+              >
+              {% elif r.gmv_pct >= 80 %}<span class="chip chip--success"
+                >{{ r.gmv_pct }}%</span
+              >
+              {% elif r.gmv_pct >= 50 %}<span class="chip"
+                >{{ r.gmv_pct }}%</span
+              >
+              {% elif r.gmv_pct >= 20 %}<span class="chip chip--warn"
+                >{{ r.gmv_pct }}%</span
+              >
+              {% else %}<span class="chip chip--error">{{ r.gmv_pct }}%</span>{%
+              endif %}
+            </td>
+            <td class="num">
+              {% if r.target.videos > 0 %}{{ r.target.videos }} {% else %}<span
+                class="muted"
+                >—</span
+              >{% endif %}
+            </td>
+            <td class="num">{{ r.achieved.videos }}</td>
+            <td class="num">
+              {% if r.videos_pct is none %}<span class="muted">—</span> {% elif
+              r.videos_pct >= 100 %}<span class="chip chip--success"
+                >{{ r.videos_pct }}% ✓</span
+              >
+              {% elif r.videos_pct >= 80 %}<span class="chip chip--success"
+                >{{ r.videos_pct }}%</span
+              >
+              {% elif r.videos_pct >= 50 %}<span class="chip"
+                >{{ r.videos_pct }}%</span
+              >
+              {% elif r.videos_pct >= 20 %}<span class="chip chip--warn"
+                >{{ r.videos_pct }}%</span
+              >
+              {% else %}<span class="chip chip--error">{{ r.videos_pct }}%</span
+              >{% endif %}
+            </td>
+            <td>
+              <a href="/trackers/{{ ctx.product_key }}?view=all" class="row-act"
+                >view roster →</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<p class="muted" style="margin-top: var(--s-4); font-size: var(--t-12)">
+  Targets are stored in
+  <code
+    style="
+      font-family: var(--f-mono);
+      background: var(--c-sunken);
+      padding: 1px 5px;
+      border-radius: 3px;
+    "
+    >_private/poc_targets.json</code
+  >. Tanmita edits that file when the month rolls over. Achievement is computed
+  live each page load.
+</p>
+
+{% endblock %}

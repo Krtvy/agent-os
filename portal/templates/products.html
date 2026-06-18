@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block title %}Products · Rootlabs Portal{% endblock
+%} {% block content %}
+<nav class="breadcrumb">
+  <a href="/dashboard">Dashboard</a>
+  <span class="sep">›</span>
+  <span>Products</span>
+</nav>
+
+<div class="page-header">
+  <h2>📦 Product catalog</h2>
+  <p class="subtitle">
+    Products tracked by the portal. Edit the source file
+    <code class="kbd">portal/products.csv</code> directly to add a new product,
+    mark inactive, or change category — the change is live on next page load.
+  </p>
+</div>
+
+<div class="surface" style="margin-bottom: 1.5rem">
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-value">{{ all_count }}</div>
+      <div class="stat-label">total products</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ hero_count }}</div>
+      <div class="stat-label">hero</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ bundle_count }}</div>
+      <div class="stat-label">bundle</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ extra_count }}</div>
+      <div class="stat-label">extra</div>
+    </div>
+  </div>
+</div>
+
+<h3 class="section-heading">⭐ Hero products</h3>
+<div class="scroll-x" style="margin-bottom: 1.5rem">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>product</th>
+        <th>SKUs in DB</th>
+        <th>notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}{% if p.category == "hero" %}
+      <tr>
+        <td><strong>{{ p.name }}</strong></td>
+        <td>{{ sku_counts.get(p.name, 0) }}</td>
+        <td><small class="muted">{{ p.notes }}</small></td>
+      </tr>
+      {% endif %}{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h3 class="section-heading">📦 Bundles + extras</h3>
+<div class="scroll-x">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>product</th>
+        <th>category</th>
+        <th>SKUs in DB</th>
+        <th>notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}{% if p.category != "hero" %}
+      <tr>
+        <td>{{ p.name }}</td>
+        <td><small class="muted">{{ p.category }}</small></td>
+        <td>{{ sku_counts.get(p.name, 0) }}</td>
+        <td><small class="muted">{{ p.notes }}</small></td>
+      </tr>
+      {% endif %}{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="muted" style="margin-top: 2rem; font-size: 0.85rem">
+  💾 Source: <code class="kbd">portal/products.csv</code>. SKU counts come live
+  from <code class="kbd">rootlabs_core.rootlabs_products</code>. If a product is
+  in the DB but not in the CSV, it won't appear here — add it to the CSV.
+</p>
+{% endblock %}
