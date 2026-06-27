@@ -2,9 +2,6 @@
 
 **FIRST ACTION IN EVERY SESSION: Read `.planning/STATE.md`**
 
-This file tells you exactly where we are, what's broken, and what to do next.
-Do not ask "where were we?" — STATE.md has the answer in 2 minutes.
-
 ```
 cat .planning/STATE.md
 ```
@@ -14,9 +11,10 @@ cat .planning/STATE.md
 ## Quick orientation
 
 - This repo is `agent-os` — Kartavya's personal multi-agent operating system
-- 10 agents (Mahabharata-themed), governed by Bhishma constitution (23 rules)
+- **26 agents** (Mahabharata-themed), governed by Bhishma constitution (23 rules)
+- Canonical location: `~/KRTVYDEV/agents/observer-test/`
 - GSD framework installed — use `/gsd-progress --next` to get the next task
-- All agents' purposes are in `.claude/agents/<name>/agent.md`
+- All agents: `.claude/agents/<name>/agent.md` | Full roster: `ROSTER.md`
 - Constitution: `.claude/agents/_meta/conductor/bhishma.md`
 
 ## If something seems broken
@@ -29,26 +27,26 @@ cat .planning/STATE.md
 
 | What | Command |
 |---|---|
-| Where am I? | `/status` |
 | Next step? | `/gsd-progress --next` |
 | Resume session | `/gsd-resume-work` |
 | Run audit now | `/audit-now` |
 | Checkpoint state | `/checkpoint` |
-| **Run full team on a task** | `/team-run` |
-| **gstack planning** | `/office-hours` `/plan-ceo-review` `/review` `/ship` |
+| Run full team on a task | `/team-run` |
 
 ## Agent Team (how they coordinate)
 
-When running as a team, agents communicate through `~/.agent-os/sessions/<id>/`:
-- Yudhishthira ⚖️ → strategy (01-strategy.md)
-- Vidura 📚 → research (02-research.md)
-- Hanuman 🐒 → recon (03-recon.md)
-- Arjuna 🏹 → execute (04-execution.md)
-- Narada 🪶 → draft output (05-draft.md)
-- Nakula 🐎 → schedule followups (06-schedule.md)
-- Sanjaya 👁️ → journal session (07-journal.md)
+Agents communicate through `~/.agent-os/sessions/<id>/`:
+- Yudhishthira ⚖️ → strategy
+- Vidura 📚 → research
+- Hanuman 🐒 → recon
+- Arjuna 🏹 → execute
+- Narada 🪶 → draft output
+- Nakula 🐎 → schedule followups
+- Sanjaya 👁️ → journal session
 
 Run the full pipeline: `python lib/team_coordinator.py "your task here"`
+
+Run with specialists: `python lib/team_coordinator.py "task" --specialists auto`
 
 ## GSD Phase
 
