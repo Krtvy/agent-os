@@ -13,8 +13,8 @@ The deployed agent runs on the **Hyperagent** platform. Local files document ide
 - Adaptive output: chat markdown, persistent document, webpage artifact, slides, or table — picked per request.
 - Source-tier badges on every cited source (`[T1]`–`[T5]`, plus `[stale]`, `[T4 — vendor]`, `[translated]`, `[single source]`, `[contested]`).
 - Standard report shape: TL;DR → Key Findings → Detailed Analysis → Source Bibliography → Confidence → Gaps → Next Steps.
-- Domain rules auto-load from `.claude/rules/` (e.g. `dtc-supplements.md` for Rootlab competitive context).
-- Standing competitive-monitoring system at `docs/competitor_profiles/` (15 brands across 3 tiers, monthly + quarterly cadence).
+- Domain rules auto-load from `.claude/rules/` (add domain-specific `.md` files there to inject context automatically).
+- Standing competitive-monitoring template at `docs/competitor_profiles/` (adapt to any domain via the schema in `.claude/templates/`).
 
 ## Files
 
@@ -47,4 +47,4 @@ The deployed agent runs on the **Hyperagent** platform. Local files document ide
 - `skill.md` — operational procedures
 - `CLAUDE.md` — compact identity for in-folder sessions
 - `.claude/rules/source-tiers.md` — detailed source-classification guide
-- `.claude/rules/dtc-supplements.md` — DTC supplement industry context for Rootlab work
+- `.claude/rules/source-tiers.md` — detailed source-classification guide (add domain rule files here as needed)

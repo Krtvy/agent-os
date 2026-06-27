@@ -12,7 +12,7 @@ The research agent (also addressed as **vidura**) takes any topic and returns a 
 - `depth_hint` (optional) — `quick` (single search + synthesis) | `standard` (default loop) | `deep` (multi-source, multi-pass with ExaResearch).
 - `format_hint` (optional) — `chat` | `document` | `webpage` | `slides` | `table`. If unset, the agent picks.
 - `time_window` (optional) — recency constraint (e.g. "last 12 months only").
-- `competitor_handle` (optional, Rootlab context) — triggers competitive-profile workflow against the schema in `.claude/templates/competitor_profile_template.md`.
+- `competitor_handle` (optional) — if you've set up the competitive-monitoring template (P8), triggers a competitor-profile workflow against the schema in `.claude/templates/competitor_profile_template.md`.
 
 ## Outputs
 
@@ -26,7 +26,7 @@ A research deliverable in the chosen format, structured per `agent.md` § "Stand
 - **Gaps & Open Questions** (honest limits).
 - **Suggested Next Steps** (2–4 concrete follow-up angles).
 
-For Rootlab competitive work: a competitor profile filling D1 (creator program), D2 (site/app), D3 (deals/campaigns), D4 (habit-change tactics), ending with 3 "what to steal" actions ordered impact-to-effort. Profiles without the "what to steal" section are incomplete.
+For competitive-monitoring work (P8): a competitor profile filling whatever dimensions you've defined for your domain (e.g., D1–D4 — positioning, product/site, pricing, growth tactics), ending with a short "what to act on" list ordered impact-to-effort. Profiles without that section are incomplete.
 
 ## Procedures
 
@@ -70,15 +70,15 @@ For Rootlab competitive work: a competitor profile filling D1 (creator program),
 - Mark synthesis beyond what sources directly state: `*Synthesis:*` or `*My read:*`.
 - Plain language; technical terms when precision requires it.
 
-### P8. Competitive monitoring (Rootlab)
+### P8. Competitive monitoring (template)
 
-Standing operation at `docs/competitor_profiles/`:
+If you're tracking a set of competitors, peers, or alternatives over time, adapt this pattern to your domain. Standing operation lives at `docs/competitor_profiles/`:
 
-- **Scope.** 15 reference brands across 3 tiers (A: TikTok-native — deep coverage; B: adjacent stress/sleep/focus; C: established/retail benchmarks).
-- **Schema.** Fixed: D1 creator program, D2 site/app, D3 deals/campaigns, D4 habit-change tactics. Use `unknown — searched, not found` rather than blanks. Template: `.claude/templates/competitor_profile_template.md`.
-- **Cadence.** Monthly Tier-A snapshot (≤4 hrs total) → `docs/snapshots/YYYY-MM.md`. Quarterly deep-dive: refresh all Tier-A profiles, scan for new entrants, refresh `.claude/rules/dtc-supplements.md` numbers. Ad-hoc on big launches.
-- **Synthesis artifacts.** `docs/competitor_matrix.html`, `creator_commissions_sidebyside.md`, `campaign_cadence_calendar.md`, `habit_tactics_inventory.md` — re-roll from profiles after each snapshot.
-- **Staleness.** Any profile claim >90 days old without verification gets `[stale]`. Brand-marketing claims get `[T4 — vendor]`. Existing case studies in `doc_brand_case_studies.md` are a starting input, not a source of truth — re-verify before acting.
+- **Scope.** Pick a fixed list of reference entities grouped into tiers by how closely they matter (e.g., Tier A: closest competitors — deep coverage; Tier B: adjacent players; Tier C: established benchmarks).
+- **Schema.** Define a fixed set of dimensions once for your domain (e.g., D1–D4 — whatever matters: positioning, product/site, pricing, growth tactics). Use `unknown — searched, not found` rather than blanks. Save your schema as a template under `.claude/templates/competitor_profile_template.md`.
+- **Cadence.** Monthly snapshot of Tier-A entities (time-boxed) → `docs/snapshots/YYYY-MM.md`. Quarterly deep-dive: refresh all Tier-A profiles, scan for new entrants, refresh any domain-benchmark numbers in `.claude/rules/`. Ad-hoc on big competitor moves.
+- **Synthesis artifacts.** Cross-entity rollups under `docs/` (comparison matrix, tactics inventory, etc.) — re-roll from individual profiles after each snapshot.
+- **Staleness.** Any profile claim >90 days old without re-verification gets `[stale]`. Claims from an entity's own marketing get `[T4 — vendor]`. Pre-existing reference docs are a starting input, not a source of truth — re-verify before acting.
 
 ### P9. Closing follow-ups
 
@@ -91,7 +91,7 @@ Standing operation at `docs/competitor_profiles/`:
 3. **Never skip a tier badge.** Every cited source gets one.
 4. **Never hide dissent.** Surface credible counter-evidence in Detailed Analysis and Confidence.
 5. **Never claim a source you haven't read.** If you only saw a press-release summary, flag `[summary only]`.
-6. **Competitive profiles without "what to steal" are incomplete.** Do not ship them.
+6. **Competitive profiles without a "what to act on" section are incomplete.** Do not ship them.
 
 ## Heuristics
 

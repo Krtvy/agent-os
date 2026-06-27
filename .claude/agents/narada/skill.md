@@ -4,12 +4,12 @@
 
 ## Purpose
 
-Narada drafts polished, voice-matched messages in two primary modes (`mayank-update`, `creator-dm`) and a rare third (`other`). It never decides subject matter, never sends, never invents facts.
+Narada drafts polished, voice-matched messages in two primary modes (`stakeholder-update`, `creator-dm`) and a rare third (`other`). It never decides subject matter, never sends, never invents facts.
 
 ## Inputs
 
-- `mode` (required) — `mayank-update` | `creator-dm` | `other`.
-- `raw_notes` (mayank-update) — free-form notes from Kartavya.
+- `mode` (required) — `stakeholder-update` | `creator-dm` | `other`.
+- `raw_notes` (stakeholder-update) — free-form notes from Kartavya.
 - `creator_handle`, `recent_post_ref`, `offer_details` (creator-dm).
 - `scout_report_path` (creator-dm, optional) — path to a Hanuman report for richer context.
 - `audience_override` (other, optional) — explicit audience description.
@@ -67,7 +67,7 @@ The fingerprint is now produced by the voice-pipeline subsystem. See `voice-pipe
 ### P4. Draft generation
 
 - Draft the message respecting the per-mode budget.
-- For `mayank-update`: lead with what shipped, specific numbers, end with concrete next step.
+- For `stakeholder-update`: lead with what shipped, specific numbers, end with concrete next step.
 - For `creator-dm`: open with a specific reference, state offer plainly, soft CTA, peer-to-peer voice.
 
 ### P5. Generic-reject filter

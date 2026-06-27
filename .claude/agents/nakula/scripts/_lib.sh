@@ -12,7 +12,14 @@ HEARTBEAT_JSON="$LOGS_DIR/heartbeat.json"
 NAKULA_LOGS_DIR="$LOGS_DIR/nakula"
 NAKULA_LOCKS_DIR="$NAKULA_DIR/locks"
 JOBS_YML="$NAKULA_DIR/jobs.yml"
-VENV_PY="$REPO_ROOT/.venv/bin/python3"
+# Use system Python (Windows: python, Unix: venv or python3)
+if [[ -f "$REPO_ROOT/.venv/bin/python3" ]]; then
+  VENV_PY="$REPO_ROOT/.venv/bin/python3"
+elif command -v python &>/dev/null; then
+  VENV_PY="$(command -v python)"
+else
+  VENV_PY="$(command -v python3)"
+fi
 
 # ---- run_id ---------------------------------------------------------------
 

@@ -1,28 +1,29 @@
 # hanuman — Skill Manual
 
-> Last updated: 2026-05-10 by bootstrap
+> Last updated: 2026-06-17 (approved proposal 20260513-hanuman-platforms-awareness, adapted for general-purpose repurposing)
 
 ## Purpose
 
-Hanuman scouts a creator (or a batch of creators) and produces a markdown report with tier-tagged sources, a fit assessment, and risk flags. Read-only on all external systems. Heavy use of a local cache to avoid hammering APIs.
+Hanuman scouts any target — person, company, GitHub repo, product, topic, URL, or concept — and produces a markdown report with tier-tagged sources, a fit assessment, and risk flags. Read-only on all external systems. Heavy use of a local cache to avoid hammering APIs or rate limits.
 
 ## Inputs
 
-- `targets` (required) — handle, URL, or list.
+- `targets` (required) — handle, URL, name, or list of any of these.
 - `depth` (optional, default `shallow`) — `shallow` or `full`.
-- `sources` (optional) — restricted source list.
+- `sources` (optional) — restricted source list (e.g., `[github, web]`).
 - `cache` (optional, default `respect`) — `respect` or `bypass`.
 - `purpose` (optional) — context for the fit-assessment section.
 
 ## Outputs
 
-A markdown file per target at `research/creators/<handle>-<YYYYMMDD>.md`. Format defined in `agent.md` § "Your outputs."
+A markdown file per target at `research/<YYYYMMDD>-<slug>.md`. Format defined in `agent.md` § "Your outputs."
 
 ## Procedures
 
-### P1. Bhishma load
+### P1. Bhishma load + platform knowledge
 
 - Read `bhishma.md`. Stop on missing file.
+- Read every file in `.claude/agents/hanuman/platforms/` if the directory exists. Scan `README.md` first (index), then any platform file relevant to the task. This loads authoritative knowledge about connected data sources before any fetch decision is made.
 
 ### P2. Input normalization and dedup
 
@@ -30,12 +31,59 @@ A markdown file per target at `research/creators/<handle>-<YYYYMMDD>.md`. Format
 - Deduplicate the resulting list.
 - Emit one report per unique handle.
 
-### P3. Handle resolution
+### P3. Source routing
+
+Given the task target and purpose, decide which sources to use:
+
+| Target type | Primary source | Fallback |
+|---|---|---|
+| GitHub repo / code / issues | `gh` CLI + GitHub API | WebFetch direct |
+| Person / company / product | WebSearch + WebFetch | agent-reach (web channel) |
+| Twitter/X content | agent-reach (twitter channel, needs cookie auth) | WebSearch for cached content |
+| Reddit discussion | agent-reach (reddit channel, needs cookie auth) | WebSearch |
+| YouTube video | agent-reach (youtube channel via yt-dlp) | WebFetch transcript |
+| Research paper | arxiv API / WebFetch | WebSearch + DOI lookup |
+| RSS / blog | agent-reach (rss channel) | WebFetch direct |
+| Any URL | agent-reach (web channel via Jina Reader) | WebFetch raw |
+| **Cloudflare-protected site** | **agent-browser (real Chrome)** | curl_cffi |
+| **Login-required page** | **agent-browser with session/cookies** | N/A |
+| **Dynamic/JS-rendered content** | **agent-browser snapshot** | WebFetch (gets raw HTML only) |
+| **Visual inspection needed** | **agent-browser screenshot** | N/A |
+
+State the routing decision in the report: _"Routing to GitHub API + WebSearch."_
+
+If unsure, default to WebSearch → WebFetch — broadest coverage, no auth needed.
+
+### P3b. agent-browser protocol (when to use real Chrome)
+
+Use `agent-browser` when:
+- The target site blocks bots / returns 403 with WebFetch
+- The page requires JavaScript to render content
+- You need to interact with the page (click, fill, scroll)
+- You need a screenshot for visual evidence
+
+```bash
+# Standard browser recon sequence
+agent-browser open "https://target-url.com"
+agent-browser snapshot -i          # get interactive elements as refs
+agent-browser get text @e1         # extract specific element
+agent-browser screenshot recon.png # visual evidence
+
+# For Cloudflare-protected sites (no --headed needed, headless works)
+agent-browser open "https://cloudflare-site.com"
+agent-browser wait --load networkidle
+agent-browser snapshot -c -d 3    # compact snapshot, 3 levels deep
+```
+
+Never use agent-browser for sites that WebFetch handles fine — it's slower.
+Always close the browser when done: `agent-browser close`
+
+### P5. Handle resolution
 
 - Per `agent.md` § "Handle resolution." Set `handle_resolution: confirmed | redirected | unresolved`.
 - If unresolved: write a stub report with the fact, exit for that handle.
 
-### P4. Cache check (per source per handle)
+### P6. Cache check (per source per handle)
 
 - Steps:
   1. Read `.claude/agents/hanuman/cache/<handle>.json` if present.
@@ -43,39 +91,39 @@ A markdown file per target at `research/creators/<handle>-<YYYYMMDD>.md`. Format
   3. If within TTL and `cache: respect`: mark this source as cached.
   4. If outside TTL or `cache: bypass`: queue a fresh fetch.
 
-### P5. Source fetch
+### P7. Source fetch
 
 - For each queued source:
-  1. Issue a GET to the Kalodata MCP / TikTok public profile / Cruva MCP / web search.
+  1. Issue a GET via the routed source (GitHub API, WebSearch, agent-reach channel, WebFetch, arxiv, etc.).
   2. Capture response, timestamp, and source URL.
   3. Update the cache with `fetched_at: <UTC ISO8601>`.
   4. If fetch fails and a stale cache exists: use the stale cache, mark `[STALE: <source> data is <N>h old]`.
 
-### P6. Data classification
+### P8. Data classification
 
 - For each captured fact, tag with T1–T5 tier (per agent.md rubric).
 - Note the "as of" date.
 
-### P7. Fit assessment
+### P9. Fit assessment
 
 - Compute audience overlap with the stated `purpose`.
 - Estimate CPM tier (low / mid / high) by combining niche + size.
 - Output a recommendation: strong fit / acceptable / weak fit / pass.
 - Output a confidence: high / medium / low.
 
-### P8. Risk flag scan
+### P10. Risk flag scan
 
 - Scan recent post titles and captions for off-brand keywords.
 - Cross-check with WebSearch for "controversy" results.
 - Flag any disclosure-pattern issues (e.g., low #ad usage on visibly sponsored posts).
 
-### P9. Write report and log
+### P11. Write report and log
 
 - Compose the markdown report per `agent.md` format.
 - Save to `research/creators/<handle>-<YYYYMMDD>.md`.
 - Append to `logs/hanuman/<run_id>.log` a single line with run_id, target count, sources used, and write path.
 
-### P10. Daily competitor TikTok content discovery (added 2026-05-11, revised v2)
+### P12. [ARCHIVED — Rootlabs-specific, superseded 2026-06-17] Daily competitor TikTok content discovery
 
 A second procedure path, run on cron, NOT the per-creator scout path above.
 

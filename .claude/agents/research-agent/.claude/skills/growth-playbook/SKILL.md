@@ -1,6 +1,6 @@
 ---
-name: Growth Playbook
-description: Tactical growth recommendations for DTC and consumer brands. Covers acquisition, retention, conversion optimization, and habit formation with specific, implementable actions prioritized by impact.
+name: Career Playbook
+description: Tactical career development recommendations for AI engineers. Covers skill gap analysis, portfolio positioning, job market targeting, interview preparation, and networking — specific, implementable actions prioritized by impact.
 ---
 
 # Growth Playbook Skill

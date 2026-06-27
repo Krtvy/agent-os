@@ -92,13 +92,13 @@ A second procedure path for the competitor content pipeline. Distinct from the P
   ```json
   {
     "video_id": "7234567890",
-    "brand_slug": "bloom-nutrition",
+    "brand_slug": "<entity-slug>",
     "analyzed_at_utc": "2026-05-11T01:14:00Z",
     "analyzer": "gemini",
     "analyzer_model": "gemini-2.0-flash",
     "tier": "deep",
     "transcript": "...",
-    "hook_description": "Opens with woman saying 'I quit melatonin...' on a static shot of her bedroom",
+    "hook_description": "<description of how the video opens>",
     "hook_type": "problem-led",
     "format_tags": ["talking-head", "single-shot", "on-screen-text"],
     "claims": [

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M0 · Phase 0 · Test Run</title>
+
+<!-- Mermaid for architecture diagrams -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<!-- Prism for syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+<style>
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #7c6bff;
+    --accent2: #00d4aa;
+    --text: #e8e8f0;
+    --muted: #8888a0;
+    --warning: #ffaa44;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem 2rem;
+    background: var(--surface);
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+  .header .date { color: var(--muted); font-size: 0.85rem; }
+
+  /* Key insight banner */
+  .insight-banner {
+    background: linear-gradient(135deg, rgba(124,107,255,0.15), rgba(0,212,170,0.1));
+    border: 1px solid rgba(124,107,255,0.3);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+    font-style: italic;
+  }
+  .insight-banner::before {
+    content: "Key Insight";
+    display: block;
+    font-size: 0.7rem;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Sections */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .section h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  .section p { color: #c0c0d0; margin-bottom: 0.75rem; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* Architecture diagram */
+  .mermaid-wrap {
+    background: #13131c;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin-top: 0.5rem;
+  }
+  .mermaid { color: var(--text); }
+
+  /* What broke */
+  .broke-section {
+    border-left-color: var(--warning);
+  }
+  .broke-section .section-label { color: var(--warning); }
+
+  /* Decision */
+  .decision-section {
+    border-left-color: var(--accent2);
+    border-left-width: 3px;
+  }
+
+  /* Your words */
+  .raw-answer {
+    background: #13131c;
+    border-left: 3px solid var(--muted);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .raw-answer::before {
+    content: "Your words: ";
+    font-style: normal;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #666680;
+  }
+
+  /* Code block */
+  pre[class*="language-"] {
+    border-radius: 8px;
+    margin: 0.75rem 0 0;
+    font-size: 0.82rem;
+  }
+
+  /* Next phase */
+  .next-section {
+    background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(124,107,255,0.05));
+    border: 1px solid rgba(0,212,170,0.2);
+  }
+  .next-section .section-label { color: var(--accent2); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media print {
+    body { background: white; color: #1a1a1a; padding: 1rem; }
+    .section { border: 1px solid #ddd; }
+    .header { background: #f5f5f5; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="breadcrumb">Month 0 · Test Run · Phase 0</div>
+    <h1>AI-Powered Documentation Generation</h1>
+    <div class="date">Completed June 19, 2026</div>
+  </div>
+
+  <!-- Key Insight -->
+  <div class="insight-banner">
+    Automating documentation generation with LLMs like Gemini can drastically reduce manual effort, but integrating dynamic elements like Mermaid.js diagrams into the output without a complex build pipeline presents unique client-side rendering challenges.
+  </div>
+
+  <!-- Concept Explanation -->
+  <div class="section">
+    <div class="section-label">Concept</div>
+    <h2>What is this?</h2>
+    <p>This phase focused on setting up an AI-powered system to automate the generation of learning documentation. The core concept involves leveraging a large language model (LLM), specifically Google Gemini, to transform concise, raw answers into comprehensive and structured documentation. The intuition here is to offload the repetitive and time-consuming task of writing detailed explanations, diagram descriptions, and code examples to an AI.</p><p>The process begins with a set of five structured answers provided by the user, covering aspects like what was built, concept explanations, challenges, and broken components. These answers serve as the prompt for the Gemini model. The generator then uses Gemini to expand upon these brief inputs, enriching them with technical details, intuitive explanations, and structural elements like architecture diagrams, code snippets, and visual sections, all formatted for a developer audience.</p><p>Essentially, this setup acts as a sophisticated content amplifier. Instead of manually crafting each section, the developer provides the core ideas, and the AI fills in the gaps, ensuring consistency and detail across the documentation. This significantly accelerates the documentation process, allowing developers to focus more on building and less on extensive writing.</p>
+    <div class="raw-answer">The generator takes my 5 answers and uses Gemini to expand them into full documentation with architecture diagrams, code snippets and visual sections</div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="section">
+    <div class="section-label">Architecture</div>
+    <h2>How it connects</h2>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    A[Raw Answers (5)] --> B{Documentation Generator}
+    B --> C[Gemini API Call]
+    C --> D[Expanded Documentation Content]
+    D --> E[HTML Renderer]
+    E --> F[Mermaid.js for Diagrams]
+    F --> G[Final HTML Documentation (Dark Theme)]
+      </div>
+    </div>
+  </div>
+
+  <!-- What Broke -->
+  <div class="section broke-section">
+    <div class="section-label">What Broke</div>
+    <h2>The real learning</h2>
+    <p>The `gemini pool` import failed because the `lib` folder, which was intended to house the Gemini-related modules, lacked an `__init__.py` file. In Python, a directory is only recognized as a package (and thus its modules importable using dot notation, e.g., `from lib import gemini_pool`) if it contains an `__init__.py` file. Without this file, Python doesn't treat `lib` as a package, leading to an `ImportError` when trying to access submodules within it.</p><p>The fix involved directly importing `google.genai`, which is the correct and standard way to access the Gemini API client. This teaches a crucial lesson about Python's module and package system: understanding how `__init__.py` defines package boundaries is fundamental for structuring larger projects and ensuring correct imports. It also highlights the importance of consulting official library documentation for the correct import paths rather than assuming custom wrapper structures.</p>
+    <div class="raw-answer">The gemini pool import failed because lib folder has no __init__.py - fixed by importing google.genai directly</div>
+  </div>
+
+  <!-- Hardest Part -->
+  <div class="section">
+    <div class="section-label">Hardest Part</div>
+    <h2>Where you got stuck</h2>
+    <div class="raw-answer">Getting Mermaid.js to render dark theme diagrams inside the HTML without a build step</div>
+  </div>
+
+  <!-- Code Pattern -->
+  <div class="section">
+    <div class="section-label">Key Pattern</div>
+    <h2>The code concept</h2>
+    <p>The most important code pattern from this phase is interacting with a large language model (LLM) API to generate content. This typically involves initializing the LLM client, preparing a prompt based on user input, and then making an asynchronous or synchronous call to the API to receive the generated text. The output then needs to be parsed and integrated into the final documentation structure.
+
+```python
+import google.generativeai as genai
+
+# Configure API key (conceptual)
+genai.configure(api_key="YOUR_GEMINI_API_KEY")
+
+# Initialize the model
+model = genai.GenerativeModel('gemini-pro')
+
+def generate_documentation(raw_answers):
+    prompt = f"""Based on these answers, generate comprehensive documentation:
+    {raw_answers}
+    Include architecture diagrams (Mermaid.js), code snippets, and explanations.
+    """
+    response = model.generate_content(prompt)
+    return response.text
+
+# Usage example
+my_answers = "What I built: ... Concept: ..."
+doc_content = generate_documentation(my_answers)
+# Further processing to embed diagrams, code, etc.
+```</p>
+  </div>
+
+  <!-- Decision -->
+  <div class="section decision-section">
+    <div class="section-label">Decision Made</div>
+    <h2>Why you built it this way</h2>
+    <p>The key implementation decision was to render Mermaid.js diagrams directly within the generated HTML on the client-side without requiring a separate build step. This was chosen to simplify the deployment and development workflow, avoiding the overhead and complexity of a build pipeline just for diagram generation. The challenge then became ensuring these diagrams rendered correctly, especially with dark themes, purely through client-side JavaScript execution after the HTML content was loaded.</p>
+  </div>
+
+  <!-- What's Next -->
+  <div class="section next-section">
+    <div class="section-label">What's Next</div>
+    <h2>How this phase sets up Phase 1</h2>
+    <p>This phase's documentation generator lays the foundational content for the next phase: "Month 1 Phase 1 - Chunking and Embeddings for the RAG system." The comprehensive documentation produced here, whether in its raw form or the expanded HTML, will serve as the primary knowledge base. For a Retrieval-Augmented Generation (RAG) system, this documentation needs to be broken down into smaller, manageable 'chunks' and then converted into numerical 'embeddings.' These embeddings allow the RAG system to efficiently search and retrieve relevant pieces of information from the documentation when a user asks a question, forming the bedrock for intelligent information retrieval and generation in the subsequent phase.</p>
+    <div class="raw-answer">Month 1 Phase 1 - Chunking and Embeddings for the RAG system</div>
+  </div>
+
+  <div class="footer">
+    Kartavya Joshi · AI Engineering · Month 0 Phase 0 · June 19, 2026
+  </div>
+
+</div>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</body>
+</html>

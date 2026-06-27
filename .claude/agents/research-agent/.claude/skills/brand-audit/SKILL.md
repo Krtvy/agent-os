@@ -1,6 +1,6 @@
 ---
-name: Brand Audit
-description: DTC and consumer brand competitive analysis. Researches acquisition channels, retention tactics, marketing campaigns, key metrics, and strategic positioning for any brand or set of brands.
+name: AI Tool Audit
+description: AI tool and company competitive analysis. Researches GitHub stars/activity, funding, use cases, limitations, community adoption, and strategic positioning for any AI tool, framework, or company.
 ---
 
 # Brand Audit Skill

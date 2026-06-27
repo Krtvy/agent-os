@@ -1,6 +1,6 @@
 # Bhishma — The Constitution
 
-⚔️ _The vow-bound rules of Kartavya Joshi's multi-agent ecosystem at Rootlabs._
+⚔️ _The vow-bound rules of Kartavya Joshi's personal multi-agent ecosystem._
 
 ---
 

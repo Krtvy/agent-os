@@ -230,9 +230,8 @@ Files: `SaveFile`, `FetchStoredFile`, `PublishFilePublicly`.
 
 ### Attached context
 
-- Document `cmotzc2ko0fit07adhpp0dffq` — _DTC Supplement Brand Growth Strategies: 8-Brand Research Report (2025-2026)_ — mirrored locally at `docs/doc_brand_case_studies.md`.
-- Document `cmotzcx260g0707adowsw2ndk` — _DTC Consumer Brand Data & Personalization Research Report (2025-2026)_ — mirrored locally at `docs/doc_personalization_report.md`.
+- (Example) Hyperagent supports attaching reference documents that get pulled into context automatically. If you use it, mirror those docs locally under `docs/` (e.g., `docs/doc_<topic>.md`) so the agent can still read them when running outside Hyperagent.
 
 ### Integrations / scheduled invocations / skills / memories
 
-None configured at the platform level. Local `.claude/rules/` provides domain context (`source-tiers.md`, `dtc-supplements.md`); local `docs/competitor_profiles/` provides standing competitive-intel data. See `skill.md` § "Competitive monitoring (Rootlab)" for the operating discipline around these.
+None configured at the platform level. Local `.claude/rules/` provides domain context (`source-tiers.md` plus any domain-specific rule files you add); local `docs/competitor_profiles/` can hold a standing competitive-intel operation if you run one. See `skill.md` § "Competitive monitoring (template)" for the operating discipline around these.

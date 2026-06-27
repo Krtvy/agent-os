@@ -1,6 +1,6 @@
 # Monthly Competitive Snapshot — YYYY-MM
 
-> **Brands tracked:** Tier A only (Nello, Neuro, SNAP, MaryRuth's, Goli, Bloom)
+> **Entities tracked:** Tier A only (fill in your list)
 > **Time-box:** ≤ 4 hours total · ≤ 30 min per brand
 > **Output goes to:** `docs/snapshots/YYYY-MM.md`
 
@@ -24,11 +24,11 @@ For each Tier A brand, scan and record only what changed since last snapshot:
 
 - Patterns showing up in 2+ brands this month:
 - Single-brand outliers worth a closer look:
-- Anything that should trigger a Rootlab playbook update?
+- Anything that should trigger a playbook update?
 
-## Action items for Rootlab (≤ 30 min)
+## Action items for this cycle (≤ 30 min)
 
-List 1–3 specific, testable moves Rootlab should consider this cycle.
+List 1–3 specific, testable moves to consider based on what you saw.
 
 1.
 2.

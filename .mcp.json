@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "agent-browser": {
+      "type": "stdio",
+      "command": "agent-browser",
+      "args": ["mcp", "--tools", "all"],
+      "env": {}
+    },
+    "agent-reach": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "agent_reach.integrations.mcp_server"],
+      "env": {}
+    }
+  }
+}

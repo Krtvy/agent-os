@@ -9,3 +9,7 @@ Append-only log of **agent-level** changes (identity, file structure, scope, too
 ## 2026-05-10
 
 - Bootstrap — initial agent definition committed.
+
+## 2026-06-17
+- Approved proposal 20260513-hanuman-platforms-awareness (adapted): wired platforms/ dir into P1 bootstrap, added general-purpose P3 source routing table (GitHub/web/Twitter/Reddit/YouTube/RSS), updated P7 to general sources, archived Rootlabs-specific TikTok P10 as P12.
+- Repurposed from TikTok/creator scout → general-purpose web research scout (see agent.md description).

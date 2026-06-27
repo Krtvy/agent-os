@@ -64,6 +64,11 @@ Nakula owns scheduled recurring jobs defined in `jobs.yml`. It runs each due job
   - Read this week's heartbeat history.
   - Compute `jobs_total`, `jobs_success`, `jobs_failure`, `jobs_skipped`, `uptime_pct`.
   - Append a weekly-summary heartbeat to `logs/heartbeat.json`.
+  - # NOTE (observer 2026-05-28, approved 2026-06-17): K8 has not produced a heartbeat entry
+  - # after the first eligible Sunday (2026-05-24). Verify nakula-run.sh implements this
+  - # Sunday-time branch. If not implemented, this block is aspirational — mark TODO until wired.
+  - # Most likely cause: cron fires at 20:30 UTC (02:00 IST), not 23:55 UTC. A separate
+  - # Sunday 23:55 UTC job entry in jobs.yml is needed to trigger this branch.
 
 ### P8. Output
 

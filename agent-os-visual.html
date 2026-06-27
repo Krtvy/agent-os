@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>agent-os — The Mahabharata Multi-Agent Ecosystem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dark: #8b6914;
+    --saffron: #ff8c00;
+    --bg: #0a0805;
+    --surface: #12100a;
+    --surface2: #1a1610;
+    --text: #e8dcc8;
+    --muted: #8a7a5a;
+    --tier0: #1a2a1a;
+    --tier1: #1a1a2a;
+    --tier2: #2a1a1a;
+    --audit: #2a2a1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Starfield background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 60%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 10%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 80%, rgba(201,168,76,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 40%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,0.1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .header .sanskrit {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    opacity: 0.8;
+  }
+
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .header p {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  /* ── BHISHMA — THE CONSTITUTION ── */
+  .bhishma-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .bhishma {
+    background: linear-gradient(135deg, #1a1200, #2a1e00);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.25rem 2.5rem;
+    text-align: center;
+    width: 360px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(201,168,76,0.2), inset 0 0 20px rgba(201,168,76,0.05);
+  }
+
+  .bhishma::before {
+    content: '⚔';
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    opacity: 0.6;
+  }
+  .bhishma::after {
+    content: '⚔';
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    opacity: 0.6;
+  }
+
+  .bhishma .agent-icon { font-size: 2rem; margin-bottom: 0.25rem; }
+  .bhishma .agent-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+  .bhishma .agent-role {
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0.2rem 0;
+  }
+  .bhishma .agent-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.4rem;
+  }
+  .bhishma .rule-count {
+    display: inline-block;
+    background: var(--gold-dark);
+    color: var(--gold-light);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── CONNECTOR LINES ── */
+  .connector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    position: relative;
+  }
+  .connector::before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  .connector-wide {
+    display: flex;
+    justify-content: center;
+    height: 2rem;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  /* ── TIER SECTIONS ── */
+  .tier-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    opacity: 0.7;
+  }
+
+  /* ── TIER 2: VYASA ── */
+  .tier2-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── TIER 1: SANJAYA ── */
+  .tier1-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── AUDIT: SAHADEVA ── */
+  .audit-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+    padding-right: 1rem;
+  }
+
+  /* ── TIER 0: WORKERS ── */
+  .tier0-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ── AGENT CARD ── */
+  .agent-card {
+    border-radius: 10px;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    border: 1px solid rgba(201,168,76,0.15);
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .agent-card:hover::before { opacity: 1; }
+  .agent-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 12px rgba(201,168,76,0.1);
+  }
+
+  .tier0-card { background: var(--tier0); }
+  .tier1-card { background: var(--tier1); width: 280px; }
+  .tier2-card { background: var(--tier2); width: 280px; }
+  .audit-card { background: var(--audit); width: 220px; }
+
+  .agent-card .icon { font-size: 1.8rem; margin-bottom: 0.3rem; display: block; }
+  .agent-card .name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.15rem;
+  }
+  .agent-card .role {
+    font-size: 0.65rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+  }
+  .agent-card .desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .agent-card .tools {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    justify-content: center;
+  }
+  .tool-tag {
+    font-size: 0.6rem;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--gold);
+    padding: 0.1rem 0.35rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── INFRASTRUCTURE ── */
+  .infra-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--surface2);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 12px;
+  }
+  .infra-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .infra-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+  .infra-item {
+    background: var(--surface);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+  }
+  .infra-item .i-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
+  .infra-item .i-name {
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2rem;
+  }
+  .infra-item .i-desc { font-size: 0.65rem; color: var(--muted); }
+
+  /* ── FLOW ARROWS SVG ── */
+  .flow-svg {
+    width: 100%;
+    height: 60px;
+    margin: -0.5rem 0;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  /* Pulse animation on active agents */
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.0); }
+    50% { box-shadow: 0 0 0 4px rgba(201,168,76,0.1); }
+  }
+  .agent-card:nth-child(odd) { animation: pulse 4s ease-in-out infinite; }
+  .agent-card:nth-child(even) { animation: pulse 4s ease-in-out 2s infinite; }
+
+  /* Divider ornament */
+  .ornament {
+    text-align: center;
+    color: var(--gold-dark);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    margin: 1rem 0 0.5rem;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="sanskrit">॥ सर्वे भवन्तु सुखिनः ॥</div>
+    <h1>agent-os</h1>
+    <p>The Mahabharata Multi-Agent Ecosystem &nbsp;·&nbsp; Kartavya Joshi</p>
+  </div>
+
+  <!-- BHISHMA — CONSTITUTION -->
+  <div class="bhishma-wrap">
+    <div class="bhishma">
+      <div class="agent-icon">📜</div>
+      <div class="agent-name">Bhishma</div>
+      <div class="agent-role">The Constitution · Immovable Law</div>
+      <div class="agent-desc">23 hard rules. No agent may edit, ignore, or argue with this file. The vow that binds the entire ecosystem.</div>
+      <span class="rule-count">23 Rules · Hash-Verified · Append-Only</span>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+  <div class="ornament">· · · ·</div>
+  <div class="tier-label">Tier 2 — Conductor</div>
+
+  <!-- VYASA -->
+  <div class="tier2-wrap">
+    <div class="agent-card tier2-card">
+      <span class="icon">📖</span>
+      <div class="name">Vyasa</div>
+      <div class="role">Meta-Conductor · Tier 2</div>
+      <div class="desc">Watches Sanjaya for drift. Proposes meta-changes to the observer itself. The author who sees the whole story.</div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+  <div class="ornament">· · · ·</div>
+  <div class="tier-label">Tier 1 — Observer</div>
+
+  <!-- SANJAYA -->
+  <div class="tier1-wrap">
+    <div class="agent-card tier1-card">
+      <span class="icon">👁️</span>
+      <div class="name">Sanjaya</div>
+      <div class="role">Observer · Tier 1</div>
+      <div class="desc">Watches all Tier-0 workers. Journals behaviour every run. Proposes skill improvements through the gated proposal system.</div>
+      <div class="tools">
+        <span class="tool-tag">journals</span>
+        <span class="tool-tag">proposals</span>
+        <span class="tool-tag">pattern detection</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+  <div class="ornament">· · · · · · · · ·</div>
+  <div class="tier-label">Tier 0 — Workers</div>
+
+  <!-- TIER 0 AGENTS -->
+  <div class="tier0-grid">
+
+    <div class="agent-card tier0-card">
+      <span class="icon">🐒</span>
+      <div class="name">Hanuman</div>
+      <div class="role">Scout · Recon</div>
+      <div class="desc">Web research, GitHub scanning, recon on any target. Uses real Chrome via agent-browser.</div>
+      <div class="tools">
+        <span class="tool-tag">WebSearch</span>
+        <span class="tool-tag">agent-browser</span>
+        <span class="tool-tag">agent-reach</span>
+      </div>
+    </div>
+
+    <div class="agent-card tier0-card">
+      <span class="icon">🪶</span>
+      <div class="name">Narada</div>
+      <div class="role">Drafter · Voice</div>
+      <div class="desc">Communication drafter for any format. Voice-matched to Kartavya. 25-skill voice pipeline.</div>
+      <div class="tools">
+        <span class="tool-tag">Read</span>
+        <span class="tool-tag">Write</span>
+        <span class="tool-tag">voice-pipeline</span>
+      </div>
+    </div>
+
+    <div class="agent-card tier0-card">
+      <span class="icon">⚖️</span>
+      <div class="name">Yudhishthira</div>
+      <div class="role">Analyst · Data</div>
+      <div class="desc">Personal data analyst. CSV/XLSX/JSON analysis, job tracking, finance, GitHub stats.</div>
+      <div class="tools">
+        <span class="tool-tag">pandas</span>
+        <span class="tool-tag">SQL</span>
+        <span class="tool-tag">playbook</span>
+      </div>
+    </div>
+
+    <div class="agent-card tier0-card">
+      <span class="icon">🏹</span>
+      <div class="name">Arjuna</div>
+      <div class="role">Executor · API</div>
+      <div class="desc">Precise API executor. Idempotency keys, circuit breakers, rate-limit awareness. Never strategises.</div>
+      <div class="tools">
+        <span class="tool-tag">WebFetch</span>
+        <span class="tool-tag">Bash</span>
+        <span class="tool-tag">circuit breakers</span>
+      </div>
+    </div>
+
+    <div class="agent-card tier0-card">
+      <span class="icon">🐎</span>
+      <div class="name">Nakula</div>
+      <div class="role">Scheduler · Cron</div>
+      <div class="desc">Owns jobs.yml. Runs scheduled pipelines. Heartbeats on every run. Failures are loud, successes silent.</div>
+      <div class="tools">
+        <span class="tool-tag">Bash</span>
+        <span class="tool-tag">jobs.yml</span>
+        <span class="tool-tag">heartbeat</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- AUDIT — SAHADEVA -->
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+    <div style="flex:1">
+      <div class="tier-label" style="text-align:left">Independent Audit</div>
+      <div class="audit-wrap" style="padding-right:0; justify-content:flex-start;">
+        <div class="agent-card audit-card">
+          <span class="icon">🔍</span>
+          <div class="name">Sahadeva</div>
+          <div class="role">Auditor · Weekly</div>
+          <div class="desc">Independent audit every Sunday. Reports only to Kartavya. Checks Bhishma compliance, ecosystem health.</div>
+          <div class="tools">
+            <span class="tool-tag">W21: GREEN</span>
+            <span class="tool-tag">23 rules</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1">
+      <div class="tier-label" style="text-align:left">Researcher</div>
+      <div style="padding-top:0">
+        <div class="agent-card tier0-card" style="text-align:left; max-width:280px;">
+          <span class="icon">📚</span>
+          <div class="name">Vidura</div>
+          <div class="role">Researcher · Sources</div>
+          <div class="desc">Source-disciplined researcher. Every claim tier-tagged T1–T5. Triangulates, surfaces dissent, never fabricates.</div>
+          <div class="tools">
+            <span class="tool-tag">WebSearch</span>
+            <span class="tool-tag">WebFetch</span>
+            <span class="tool-tag">source tiers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFRASTRUCTURE -->
+  <div class="infra-section">
+    <div class="infra-title">Infrastructure Layer</div>
+    <div class="infra-grid">
+      <div class="infra-item">
+        <div class="i-icon">🔄</div>
+        <div class="i-name">Team Coordinator</div>
+        <div class="i-desc">7 agents in 12 seconds via Groq LLaMA 70B</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">📊</div>
+        <div class="i-name">Tracer</div>
+        <div class="i-desc">Local JSON traces per session. Zero cost.</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">⚡</div>
+        <div class="i-name">Event Bus</div>
+        <div class="i-desc">Async handoffs between agents without blocking</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">🧠</div>
+        <div class="i-name">Memory</div>
+        <div class="i-desc">mem0 persistent memory across all sessions</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">🌐</div>
+        <div class="i-name">agent-browser</div>
+        <div class="i-desc">Real Chrome, Cloudflare bypass, MCP server</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">📡</div>
+        <div class="i-name">agent-reach</div>
+        <div class="i-desc">GitHub, RSS, YouTube, Web — zero API cost</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">💰</div>
+        <div class="i-name">Budget</div>
+        <div class="i-desc">Hard limits per agent. Prevents runaway loops.</div>
+      </div>
+      <div class="infra-item">
+        <div class="i-icon">🛡️</div>
+        <div class="i-name">Sanitizer</div>
+        <div class="i-desc">Prompt injection defense on all web fetches</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="stat">
+      <div class="stat-num">10</div>
+      <div class="stat-label">Agents</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">23</div>
+      <div class="stat-label">Bhishma Rules</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Supervision Tiers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12s</div>
+      <div class="stat-label">Full Team Run</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$0</div>
+      <div class="stat-label">Daily Cost</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">8/10</div>
+      <div class="stat-label">Industry Rating</div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:2rem; color:var(--muted); font-style:italic; font-size:0.85rem;">
+    "The eye of the bird, nothing else." — Arjuna · agent-os by Kartavya Joshi
+  </div>
+
+</div>
+</body>
+</html>

@@ -10,3 +10,6 @@ Append-only log of **agent-level** changes (identity, file structure, scope, too
 ## 2026-05-10
 
 - Bootstrap — initial agent definition committed.
+
+## 2026-06-17
+- Approved proposal 20260528-narada-word-count-conflict: conflict moot — Narada repurposed from Rootlabs DM drafter → general communication drafter. mayank-update mode retired. Voice pipeline retained (personal voice fingerprint, 25/50 samples).

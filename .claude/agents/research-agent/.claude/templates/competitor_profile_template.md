@@ -14,7 +14,7 @@
 | Funding / valuation      |                                                   |           |
 | Distribution mix         | DTC / TikTok Shop / Amazon / retail (which doors) |           |
 | Audience                 | demographic + psychographic                       |           |
-| Closest comp to Rootlab? | yes/no — explain                                  | —         |
+| Closest comp to us?      | yes/no — explain                                  | —         |
 
 ---
 
@@ -82,7 +82,7 @@ Walk-through of the conversion mechanics. Tested on `{{date}}` from `{{geo}}`.
 
 ---
 
-## What Rootlab should steal from {{Brand}}
+## What to steal from {{Brand}}
 
 Three actions max, ordered by impact-to-effort.
 
@@ -90,7 +90,7 @@ Three actions max, ordered by impact-to-effort.
 2.
 3.
 
-## What Rootlab should NOT copy
+## What NOT to copy
 
 (Anti-patterns or context-specific moves that don't translate.)
 

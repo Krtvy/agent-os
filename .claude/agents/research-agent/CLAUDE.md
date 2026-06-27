@@ -56,30 +56,23 @@ Direct, not chatty. Confident where evidence is strong, hedged where weak. Plain
 Research workflows — invoke as needed:
 
 - `deep-research/` — Multi-source deep research on any topic. Parallel search, source triangulation, progressive synthesis.
-- `brand-audit/` — DTC/consumer brand competitive analysis. Channels, metrics, strategies, benchmarks.
-- `market-intel/` — Market sizing, trend analysis, category research with data tables.
-- `growth-playbook/` — Tactical growth recommendations. Acquisition, retention, conversion, habit formation.
+- `brand-audit/` → repurposed as **AI Tool Audit** — GitHub stars/activity, funding, use cases, community adoption for any AI tool or company.
+- `market-intel/` — Market sizing, trend analysis, category research. Useful for AI industry landscape.
+- `growth-playbook/` → repurposed as **Career Playbook** — skill gap analysis, portfolio positioning, job targeting.
 
 ## Available Rules
 
-Domain knowledge — auto-loaded when relevant:
-
 - `source-tiers.md` — Detailed source classification guide with edge cases
-- `dtc-supplements.md` — DTC supplement industry context, benchmarks, key players
 
-## Competitive Monitoring System (Rootlab)
+## Primary Use Cases (personal, 2026-06-17)
 
-A standing competitive-intel operation lives at `docs/competitor_profiles/`. Rules:
-
-- **15 reference brands across 3 tiers.** Tier A (TikTok-Shop natives — deep coverage): Nello, Neuro, SNAP, MaryRuth's, Goli, Bloom. Tier B (adjacent stress/sleep/focus): Magic Mind, Moon Juice, Hims/Hers, Calm. Tier C (established/retail benchmarks): AG1, Ritual, Seed, Olly, Momentous.
-- **Profile schema is fixed.** Every profile fills four dimensions: D1 creator program, D2 site/app, D3 deals/campaigns, D4 habit-change tactics. Use `unknown — searched, not found` rather than blanks. Template: `.claude/templates/competitor_profile_template.md`.
-- **Cadence.** Monthly snapshot (Tier A only, ≤4 hrs total): `docs/snapshots/YYYY-MM.md`, template at `.claude/templates/monthly_snapshot_template.md`. Quarterly deep-dive: refresh all Tier A profiles + new entrant scan + refresh `dtc-supplements.md` numbers. Ad-hoc trigger on big launches.
-- **Synthesis artifacts** at `docs/`: `competitor_matrix.html` (cross-brand grid), `creator_commissions_sidebyside.md`, `campaign_cadence_calendar.md`, `habit_tactics_inventory.md`. These re-roll from individual profiles — keep them in sync after each snapshot.
-- **Stale-data flag.** Any profile claim >90 days old without verification gets `[stale]`. Any claim from the brand's own marketing gets `[T4 — vendor]`. Treat existing case studies in `doc_brand_case_studies.md` as a starting input but not a source of truth — re-verify before acting on them.
-- **The "what to steal" section is the deliverable.** Every profile must end with 3 actions Rootlab can take, ordered impact-to-effort. Profiles without it aren't complete.
+1. **AI tool research** — when evaluating a new framework, library, or company
+2. **Job market research** — company culture, role requirements, compensation bands
+3. **Technical deep-dives** — architecture patterns, papers, implementation comparisons
+4. **Career intelligence** — skills in demand, what companies are hiring for
 
 ## Model
 
-- claude-opus-4-6 (preferred) or claude-sonnet-4 (fallback)
+- claude-sonnet-4-6 (standard) or claude-opus-4-8 for synthesis tasks
 - Effort: high
 - Extended thinking: enabled for synthesis tasks

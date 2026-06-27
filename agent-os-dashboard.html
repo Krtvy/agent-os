@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>agent-os Live Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #080806;
+    --surface: #11100d;
+    --surface2: #191714;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #8b6914;
+    --text: #e0d5b8;
+    --muted: #7a6e52;
+    --green: #4a9e6a;
+    --blue: #4a7a9e;
+    --orange: #c97a3a;
+    --red: #9e4a4a;
+    --gray: #4a4840;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .topbar h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+
+  .status-pill {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .pill-idle    { background: rgba(74,72,64,0.4); color: var(--muted); border: 1px solid var(--gray); }
+  .pill-running { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.4); animation: blink 1.5s ease-in-out infinite; }
+  .pill-done    { background: rgba(74,158,106,0.15); color: var(--green); border: 1px solid rgba(74,158,106,0.4); }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  #elapsed { color: var(--gold); }
+  #session-id { font-size: 0.6rem; opacity: 0.6; }
+
+  /* ── TASK BAR ── */
+  .taskbar {
+    padding: 0.6rem 1.5rem;
+    background: var(--surface2);
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    font-size: 0.85rem;
+    color: var(--muted);
+    min-height: 2rem;
+  }
+  .taskbar span { color: var(--text); font-style: italic; }
+
+  /* ── KANBAN ── */
+  .kanban {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1.25rem 1.25rem;
+    min-height: calc(100vh - 120px);
+  }
+
+  .column {
+    background: var(--surface);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-header {
+    padding: 0.6rem 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .col-waiting .col-header  { color: var(--muted);  background: rgba(74,72,64,0.2); }
+  .col-running .col-header  { color: var(--gold);   background: rgba(201,168,76,0.08); }
+  .col-done .col-header     { color: var(--green);  background: rgba(74,158,106,0.08); }
+  .col-failed .col-header   { color: var(--red);    background: rgba(158,74,74,0.08); }
+
+  .col-count {
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.7;
+  }
+
+  .col-body {
+    flex: 1;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  /* ── AGENT CARD ── */
+  .agent-card {
+    border-radius: 8px;
+    padding: 0.8rem;
+    border: 1px solid transparent;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-waiting {
+    background: var(--surface2);
+    border-color: rgba(74,72,64,0.4);
+    opacity: 0.6;
+  }
+
+  .card-running {
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,120,58,0.05));
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: 0 0 20px rgba(201,168,76,0.08);
+    animation: running-pulse 2s ease-in-out infinite;
+  }
+
+  .card-done {
+    background: linear-gradient(135deg, rgba(74,158,106,0.1), rgba(74,158,106,0.05));
+    border-color: rgba(74,158,106,0.3);
+  }
+
+  .card-failed {
+    background: linear-gradient(135deg, rgba(158,74,74,0.1), rgba(158,74,74,0.05));
+    border-color: rgba(158,74,74,0.3);
+  }
+
+  .card-skipped {
+    background: var(--surface2);
+    border-color: rgba(74,72,64,0.2);
+    opacity: 0.35;
+  }
+
+  @keyframes running-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(201,168,76,0.08); }
+    50% { box-shadow: 0 0 30px rgba(201,168,76,0.2), 0 0 0 1px rgba(201,168,76,0.3); }
+  }
+
+  /* Running shimmer */
+  .card-running::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.06), transparent);
+    animation: shimmer 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  .card-icon { font-size: 1.4rem; margin-bottom: 0.25rem; }
+
+  .card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .card-role {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0.1rem 0 0.4rem;
+  }
+
+  .card-output {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    line-height: 1.5;
+    max-height: 60px;
+    overflow: hidden;
+    border-left: 2px solid rgba(201,168,76,0.2);
+    padding-left: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
+  .card-done .card-output { border-left-color: rgba(74,158,106,0.4); color: #8ab09a; }
+  .card-running .card-output { border-left-color: rgba(201,168,76,0.5); }
+
+  .card-timer {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+  }
+  .card-done .card-timer { color: var(--green); }
+  .card-running .card-timer { color: var(--gold); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    height: 2px;
+    background: rgba(201,168,76,0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--gold-dim), var(--gold), var(--gold-light));
+    transition: width 0.5s ease;
+  }
+
+  /* ── IDLE STATE ── */
+  .idle-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 120px);
+    gap: 1rem;
+    color: var(--muted);
+  }
+  .idle-state .idle-icon { font-size: 3rem; opacity: 0.3; }
+  .idle-state p { font-style: italic; font-size: 0.9rem; }
+  .idle-state code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--surface2);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(201,168,76,0.15);
+    color: var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <h1>agent-os</h1>
+    <span class="status-pill pill-idle" id="status-pill">IDLE</span>
+  </div>
+  <div class="topbar-right">
+    <span id="elapsed"></span>
+    <span id="session-id"></span>
+  </div>
+</div>
+
+<!-- TASK BAR -->
+<div class="taskbar" id="taskbar">
+  Waiting for a team session to start...
+</div>
+
+<!-- KANBAN / IDLE -->
+<div id="idle-view" class="idle-state">
+  <div class="idle-icon">⚔️</div>
+  <p>No session running</p>
+  <code>python lib/team_coordinator.py "your task here"</code>
+</div>
+
+<div id="kanban" class="kanban" style="display:none">
+  <div class="column col-waiting">
+    <div class="col-header">
+      <span>⏳</span> Waiting
+      <span class="col-count" id="count-waiting">0</span>
+    </div>
+    <div class="col-body" id="col-waiting"></div>
+  </div>
+  <div class="column col-running">
+    <div class="col-header">
+      <span>⚡</span> Running
+      <span class="col-count" id="count-running">0</span>
+    </div>
+    <div class="col-body" id="col-running"></div>
+  </div>
+  <div class="column col-done">
+    <div class="col-header">
+      <span>✓</span> Done
+      <span class="col-count" id="count-done">0</span>
+    </div>
+    <div class="col-body" id="col-done"></div>
+  </div>
+  <div class="column col-failed">
+    <div class="col-header">
+      <span>✗</span> Failed / Skipped
+      <span class="col-count" id="count-failed">0</span>
+    </div>
+    <div class="col-body" id="col-failed"></div>
+  </div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+<script>
+const ICONS = {
+  hanuman: '🐒', narada: '🪶', yudhishthira: '⚖️',
+  arjuna: '🏹', nakula: '🐎', vidura: '📚',
+  sanjaya: '👁️', vyasa: '📖', sahadeva: '🔍',
+  team_coordinator: '🔄'
+};
+
+function makeCard(agent) {
+  const icon = ICONS[agent.id] || '🤖';
+  const timer = agent.elapsed_s > 0 ? `${agent.elapsed_s}s` : '';
+  const output = agent.output
+    ? `<div class="card-output">${agent.output.substring(0, 200)}</div>`
+    : '';
+  return `
+    <div class="agent-card card-${agent.status}" id="card-${agent.id}">
+      <div class="card-timer">${timer}</div>
+      <div class="card-icon">${icon}</div>
+      <div class="card-name">${agent.name}</div>
+      <div class="card-role">${agent.role}</div>
+      ${output}
+    </div>`;
+}
+
+let lastSessionId = null;
+let elapsedInterval = null;
+let sessionStart = null;
+
+async function poll() {
+  try {
+    const res = await fetch('/status?t=' + Date.now());
+    const data = await res.json();
+
+    // Update pill
+    const pill = document.getElementById('status-pill');
+    pill.textContent = data.status.toUpperCase();
+    pill.className = 'status-pill ' + {
+      idle: 'pill-idle', running: 'pill-running', done: 'pill-done'
+    }[data.status] || 'pill-idle';
+
+    if (data.status === 'idle' || !data.agents.length) {
+      document.getElementById('idle-view').style.display = 'flex';
+      document.getElementById('kanban').style.display = 'none';
+      document.getElementById('taskbar').innerHTML = 'Waiting for a team session to start...';
+      document.getElementById('progress').style.width = '0%';
+      return;
+    }
+
+    // Show kanban
+    document.getElementById('idle-view').style.display = 'none';
+    document.getElementById('kanban').style.display = 'grid';
+
+    // Task
+    document.getElementById('taskbar').innerHTML =
+      `Task: <span>${data.task}</span>`;
+    document.getElementById('session-id').textContent = data.session_id;
+
+    // Elapsed
+    document.getElementById('elapsed').textContent =
+      data.elapsed_s > 0 ? `${data.elapsed_s}s` : '';
+
+    // Sort agents into columns
+    const cols = { waiting: [], running: [], done: [], failed: [] };
+    data.agents.forEach(a => {
+      if (a.status === 'skipped') cols.failed.push(a);
+      else cols[a.status]?.push(a);
+    });
+
+    ['waiting','running','done','failed'].forEach(col => {
+      document.getElementById(`col-${col}`).innerHTML =
+        cols[col].map(makeCard).join('');
+      document.getElementById(`count-${col}`).textContent = cols[col].length;
+    });
+
+    // Progress
+    const total = data.agents.filter(a => a.status !== 'skipped').length;
+    const done = data.agents.filter(a => a.status === 'done' || a.status === 'failed').length;
+    const pct = total > 0 ? (done / total) * 100 : 0;
+    document.getElementById('progress').style.width = pct + '%';
+
+  } catch(e) {
+    // server not running yet
+  }
+}
+
+poll();
+setInterval(poll, 1200);
+</script>
+</body>
+</html>

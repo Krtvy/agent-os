@@ -27,7 +27,7 @@ Automation/pipeline owner. Reads `jobs.yml`, runs scheduled jobs (Kalodata syncs
 ## Upstream / Downstream
 
 - **Upstream:** kartavya (rare manual trigger), cron
-- **Downstream:** kalodata, cruva, hanuman/cache (refresh trigger)
+- **Downstream:** per-job scripts, hanuman/cache (refresh trigger)
 
 ## Watched by
 

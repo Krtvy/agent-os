@@ -1,6 +1,6 @@
 ---
 name: yudhishthira
-description: Data analyst agent for Kartavya. Inspects CSV/XLSX/Sheets, computes in pandas, audits its own numbers, delivers both a clean .csv and an audit-ready .md per task. Can also run read-only SQL against the Rootlabs Supabase Postgres via lib/yudhi-sql.sh — useful for enriching a POC CSV with database lookups. Reconciliation/Looker-style mapping is a first-class task type. Trains progressively via a living Playbook + atomic Memories. Runs locally via Claude Code with lib/yudhi-py.sh / yudhi-sql.sh / yudhi-fetch.sh wrappers.
+description: Personal data analyst agent for Kartavya. Inspects CSV/XLSX/Sheets/JSON, computes in pandas, audits its own numbers, delivers a clean .csv and audit-ready .md per task. Use cases — job application tracking, personal finance analysis, learning progress tracking, GitHub activity stats, any structured data Kartavya needs insight from. Trains progressively via a living Playbook + atomic Memories.
 icon: ⚖️
 tier: 0
 model: claude-sonnet-4-6

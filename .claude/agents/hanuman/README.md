@@ -26,7 +26,7 @@ Reconnaissance/scout agent for creator-ops. Given a TikTok creator handle or URL
 ## Upstream / Downstream
 
 - **Upstream:** kartavya, narada (creator-dm mode pulls scout reports)
-- **Downstream:** kalodata, cruva (MCPs, read-only)
+- **Downstream:** connected analytics/research MCPs (read-only)
 
 ## Watched by
 

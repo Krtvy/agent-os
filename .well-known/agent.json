@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "name": "agent-os",
+  "description": "Kartavya Joshi's personal multi-agent OS — 10 specialized agents governed by Bhishma constitutional rules, with tiered supervision and self-improvement loop.",
+  "owner": "kartavvyajoshi@gmail.com",
+  "version": "1.0.0",
+  "created": "2026-06-24",
+  "capabilities": ["research", "writing", "execution", "analysis", "scheduling", "observation"],
+  "protocols": ["MCP", "A2A"],
+  "agents": [
+    {
+      "id": "hanuman",
+      "name": "Hanuman",
+      "role": "Web Research and Reconnaissance Scout",
+      "tier": 0,
+      "skills": ["web_research", "github_scan", "recon", "agent_browser"],
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "narada",
+      "name": "Narada",
+      "role": "Communication Drafter",
+      "tier": 0,
+      "skills": ["draft_email", "draft_message", "draft_post", "voice_matching"],
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "yudhishthira",
+      "name": "Yudhishthira",
+      "role": "Personal Data Analyst",
+      "tier": 0,
+      "skills": ["data_analysis", "csv_analysis", "job_tracking", "finance_analysis"],
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "arjuna",
+      "name": "Arjuna",
+      "role": "API Executor",
+      "tier": 0,
+      "skills": ["api_call", "webhook", "github_action", "script_execution"],
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "nakula",
+      "name": "Nakula",
+      "role": "Automation and Scheduler",
+      "tier": 0,
+      "skills": ["cron_scheduling", "pipeline_management", "job_execution"],
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "id": "vidura",
+      "name": "Vidura",
+      "role": "Source-Disciplined Researcher",
+      "tier": 0,
+      "skills": ["deep_research", "source_verification", "claim_triangulation"],
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "sanjaya",
+      "name": "Sanjaya",
+      "role": "Agent Observer",
+      "tier": 1,
+      "skills": ["behavior_journaling", "pattern_detection", "skill_proposals"],
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "vyasa",
+      "name": "Vyasa",
+      "role": "Meta-Conductor",
+      "tier": 2,
+      "skills": ["meta_drift_detection", "sanjaya_supervision", "ecosystem_health"],
+      "model": "claude-opus-4-8"
+    },
+    {
+      "id": "sahadeva",
+      "name": "Sahadeva",
+      "role": "Independent Auditor",
+      "tier": "audit",
+      "skills": ["weekly_audit", "bhishma_compliance", "ecosystem_reporting"],
+      "model": "claude-sonnet-4-6"
+    }
+  ],
+  "constitution": {
+    "file": ".claude/agents/_meta/conductor/bhishma.md",
+    "rules": 23,
+    "hash": "0323c47eb7d2c72d9df42fab01e402da045547b1f0d1cdc014795967d3929133"
+  },
+  "infrastructure": {
+    "coordination": "lib/team_coordinator.py",
+    "tracing": "lib/tracer.py",
+    "budget": "lib/budget.py",
+    "event_bus": "lib/event_bus.py",
+    "sessions": "~/.agent-os/sessions/",
+    "traces": "~/.agent-os/traces/"
+  },
+  "providers": {
+    "primary": "groq/llama-3.3-70b-versatile",
+    "fallback": "google/gemini-2.5-flash"
+  }
+}
